@@ -1,4 +1,4 @@
-module org.example {
+module org {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
