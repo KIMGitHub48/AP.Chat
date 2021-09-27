@@ -1,0 +1,9 @@
+org\Presentation\Facade.class
+org\DATA\Entity\HistoryMessage.class
+org\DATA\Entity\SprUser.class
+module-info.class
+org\DATA\Dao.class
+org\Domain\Main.class
+org\Presentation\Main.class
+org\Domain\Facade.class
+org\Presentation\PrimaryController.class
