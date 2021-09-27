@@ -2,18 +2,12 @@ package org.DATA;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.CriteriaSpecification;
-import org.hibernate.criterion.DetachedCriteria;
 import org.reflections.Reflections;
 
 import javax.persistence.Entity;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
-import java.util.function.Supplier;
+
 
 
 //Класс работы с базой
@@ -52,7 +46,7 @@ public class Dao {
      * Получить открытую сессию для работы с БД.
      */
 
-    public Session getSession() {
+/*    public Session getSession() {
         final Session currentSession = sessionFactory.getCurrentSession();
         if (currentSession != null && currentSession.isOpen()) {
             return currentSession;
@@ -65,5 +59,7 @@ public class Dao {
     private Session openSession() {
         return sessionFactory.openSession();
     }
+
+ */
 }
 
