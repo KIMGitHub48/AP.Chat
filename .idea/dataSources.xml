@@ -7,5 +7,11 @@
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://127.0.0.1;database=chat</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="Apache Derby (Embedded) - Database" uuid="cd75e287-893e-4fa7-b610-185ac5334e7e">
+      <driver-ref>derby.embedded</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.apache.derby.jdbc.EmbeddedDriver</jdbc-driver>
+      <jdbc-url>jdbc:derby:$PROJECT_DIR$/Server/src/main/java/org/DATA/ApacheDerby/Database;create=true</jdbc-url>
+    </data-source>
   </component>
 </project>

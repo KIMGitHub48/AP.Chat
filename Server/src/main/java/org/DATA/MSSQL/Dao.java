@@ -1,4 +1,4 @@
-package org.DATA;
+package org.DATA.MSSQL;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

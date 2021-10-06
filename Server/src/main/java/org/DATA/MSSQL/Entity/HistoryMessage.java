@@ -1,4 +1,4 @@
-package org.DATA.Entity;
+package org.DATA.MSSQL.Entity;
 
 import org.hibernate.annotations.Type;
 

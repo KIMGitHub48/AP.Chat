@@ -17,5 +17,11 @@
         </introspection-scope>
       </schema-mapping>
     </data-source>
+    <data-source name="Apache Derby (Embedded) - Database" uuid="cd75e287-893e-4fa7-b610-185ac5334e7e">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="DERBY" exact-version="0" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>admin</user-name>
+      <schema-mapping />
+    </data-source>
   </component>
 </project>
