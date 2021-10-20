@@ -6,6 +6,10 @@ package org.Presentation;
 
 public class Facade {
     public static void Launcher(String[] args){
-        Main.main(args);
-    }
+        Runnable mainRunnable = () -> {
+            Main.main(args);
+        };
+        Thread UIThread =new Thread(mainRunnable, "UIThread");
+        UIThread.start();
+    }//Запускает UI в новом потоке.
 }
