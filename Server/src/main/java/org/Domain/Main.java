@@ -9,6 +9,6 @@ public class Main {
         org.Presentation.Facade.Launcher(args);//Запускает UI в новом потоке.
 
         org.Domain.Net.Server server = new org.Domain.Net.Server();
-        server.Start();//Стартует сетевую часть сервера.
+        server.Start();//Стартует сетевую часть сервер в новом потоке.
     }
 }

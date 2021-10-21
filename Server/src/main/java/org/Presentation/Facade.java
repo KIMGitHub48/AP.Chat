@@ -9,7 +9,8 @@ public class Facade {
         Runnable mainRunnable = () -> {
             Main.main(args);
         };
-        Thread UIThread =new Thread(mainRunnable, "UIThread");
-        UIThread.start();
+        new Thread(mainRunnable, "UIThread").start();
+//        Thread UIThread =new Thread(mainRunnable, "UIThread");
+//        UIThread.start();
     }//Запускает UI в новом потоке.
 }
