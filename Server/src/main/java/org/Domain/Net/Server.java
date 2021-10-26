@@ -13,6 +13,10 @@ import java.util.ArrayList;
 public class Server {
     private ArrayList<Thread> arrayListClientThread = new ArrayList();
 
+    public ArrayList<Thread> getArrayListClientThread() {
+        return arrayListClientThread;
+    }
+
     public void Start(){
         Runnable mainRunnable = () -> {
             StartServerSocket();
@@ -24,24 +28,23 @@ public class Server {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(4848);
+            addClientSocketCycle(serverSocket);
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            addClientSocket(serverSocket);
+            System.out.println("StartServerSocket - Error");//TODO Зделать чтото реальное
         }
     }
-    private void addClientSocket(ServerSocket serverSocket){
+    private boolean addClientSocketCycle(ServerSocket serverSocket){
         Socket clientSocket = null;
         while (true) {
             try {
                 clientSocket = serverSocket.accept();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
                 Thread clientThread = new ClientThread(clientSocket);
                 arrayListClientThread.add(clientThread);
                 clientThread.start();
+            } catch (IOException e) {
+                System.out.println("addClientSocketCycle - Error");//TODO Зделать чтото реальное
             }
         }
     }
+
 }

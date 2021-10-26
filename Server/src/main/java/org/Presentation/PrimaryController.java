@@ -25,11 +25,10 @@ public class PrimaryController {
 
     @FXML
     private void SendMessage(){
-        String textFromTextFieldMessage;
-        textFromTextFieldMessage = textFieldMessage.getText();
-        String returnText;
-        returnText = org.Domain.Facade.SendMessage(textFromTextFieldMessage);
-        textAreaDialog.appendText(returnText+"\n");
+        org.Domain.Net.Message chatMessage = new org.Domain.Net.Message();
+        chatMessage.setId("chatMessageToAll");
+        chatMessage.setText(textFieldMessage.getText());
+        org.Domain.Facade.SendMessage(chatMessage);
     }
 
 }
