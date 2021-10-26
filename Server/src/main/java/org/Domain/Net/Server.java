@@ -30,7 +30,7 @@ public class Server {
             serverSocket = new ServerSocket(4848);
             addClientSocketCycle(serverSocket);
         } catch (IOException e) {
-            System.out.println("StartServerSocket - Error");//TODO Зделать чтото реальное
+            System.out.println("StartServerSocket - Error");//TODO Сделать чтото реальное
         }
     }
     private boolean addClientSocketCycle(ServerSocket serverSocket){
@@ -42,7 +42,7 @@ public class Server {
                 arrayListClientThread.add(clientThread);
                 clientThread.start();
             } catch (IOException e) {
-                System.out.println("addClientSocketCycle - Error");//TODO Зделать чтото реальное
+                System.out.println("addClientSocketCycle - Error");//TODO Сделать чтото реальное
             }
         }
     }
