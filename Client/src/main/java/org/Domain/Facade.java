@@ -5,4 +5,5 @@ public class Facade {
         //Тело для запроса в DATA.Facade
         return message;//тестовый возврат
     }
+    //gfgdfgdfrgrd
 }
