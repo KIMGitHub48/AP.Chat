@@ -3,7 +3,7 @@ package org.Domain;
     Точка входа в приложение.
  */
 
-
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
@@ -21,5 +21,8 @@ public class Main {
 
     public ArrayList<Thread> getArrayListClientThread() {
         return server.getArrayListClientThread();
+    }
+    public ArrayList<Socket> getArrayListClientSocket() {
+        return server.getArrayListClientSocket();
     }
 }

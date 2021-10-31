@@ -17,23 +17,29 @@ public class Server {
         return arrayListClientThread;
     }
 
+    private ArrayList<Socket> arrayListClientSocket = new ArrayList();
+
+    public ArrayList<Socket> getArrayListClientSocket() {
+        return arrayListClientSocket;
+    }
+
     public void Start(){
-        Runnable mainRunnable = () -> {
+        Runnable runnableStart = () -> {
             StartServerSocket();
         };
-        new Thread(mainRunnable, "ServerThread").start();
+        new Thread(runnableStart, "ServerThread").start();
     }
 
     private void StartServerSocket () {
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(4848);
-            addClientSocketCycle(serverSocket);
+            addClientSocketToThread(serverSocket);
         } catch (IOException e) {
             System.out.println("StartServerSocket - Error");//TODO Сделать чтото реальное
         }
     }
-    private boolean addClientSocketCycle(ServerSocket serverSocket){
+    private boolean addClientSocketToThread(ServerSocket serverSocket){
         Socket clientSocket = null;
         while (true) {
             try {

@@ -2,6 +2,7 @@ package org.Domain;
 
 import org.Domain.Net.ClientThread;
 
+import java.net.Socket;
 import java.util.ArrayList;
 
 public class Facade {
@@ -15,10 +16,10 @@ public class Facade {
         }
     }
 
-    private static void chatMessageToAll(org.Domain.Net.Message message){
-        ArrayList<Thread>  arrayListClientThread = Main.mainRef.getArrayListClientThread();
-        for (int i = 0; i < arrayListClientThread.size(); i++) {
-            Thread element = arrayListClientThread.get(i);
+    public static void chatMessageToAll(org.Domain.Net.Message message){
+        ArrayList<Socket>  arrayListClientSocket = Main.mainRef.getArrayListClientSocket();
+        for (int i = 0; i < arrayListClientSocket.size(); i++) {
+            Socket element = arrayListClientSocket.get(i);
             //(ClientThread)element.
         }
     }

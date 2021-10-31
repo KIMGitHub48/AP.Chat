@@ -10,7 +10,7 @@ public class ClientThread extends Thread {
     private Socket clientSocket;
     private BufferedReader clientSockedStreamIn; // поток чтения из сокета
     private Thread threadIn;
-    private boolean threadInStartFlag;
+    private boolean threadInBreakFlag;
     ClientThread(Socket socket){
         clientSocket = socket;
     }
@@ -22,11 +22,14 @@ public class ClientThread extends Thread {
 
     private void SocketThreadInStart(){
         org.Domain.Net.Message message;
-        threadInStartFlag=true;
-        while (threadInStartFlag) {
+        threadInBreakFlag=true;
+        while (threadInBreakFlag) {
             message = SocketStreamIn();
             if (message != null){
+                org.DATA.Facade.ClientMessage(message);
                 //В случае если пришел объект сообщения
+            } else {
+
             }
         }
     }
@@ -50,18 +53,14 @@ public class ClientThread extends Thread {
         }
     }
 
-    public boolean AllStop(){
+    public boolean stopClientThread(){
         try {
             clientSocket.shutdownInput();
-            threadInStartFlag=false;
+            threadInBreakFlag=false;
 //            threadIn.interrupt();
             return true;
         } catch (IOException e) {
             return false;
         }
     } //Останавливает StreamIn, threadIn
-
-    public void test(){
-
-    }
 }
