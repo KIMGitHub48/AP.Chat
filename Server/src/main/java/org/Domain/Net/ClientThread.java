@@ -2,7 +2,6 @@ package org.Domain.Net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
@@ -26,8 +25,7 @@ public class ClientThread extends Thread {
         while (threadInBreakFlag) {
             message = SocketStreamIn();
             if (message != null){
-                org.DATA.Facade.ClientMessage(message);
-                //В случае если пришел объект сообщения
+                org.DATA.Facade.MessageFromClient(message);
             } else {
 
             }
