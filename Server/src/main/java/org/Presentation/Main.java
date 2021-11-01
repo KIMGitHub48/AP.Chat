@@ -12,8 +12,13 @@ import java.io.IOException;
     Не является точкой входа в приложение.
  */
 public class Main extends Application {
-
+    public static Main presentationMain;
     private static Scene scene;
+    private static FXMLLoader fxmlLoader;
+
+    private Main(){
+        presentationMain = this;
+    }
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -27,8 +32,13 @@ public class Main extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
+    }
+
+    public void SetSystemMessage(String text){
+        org.Presentation.PrimaryController controller = fxmlLoader.getController();
+        controller.SetSystemText(text);
     }
 
     public static void main(String[] args) {

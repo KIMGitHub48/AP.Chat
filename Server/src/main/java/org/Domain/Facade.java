@@ -21,4 +21,8 @@ public class Facade {
             sendToAll.start();
         }
     }
+
+    public static void StartServer(){
+        Main.mainRef.StartServer();
+    }
 }

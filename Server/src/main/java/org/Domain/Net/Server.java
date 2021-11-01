@@ -11,7 +11,12 @@ import java.util.ArrayList;
  */
 
 public class Server {
+    private int serverPort;
     private ArrayList<Thread> arrayListClientThread = new ArrayList();
+
+    public Server(int port){
+        serverPort = port;
+    }
 
     public ArrayList<Thread> getArrayListClientThread() {
         return arrayListClientThread;
@@ -33,7 +38,8 @@ public class Server {
     private void StartServerSocket () {
         ServerSocket serverSocket = null;
         try {
-            serverSocket = new ServerSocket(4848);
+            serverSocket = new ServerSocket(serverPort);
+            org.Presentation.Facade.addSystemMessage("Сервер запущен на порту: "+serverPort);
             addClientSocketToThread(serverSocket);
         } catch (IOException e) {
             System.out.println("StartServerSocket - Error");//TODO Сделать чтото реальное

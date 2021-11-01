@@ -10,7 +10,9 @@ public class Facade {
             Main.main(args);
         };
         new Thread(mainRunnable, "UIThread").start();
-//        Thread UIThread =new Thread(mainRunnable, "UIThread");
-//        UIThread.start();
     }//Запускает UI в новом потоке.
+
+    public static void addSystemMessage(String text){
+        Main.presentationMain.SetSystemMessage(text);
+    }
 }

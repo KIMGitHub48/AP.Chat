@@ -7,16 +7,15 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
-    public static Main mainRef ;
-    private static org.Domain.Net.Server server;
-    Main (){
+    private Main (){
         mainRef = this;
     }
+
+    public static Main mainRef ;
+    private static org.Domain.Net.Server server;
+
     public static void main(String[] args) {
         org.Presentation.Facade.Launcher(args);//Запускает UI в новом потоке.
-
-        server = new org.Domain.Net.Server();
-        server.Start();//Стартует сетевую часть сервер в новом потоке.
     }
 
     public ArrayList<Thread> getArrayListClientThread() {
@@ -24,5 +23,10 @@ public class Main {
     }
     public ArrayList<Socket> getArrayListClientSocket() {
         return server.getArrayListClientSocket();
+    }
+
+    public void StartServer(){
+        server = new org.Domain.Net.Server(4848);
+        server.Start();//Стартует сетевую часть сервер в новом потоке.
     }
 }

@@ -1,5 +1,6 @@
 package org.Presentation;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
@@ -24,11 +25,23 @@ public class PrimaryController {
     private Button buttonSendMessage;
 
     @FXML
+    private Button buttonStartServer;
+
+    @FXML
     private void SendMessage(){
         org.Domain.Net.Message chatMessage = new org.Domain.Net.Message();
         chatMessage.setId("chatMessageToAll");
         chatMessage.setText(textFieldMessage.getText());
         org.Domain.Facade.SendMessage(chatMessage);
+    }
+
+    @FXML
+    private void StartServer(ActionEvent actionEvent){
+        org.Domain.Facade.StartServer();
+    }
+
+    public void SetSystemText(String text){
+        textAreaDialog.appendText("Системное сообщение: "+text);
     }
 
 }
