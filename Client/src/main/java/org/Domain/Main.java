@@ -12,7 +12,7 @@ public class Main {
     private org.Domain.Net.ConnectToServer connectToServer;
 
     Main(String[] args){
-        System.out.println("Запущен Клиент");
+        System.out.println("Запущен Клиент ");
         domainMainRef = this;
         org.Presentation.Facade.Launcher(args);
     }
