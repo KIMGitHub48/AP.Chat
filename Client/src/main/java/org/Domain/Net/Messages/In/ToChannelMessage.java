@@ -1,8 +1,8 @@
-package org.Domain1.Net.Messages.In;
+package org.Domain.Net.Messages.In;
 
 public class ToChannelMessage {
-    private org.Domain1.Net.Message message;
-    public ToChannelMessage(org.Domain1.Net.Message toChannelMessage){
+    private org.Domain.Net.Message message;
+    public ToChannelMessage(org.Domain.Net.Message toChannelMessage){
         message = toChannelMessage;
     }
     public void Process(){

@@ -1,4 +1,4 @@
-package org.Domain1.Net;
+package org.Domain.Net;
 
 import java.io.IOException;
 import java.net.Socket;

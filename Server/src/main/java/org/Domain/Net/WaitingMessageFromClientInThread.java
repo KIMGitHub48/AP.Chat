@@ -1,4 +1,4 @@
-package org.Domain1.Net;
+package org.Domain.Net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,7 +21,7 @@ public class WaitingMessageFromClientInThread extends Thread {
     }
 
     private void SocketThreadInStart() {
-        org.Domain1.Net.Message message;
+        org.Domain.Net.Message message;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
@@ -29,10 +29,10 @@ public class WaitingMessageFromClientInThread extends Thread {
         }
     }
 
-    private org.Domain1.Net.Message SocketStreamIn() {
-        org.Domain1.Net.Message message;
+    private org.Domain.Net.Message SocketStreamIn() {
+        org.Domain.Net.Message message;
         try {
-            message = (org.Domain1.Net.Message) ClientObjectInputStream().readObject();
+            message = (org.Domain.Net.Message) ClientObjectInputStream().readObject();
             return message;
         } catch (ClassNotFoundException | IOException e) {
             return null;

@@ -36,15 +36,15 @@ public class PrimaryController {
     @FXML
     private void SendMessage(){
         //Тип сообщения
-        org.Domain1.Net.Message message = new org.Domain1.Net.Message();
+        org.Domain.Net.Message message = new org.Domain.Net.Message();
         message.setId("chatMessageToAll");
         message.setChatChannelText(textFieldChannelMessage.getText());
         message.setChatChannelName("Default");
-        org.Domain1.Facade.SendMessage(message);
+        org.Domain.Facade.SendMessage(message);
     }
 
     public void connectToServer(ActionEvent actionEvent) {
-        org.Domain1.Facade.ConnectToServer();
+        org.Domain.Facade.ConnectToServer();
     }
 
     public String GetIPFromTextField(){

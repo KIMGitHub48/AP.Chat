@@ -1,11 +1,11 @@
-package org.Domain1;
+package org.Domain;
 /*
     Точка входа в приложение.
  */
 
 public class Main {
     public static Main domainMainRef;
-    private org.Domain1.Net.ConnectToServer connectToServer;
+    private org.Domain.Net.ConnectToServer connectToServer;
 
     Main(String[] args){
         domainMainRef = this;
@@ -13,7 +13,7 @@ public class Main {
     }
 
     public void ConnectToServer(){
-        connectToServer = new org.Domain1.Net.ConnectToServer();
+        connectToServer = new org.Domain.Net.ConnectToServer();
         connectToServer.ConnectToServer();
     }
 
@@ -29,11 +29,11 @@ public class Main {
 //        sendMessageThread.start();
 //    }
 
-    public void SortMessage(org.Domain1.Net.Message message) {
+    public void SortMessage(org.Domain.Net.Message message) {
         String id = message.getId();
         switch (id) {
             case ("toChatChannel"):
-                org.Domain1.Net.Messages.In.ToChannelMessage toChannelMessage = new org.Domain1.Net.Messages.In.ToChannelMessage(message);
+                org.Domain.Net.Messages.In.ToChannelMessage toChannelMessage = new org.Domain.Net.Messages.In.ToChannelMessage(message);
                 toChannelMessage.Process();
             default:
                 System.out.println("ID отправляемого сообщения не найдено");

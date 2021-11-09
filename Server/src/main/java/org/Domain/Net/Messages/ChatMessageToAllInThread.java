@@ -1,6 +1,6 @@
-package org.Domain1.Net.Messages;
+package org.Domain.Net.Messages;
 
-import org.Domain1.Main;
+import org.Domain.Main;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -8,9 +8,9 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 public class ChatMessageToAllInThread extends Thread {
-    private org.Domain1.Net.Message message;
+    private org.Domain.Net.Message message;
 
-    public ChatMessageToAllInThread(org.Domain1.Net.Message outMessage) {
+    public ChatMessageToAllInThread(org.Domain.Net.Message outMessage) {
         message = outMessage;
     }
 

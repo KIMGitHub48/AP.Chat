@@ -1,4 +1,4 @@
-package org.Domain1.Net.Messages.Out;
+package org.Domain.Net.Messages.Out;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -6,9 +6,9 @@ import java.net.Socket;
 
 public class SendMessageInThread extends Thread {
     private Socket serverSocket;
-    private Message message;
+    private org.Domain.Net.Message message;
 
-    public SendMessageInThread(Socket socket, Message outMessage) {
+    public SendMessageInThread(Socket socket, org.Domain.Net.Message outMessage) {
         serverSocket = socket;
         message = outMessage;
     }

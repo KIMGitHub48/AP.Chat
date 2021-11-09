@@ -1,16 +1,16 @@
-package org.Domain1;
+package org.Domain;
 /*
     Точка входа в приложение.
  */
 
-import org.Domain1.Net.Messages.ChatMessageToAllInThread;
+import org.Domain.Net.Messages.ChatMessageToAllInThread;
 
 import java.net.Socket;
 import java.util.ArrayList;
 
 public class Main {
     public static Main domainMainRef;
-    private static org.Domain1.Net.Server server;
+    private static org.Domain.Net.Server server;
 
     public Main(String[] args) {
         domainMainRef = this;
@@ -26,7 +26,7 @@ public class Main {
     }
 
     public void StartServer() {
-        server = new org.Domain1.Net.Server(4848);
+        server = new org.Domain.Net.Server(4848);
         server.Start();//Стартует сетевую часть сервер в новом потоке.
     }
 
@@ -34,7 +34,7 @@ public class Main {
         server.Stop();
     }
 
-    public void SortMessage(org.Domain1.Net.Message message) {
+    public void SortMessage(org.Domain.Net.Message message) {
         String id = message.getId();
         switch (id) {
             case ("chatMessageToAll"):
@@ -44,7 +44,7 @@ public class Main {
         }
     }
 
-    public void ChatMessageToAll(org.Domain1.Net.Message message) {
+    public void ChatMessageToAll(org.Domain.Net.Message message) {
         Thread chatMessageToAllInThread = new ChatMessageToAllInThread(message);
         chatMessageToAllInThread.start();
     }

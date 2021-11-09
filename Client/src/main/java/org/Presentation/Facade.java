@@ -20,7 +20,7 @@ public class Facade {
     public static Integer GetPortFromTextField(){
         return Main.presentationMainRef.GetPortFromTextField();
     }
-    public static void MessageFromServer(org.Domain1.Net.Message message) {
+    public static void MessageFromServer(org.Domain.Net.Message message) {
 
     }
 

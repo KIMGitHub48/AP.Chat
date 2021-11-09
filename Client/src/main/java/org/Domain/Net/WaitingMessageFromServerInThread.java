@@ -1,4 +1,4 @@
-package org.Domain1.Net;
+package org.Domain.Net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -21,16 +21,16 @@ public class WaitingMessageFromServerInThread extends Thread {
     }
 
     private void SocketThreadInStart() {
-        org.Domain1.Net.Message message;
+        org.Domain.Net.Message message;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
-            message = SocketStreamIn();
+            org.Domain.Net.Message message = SocketStreamIn();
             org.DATA.Facade.MessageFromServer(message);
         }
     }
 
     private Message SocketStreamIn() {
-        org.Domain1.Net.Message message;
+        org.Domain.Net.Message message;
         try {
             message = (Message) ClientObjectInputStream().readObject();
             return message;

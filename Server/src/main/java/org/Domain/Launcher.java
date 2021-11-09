@@ -1,4 +1,4 @@
-package org.Domain1;
+package org.Domain;
 
 public class Launcher {
     public static void main(String[] args) {

@@ -47,9 +47,9 @@ public class PrimaryController {
     @FXML
     private void StartServer(ActionEvent actionEvent){
         if (buttonStartServer.getText().equals(startServerButtonText)){
-            org.Domain1.Facade.StartServer();
+            org.Domain.Facade.StartServer();
         } else if (buttonStartServer.getText().equals(stopServerButtonText)){
-            org.Domain1.Facade.StopServer();
+            org.Domain.Facade.StopServer();
         }
     }
 
