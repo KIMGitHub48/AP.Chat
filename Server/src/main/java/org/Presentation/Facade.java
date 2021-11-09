@@ -6,6 +6,19 @@ package org.Presentation;
 
 public class Facade {
     public static void Launcher(String[] args){
-        Main.main(args);
+        Runnable mainRunnable = () -> {
+            Main.main(args);
+        };
+        new Thread(mainRunnable, "UIThread").start();
+    }//Запускает UI в новом потоке.
+
+    public static void AddSystemMessage(String text){
+        Main.presentationMain.AddSystemMessage(text);
+    }
+    public static void AddTextToStartServerButtonAfterStart(){
+        Main.presentationMain.AddTextToStartServerButtonAfterStart();
+    }
+    public static void AddTextToStartServerButtonAfterStop(){
+        Main.presentationMain.AddTextToStartServerButtonAfterStop();
     }
 }

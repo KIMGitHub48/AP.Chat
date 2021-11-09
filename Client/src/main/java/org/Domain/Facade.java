@@ -1,9 +1,16 @@
 package org.Domain;
 
+
 public class Facade {
-    public static String SendMessage(String message){
-        //Тело для запроса в DATA.Facade
-        return message;//тестовый возврат
+    public static void SendMessageToServer(org.Domain.Net.Message message){
+        Main.domainMainRef.SendMessage(message);
+    }
+    public static void ConnectToServer(){
+        Main.domainMainRef.ConnectToServer();
+    }
+
+    public static void MessageFromServer(org.Domain.Net.Message message) {
+        Main.domainMainRef.SortMessage(message);
     }
     //gfgdfgdfrgrd
 }
