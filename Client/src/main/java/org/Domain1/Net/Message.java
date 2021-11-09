@@ -1,4 +1,4 @@
-package org.Domain.Net;
+package org.Domain1.Net;
 
 import java.io.Serializable;
 
@@ -6,7 +6,8 @@ public class Message implements Serializable {
     private String id;
     private String login;
     private String password;
-    private String text;
+    private String chatChannelText;
+    private String chatChannelName;
 
     public String getId() {
         return id;
@@ -32,11 +33,19 @@ public class Message implements Serializable {
         this.password = password;
     }
 
-    public String getText() {
-        return text;
+    public String getChatChannelText() {
+        return chatChannelText;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setChatChannelText(String chatChannelText) {
+        this.chatChannelText = chatChannelText;
+    }
+
+    public String getChatChannelName() {
+        return chatChannelName;
+    }
+
+    public void setChatChannelName(String chatChannelName) {
+        this.chatChannelName = chatChannelName;
     }
 }

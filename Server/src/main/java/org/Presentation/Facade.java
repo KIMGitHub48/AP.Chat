@@ -12,7 +12,13 @@ public class Facade {
         new Thread(mainRunnable, "UIThread").start();
     }//Запускает UI в новом потоке.
 
-    public static void addSystemMessage(String text){
-        Main.presentationMain.SetSystemMessage(text);
+    public static void AddSystemMessage(String text){
+        Main.presentationMain.AddSystemMessage(text);
+    }
+    public static void AddTextToStartServerButtonAfterStart(){
+        Main.presentationMain.AddTextToStartServerButtonAfterStart();
+    }
+    public static void AddTextToStartServerButtonAfterStop(){
+        Main.presentationMain.AddTextToStartServerButtonAfterStop();
     }
 }

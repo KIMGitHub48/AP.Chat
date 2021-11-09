@@ -1,15 +1,15 @@
-package org.Domain.Net.Send;
+package org.Domain1.Net.Messages.Out;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class ToAll extends Thread {
-    private Socket clientSocket;
-    private org.Domain.Net.Message message;
+public class SendMessageInThread extends Thread {
+    private Socket serverSocket;
+    private Message message;
 
-    public ToAll(Socket socket, org.Domain.Net.Message outMessage) {
-        clientSocket = socket;
+    public SendMessageInThread(Socket socket, Message outMessage) {
+        serverSocket = socket;
         message = outMessage;
     }
 
@@ -28,7 +28,7 @@ public class ToAll extends Thread {
 
     private ObjectOutputStream GetOutputStream() {
         try {
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(serverSocket.getOutputStream());
             return objectOutputStream;
         } catch (IOException e) {
             return null;

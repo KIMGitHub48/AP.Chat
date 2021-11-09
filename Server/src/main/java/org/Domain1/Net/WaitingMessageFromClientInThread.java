@@ -1,16 +1,17 @@
-package org.Domain.Net;
+package org.Domain1.Net;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
-public class ClientThread extends Thread {
+public class WaitingMessageFromClientInThread extends Thread {
     private Socket clientSocket;
     private BufferedReader clientSockedStreamIn; // поток чтения из сокета
     private Thread threadIn;
     private boolean threadInBreakFlag;
-    ClientThread(Socket socket){
+
+    WaitingMessageFromClientInThread(Socket socket) {
         clientSocket = socket;
     }
 
@@ -19,23 +20,19 @@ public class ClientThread extends Thread {
         SocketThreadInStart();
     }
 
-    private void SocketThreadInStart(){
-        org.Domain.Net.Message message;
-        threadInBreakFlag=true;
+    private void SocketThreadInStart() {
+        org.Domain1.Net.Message message;
+        threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
-            if (message != null){
-                org.DATA.Facade.MessageFromClient(message);
-            } else {
-
-            }
+            org.DATA.Facade.MessageFromClient(message);
         }
     }
 
-    private org.Domain.Net.Message SocketStreamIn(){
-        org.Domain.Net.Message message;
+    private org.Domain1.Net.Message SocketStreamIn() {
+        org.Domain1.Net.Message message;
         try {
-            message = (org.Domain.Net.Message) ClientObjectInputStream().readObject();
+            message = (org.Domain1.Net.Message) ClientObjectInputStream().readObject();
             return message;
         } catch (ClassNotFoundException | IOException e) {
             return null;
@@ -44,17 +41,17 @@ public class ClientThread extends Thread {
 
     private ObjectInputStream ClientObjectInputStream() {
         try {
-            ObjectInputStream  clientObjectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectInputStream clientObjectInputStream = new ObjectInputStream(clientSocket.getInputStream());
             return clientObjectInputStream;
         } catch (IOException e) {
             return null;
         }
     }
 
-    public boolean stopClientThread(){
+    public boolean stopClientThread() {
         try {
             clientSocket.shutdownInput();
-            threadInBreakFlag=false;
+            threadInBreakFlag = false;
 //            threadIn.interrupt();
             return true;
         } catch (IOException e) {

@@ -19,21 +19,47 @@ public class PrimaryController {
     private TextArea textAreaNames;
 
     @FXML
-    private TextField textFieldMessage;
+    private TextField textFieldChannelMessage;
 
     @FXML
     private Button buttonSendMessage;
 
     @FXML
+    private Button buttonConnect;
+
+    @FXML
+    private TextField textFieldIP;
+
+    @FXML
+    private TextField textFieldPort;
+
+    @FXML
     private void SendMessage(){
-        String textFromTextFieldMessage;
-        textFromTextFieldMessage = textFieldMessage.getText();
-        String returnText;
-        returnText = org.Domain.Facade.SendMessage(textFromTextFieldMessage);
-        textAreaDialog.appendText(returnText+"\n");
+        //Тип сообщения
+        org.Domain1.Net.Message message = new org.Domain1.Net.Message();
+        message.setId("chatMessageToAll");
+        message.setChatChannelText(textFieldChannelMessage.getText());
+        message.setChatChannelName("Default");
+        org.Domain1.Facade.SendMessage(message);
     }
 
-    public void StartServer(ActionEvent actionEvent) {
+    public void connectToServer(ActionEvent actionEvent) {
+        org.Domain1.Facade.ConnectToServer();
+    }
 
+    public String GetIPFromTextField(){
+        return this.textFieldIP.getText();
+    }
+
+    public Integer GetPortFromTextField(){
+        return Integer.parseInt(this.textFieldPort.getText());
+    }
+
+    public void SetSystemText(String text){
+        this.textAreaDialog.appendText("Системное сообщение: "+text+"\n");
+    }
+
+    public void setTextFieldChannelMessage(String channelMessage, String channelName) {
+        this.textFieldChannelMessage.appendText(channelMessage+"\n");
     }
 }

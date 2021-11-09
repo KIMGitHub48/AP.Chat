@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.io.PrintStream;
 
 /**
     Не является точкой входа в приложение.
@@ -16,7 +17,7 @@ public class Main extends Application {
     private static Scene scene;
     private static FXMLLoader fxmlLoader;
 
-    private Main(){
+    public Main(){
         presentationMain = this;
     }
 
@@ -36,9 +37,19 @@ public class Main extends Application {
         return fxmlLoader.load();
     }
 
-    public void SetSystemMessage(String text){
+    public void AddSystemMessage(String text){
         org.Presentation.PrimaryController controller = fxmlLoader.getController();
         controller.SetSystemText(text);
+    }
+
+    public void AddTextToStartServerButtonAfterStart(){
+        org.Presentation.PrimaryController controller = fxmlLoader.getController();
+        controller.AddTextToStartServerButtonAfterStart();
+    }
+
+    public void AddTextToStartServerButtonAfterStop(){
+        org.Presentation.PrimaryController controller = fxmlLoader.getController();
+        controller.AddTextToStartServerButtonAfterStop();
     }
 
     public static void main(String[] args) {
