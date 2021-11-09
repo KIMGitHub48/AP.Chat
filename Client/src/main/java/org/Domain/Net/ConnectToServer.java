@@ -22,8 +22,7 @@ public class ConnectToServer {
         try {
             serverSocket = new Socket(IP, Port);
             waitingMessageFromServerInThread = new WaitingMessageFromServerInThread(serverSocket);
-//            Socket socketToServer = new Socket("127.0.0.1", 4848);
-//            Socket socket = new Socket("localhost", 4848);
+            waitingMessageFromServerInThread.start();
             org.Presentation.Facade.AddSystemMessage("Подключение к серверу установленно.");
             return serverSocket;
         } catch (IOException e) {

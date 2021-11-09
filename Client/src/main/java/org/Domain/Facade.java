@@ -2,9 +2,8 @@ package org.Domain;
 
 
 public class Facade {
-    public static void SendMessage(org.Domain.Net.Message message){
-        //Тело для запроса в DATA.Facade
-        //Main.domainMainRef.SendMessage(message);
+    public static void SendMessageToServer(org.Domain.Net.Message message){
+        Main.domainMainRef.SendMessage(message);
     }
     public static void ConnectToServer(){
         Main.domainMainRef.ConnectToServer();

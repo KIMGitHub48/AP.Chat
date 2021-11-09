@@ -15,19 +15,10 @@ public class Server {
     private int serverPort;
     private ArrayList<Thread> arrayListClientThread = new ArrayList();
     private Thread thisThread;
+    private ArrayList<Socket> arrayListClientSocket = new ArrayList();
 
     public Server(int port) {
         serverPort = port;
-    }
-
-    public ArrayList<Thread> getArrayListClientThread() {
-        return arrayListClientThread;
-    }
-
-    private ArrayList<Socket> arrayListClientSocket = new ArrayList();
-
-    public ArrayList<Socket> getArrayListClientSocket() {
-        return arrayListClientSocket;
     }
 
     public void Start() {
@@ -66,9 +57,13 @@ public class Server {
         Socket clientSocket;
         clientSocket = serverSocket.accept();
         org.Presentation.Facade.AddSystemMessage("Успешно подключен клиент.");
+        arrayListClientSocket.add(clientSocket);
         Thread clientThread = new WaitingMessageFromClientInThread(clientSocket);
-        arrayListClientThread.add(clientThread);
         clientThread.start();
+    }
+
+    public ArrayList<Socket> getArrayListClientSocket() {
+        return arrayListClientSocket;
     }
 
 }

@@ -24,7 +24,7 @@ public class Facade {
 
     }
 
-    public static void SetTextFieldChannelMessage(String channelMessage, String channelName) {
-        Main.presentationMainRef.SetTextFieldChannelMessage(channelMessage, channelName);
+    public static void chatChannelMessage(String channelMessage, String channelName) {
+        Main.presentationMainRef.chatChannelMessage(channelMessage, channelName);
     }
 }

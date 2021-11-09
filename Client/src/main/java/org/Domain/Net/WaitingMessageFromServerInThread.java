@@ -24,7 +24,7 @@ public class WaitingMessageFromServerInThread extends Thread {
         org.Domain.Net.Message message;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
-            org.Domain.Net.Message message = SocketStreamIn();
+            message = SocketStreamIn();
             org.DATA.Facade.MessageFromServer(message);
         }
     }

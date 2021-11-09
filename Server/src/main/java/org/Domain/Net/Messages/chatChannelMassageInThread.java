@@ -7,18 +7,20 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatMessageToAllInThread extends Thread {
+public class chatChannelMassageInThread extends Thread {
     private org.Domain.Net.Message message;
 
-    public ChatMessageToAllInThread(org.Domain.Net.Message outMessage) {
+    public chatChannelMassageInThread(org.Domain.Net.Message outMessage) {
         message = outMessage;
     }
 
     @Override
     public void run() {
+        System.out.println("Запущен перебор сокетов");
         ArrayList<Socket> arrayListClientSocket = Main.domainMainRef.getArrayListClientSocket();
         for (Socket element : arrayListClientSocket) {
             SendMessage(element);
+            System.out.println("Элементы:"+element);
         }
     }
 

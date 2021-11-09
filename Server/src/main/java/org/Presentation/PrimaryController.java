@@ -38,10 +38,10 @@ public class PrimaryController {
 
     @FXML
     private void SendMessage(ActionEvent actionEvent){
-//        org.Domain.Net.Message chatMessage = new org.Domain.Net.Message();
-//        chatMessage.setId("chatMessageToAll");
-//        chatMessage.setText(textFieldMessage.getText());
-//        org.Domain.Facade.SendMessage(chatMessage);
+        org.Domain.Net.Message chatMessage = new org.Domain.Net.Message();
+        chatMessage.setId("channel");
+        chatMessage.setChatChannelText(textFieldMessage.getText());
+        org.Domain.Facade.SendMessage(chatMessage);
     }
 
     @FXML
@@ -69,4 +69,6 @@ public class PrimaryController {
         runLater(addTextToStartServerButtonRunnable);//Специальный метод для работы с объектами JavaFx из стороннего потока.
     }
 
+    public void ConnectToServer(ActionEvent actionEvent) {
+    }
 }

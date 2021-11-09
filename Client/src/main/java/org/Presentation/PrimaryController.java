@@ -13,7 +13,7 @@ public class PrimaryController {
     private Pane panePrimary;
 
     @FXML
-    private TextArea textAreaDialog;
+    private TextArea textAreaChatDialog;
 
     @FXML
     private TextArea textAreaNames;
@@ -34,16 +34,17 @@ public class PrimaryController {
     private TextField textFieldPort;
 
     @FXML
-    private void SendMessage(){
+    private void SendMessage(ActionEvent actionEvent){
         //Тип сообщения
         org.Domain.Net.Message message = new org.Domain.Net.Message();
-        message.setId("chatMessageToAll");
+        message.setId("chatChannelText");
         message.setChatChannelText(textFieldChannelMessage.getText());
         message.setChatChannelName("Default");
-        org.Domain.Facade.SendMessage(message);
+        org.Domain.Facade.SendMessageToServer(message);
     }
 
-    public void connectToServer(ActionEvent actionEvent) {
+    @FXML
+    public void ConnectToServer(ActionEvent actionEvent) {
         org.Domain.Facade.ConnectToServer();
     }
 
@@ -56,10 +57,10 @@ public class PrimaryController {
     }
 
     public void SetSystemText(String text){
-        this.textAreaDialog.appendText("Системное сообщение: "+text+"\n");
+        this.textAreaChatDialog.appendText("Системное сообщение: "+text+"\n");
     }
 
-    public void setTextFieldChannelMessage(String channelMessage, String channelName) {
-        this.textFieldChannelMessage.appendText(channelMessage+"\n");
+    public void setChatChannelMessage(String channelMessage, String channelName) {
+        this.textAreaChatDialog.appendText(channelMessage+"\n");
     }
 }

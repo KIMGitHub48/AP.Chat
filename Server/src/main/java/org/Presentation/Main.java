@@ -14,25 +14,34 @@ import java.io.PrintStream;
  */
 public class Main extends Application {
     public static Main presentationMain;
-    private static Scene scene;
-    private static FXMLLoader fxmlLoader;
+    private Scene scene;
+    private FXMLLoader fxmlLoader;
 
     public Main(){
         presentationMain = this;
     }
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
         scene = new Scene(loadFXML("primary"), 1024, 768);
-        stage.setScene(scene);
-        stage.show();
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        primaryStage.setOnCloseRequest(event -> {
+            System.out.println("Stage is closing");
+            System.exit(0);
+            // Save file
+        });//Закрывает все потоки при выходе
     }
 
-    static void setRoot(String fxml) throws IOException {
+    public static void main(String[] args) {
+        launch();
+    }
+
+    private void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-    private static Parent loadFXML(String fxml) throws IOException {
+    private Parent loadFXML(String fxml) throws IOException {
         fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
@@ -50,10 +59,6 @@ public class Main extends Application {
     public void AddTextToStartServerButtonAfterStop(){
         org.Presentation.PrimaryController controller = fxmlLoader.getController();
         controller.AddTextToStartServerButtonAfterStop();
-    }
-
-    public static void main(String[] args) {
-        launch();
     }
 
 }

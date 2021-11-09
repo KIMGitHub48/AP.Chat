@@ -3,7 +3,7 @@ package org.Domain;
     Точка входа в приложение.
  */
 
-import org.Domain.Net.Messages.ChatMessageToAllInThread;
+import org.Domain.Net.Messages.chatChannelMassageInThread;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -13,16 +13,9 @@ public class Main {
     private static org.Domain.Net.Server server;
 
     public Main(String[] args) {
+        System.out.println("Запущен Сервер");
         domainMainRef = this;
         org.Presentation.Facade.Launcher(args);//Запускает UI в новом потоке.
-    }
-
-    public ArrayList<Thread> getArrayListClientThread() {
-        return server.getArrayListClientThread();
-    }
-
-    public ArrayList<Socket> getArrayListClientSocket() {
-        return server.getArrayListClientSocket();
     }
 
     public void StartServer() {
@@ -37,15 +30,20 @@ public class Main {
     public void SortMessage(org.Domain.Net.Message message) {
         String id = message.getId();
         switch (id) {
-            case ("chatMessageToAll"):
+            case "chatChannelText":
                 ChatMessageToAll(message);
+                break;
             default:
-                System.out.println("ID отправляемого сообщения не найдено");
+                System.out.println("ID отправляемого сообщения не найдено, ID:"+id);
         }
     }
 
     public void ChatMessageToAll(org.Domain.Net.Message message) {
-        Thread chatMessageToAllInThread = new ChatMessageToAllInThread(message);
+        Thread chatMessageToAllInThread = new chatChannelMassageInThread(message);
         chatMessageToAllInThread.start();
+    }
+
+    public ArrayList<Socket> getArrayListClientSocket() {
+        return server.getArrayListClientSocket();
     }
 }
