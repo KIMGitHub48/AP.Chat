@@ -28,7 +28,7 @@ public class WaitingMessageFromServerInThread extends Thread {
             org.DATA.Facade.MessageFromServer(message);
         }
     }
-
+//test
     private Message SocketStreamIn() {
         org.Domain.Net.Message message;
         try {
