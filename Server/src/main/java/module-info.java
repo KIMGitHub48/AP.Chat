@@ -5,6 +5,7 @@ module org {
     requires java.persistence;
     requires reflections;
     requires java.sql;
+    requires derby;
 
     opens org.Presentation to javafx.fxml;
     exports org.Presentation;
