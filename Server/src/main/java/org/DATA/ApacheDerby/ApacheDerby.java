@@ -46,12 +46,11 @@ public class ApacheDerby {
             + "PRIMARY KEY (MessageID))";
 
     public static void createDataBase() {
+        System.out.println("Создаем базу данных...");
         try {
             forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL + DB_URL_MODIFY);
             Statement statement = connection.createStatement();
-
-            System.out.println("Создаем таблицы");
             statement.execute(TABLE_USER);
             System.out.println("Таблица " + TABLE_USER.trim() + " создана");
             statement.execute(TABLE_USER_DUPLICATED);
@@ -76,7 +75,7 @@ public class ApacheDerby {
             forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);
             System.out.println("Подключение выполнено");
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM TABLE_USER");
+            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("userID");
@@ -107,7 +106,7 @@ public class ApacheDerby {
 
     }
 
-    public static void createUserToTable() {              // Метод создание пользователя в таблице TABLE_USER
+    public static void addUserToTable() {              // Метод создание пользователя в таблице TABLE_USER
 
     }
 
@@ -120,7 +119,7 @@ public class ApacheDerby {
     }
 
     private static String createDatabaseAdmin() {
-        String query = "INSERT INTO Users VALUES (1, Админ, Администратор, admin, 123)";
+        String query = "INSERT INTO Users VALUES (default, 'Админ', 'Администратор', 'admin', '123')";
         return query;
     }
 
@@ -129,23 +128,21 @@ public class ApacheDerby {
         try {
             Class.forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);
-            ResultSet resultSet = connection.getMetaData().getCatalogs();
+            ResultSet resultSet = connection.getMetaData().getTables(null, null, null, new String[] {"TABLE"});
             while (resultSet.next()) {
-                String databaseName = resultSet.getString("chatDB");
-                if (databaseName == "chatDB") {
+                if (!resultSet.wasNull()) {
                     find = true;
                     System.out.println("База данных найдена");
                     break;
                 }
-                System.out.println("База данных не найдена");
-                break;
             }
             resultSet.close();
             connection.close();
+            return find;
         } catch (Exception exception) {
+            System.out.println("База данных не найдена");
             return find;
         }
-        return find;
     }
 
     public static void main(String[] args) {
