@@ -1,5 +1,7 @@
 package org.DATA.ApacheDerby;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.sql.*;
 
 import static java.lang.Class.forName;
@@ -70,11 +72,33 @@ public class ApacheDerby {
         }
     }
 
-    public static void connectDataBase() {
+    public static void connectDataBase() {                // Метод для подключения к базе данных (для проверки - запрос данных из таблицы Users)
         try {
             forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);
             System.out.println("Подключение выполнено");
+            System.out.println("Выберите действие: ");
+            System.out.println("1. Создать нового пользователя");
+            System.out.println("2. Показать всех пользователей");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            int i = Integer.parseInt(reader.readLine());
+
+            if (i == 1) {
+                Statement statement = connection.createStatement();
+                System.out.println("Введите ФИО пользователя: ");
+                String fio = reader.readLine();
+                System.out.println("Введите должность пользователя: ");
+                String post = reader.readLine();
+                System.out.println("Введите логин пользователя: ");
+                String login = reader.readLine();
+                System.out.println("Введите пароль пользователя: ");
+                String password = reader.readLine();
+                statement.execute(addUserToTable(new User(fio, post, login, password)));
+                statement.close();
+            } else {
+
+            }
+
             PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users");
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -106,8 +130,13 @@ public class ApacheDerby {
 
     }
 
-    public static void addUserToTable() {              // Метод создание пользователя в таблице TABLE_USER
-
+    public static String addUserToTable(User user) {              // Метод создание пользователя в таблице TABLE_USER
+        String fio = user.getFio();
+        String post = user.getPost();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String query = "INSERT INTO Users VALUES (default, '" + fio + "', '" + post + "', '" + login + "', '" + password + "')";
+        return query;
     }
 
     public static void transferUserInDuplicatedTable() { // Метод перемещения пользователя из таблицы TABLE_USER в ее дубликат TABLE_USER_DUPLICATED
@@ -118,7 +147,7 @@ public class ApacheDerby {
 
     }
 
-    private static String createDatabaseAdmin() {
+    private static String createDatabaseAdmin() {       // Метод-команда на добавление Админа в базу данных
         String query = "INSERT INTO Users VALUES (default, 'Админ', 'Администратор', 'admin', '123')";
         return query;
     }
