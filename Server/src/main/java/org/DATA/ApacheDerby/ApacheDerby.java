@@ -79,15 +79,13 @@ public class ApacheDerby {
             System.out.println("Подключение выполнено");
             System.out.println("Выберите действие: ");                                              // проверка корректности работы методов класса
             System.out.println("1. Создать нового пользователя");
-            System.out.println("2. Переместить пользователя в дубликат таблицы");
-            System.out.println("3. Удалить пользователя из основной таблицы");
-            System.out.println("4. Показать всех пользователей в таблице Users");
-            System.out.println("5. Показать всех пользователей в дубликате таблицы Users");
-            System.out.println("6. Создать новую запись");
-            System.out.println("7. Переместить запись в дубликат таблицы");
-            System.out.println("8. Удалить запись из основной таблицы");
-            System.out.println("9. Показать все записи в таблице History");
-            System.out.println("10. Показать все записи в дубликате таблицы History");
+            System.out.println("2. Удалить пользователя из основной таблицы");
+            System.out.println("3. Показать всех пользователей в таблице Users");
+            System.out.println("4. Показать всех пользователей в дубликате таблицы Users");
+            System.out.println("5. Создать новую запись");
+            System.out.println("6. Удалить запись из основной таблицы");
+            System.out.println("7. Показать все записи в таблице History");
+            System.out.println("8. Показать все записи в дубликате таблицы History");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             int i = Integer.parseInt(reader.readLine());
             Statement statement = connection.createStatement();
@@ -102,74 +100,82 @@ public class ApacheDerby {
                     System.out.println("Введите пароль пользователя: ");
                     String password = reader.readLine();
                     statement.execute(addUserToTable(new User(fio, post, login, password)));
+                    statement.execute(addUserInDuplicatedTable(new User(fio, post, login, password)));
                     statement.close();
                     break;
                 }
                 case 2: {
-                    System.out.println("Введите ID пользователя, которого нужно переместить: ");
+                    System.out.println("Введите ID пользователя, которого нужно удалить: ");
                     int id = Integer.parseInt(reader.readLine());
-                    transferUserInDuplicatedTable(id);
+                    statement.execute(deleteUserFromTable(id));
                     statement.close();
                     break;
                 }
                 case 3: {
-                    System.out.println("Введите ID пользователя, которого нужно удалить: ");
-                    int id = Integer.parseInt(reader.readLine());
-                    deleteUserFromTable(id);
-                    statement.close();
-                    break;
-                }
-                case 4: {
                     selectUserFromTable();
                     statement.close();
                     break;
                 }
-                case 5: {
+                case 4: {
                     selectUserFromDuplicatedTable();
                     statement.close();
                     break;
                 }
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
+                case 5: {
+                    System.out.println("Введите сообщение: ");
+                    String message = reader.readLine();
+                    statement.execute(addRecordToTable(new Record(message)));
+                    statement.execute(addRecordInDuplicatedTable(new Record(message)));
+                    statement.close();
+                    break;
+                }
+                case 6: {
+                    System.out.println("Введите ID сообщения, которое нужно удалить: ");
+                    int id = Integer.parseInt(reader.readLine());
+                    statement.execute(deleteRecordFromTable(id));
+                    statement.close();
+                    break;
+                }
+                case 7: {
+                    selectMessageFromTable();
+                    statement.close();
+                    break;
+                }
+                case 8: {
+                    selectMessageFromDuplicatedTable();
+                    statement.close();
+                    break;
+                }
                 default:
                     break;
             }
-
-           /* PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
-            ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                String id = resultSet.getString("userID");
-                String fio = resultSet.getString("fio");
-                String post = resultSet.getString("post");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                System.out.println("ID: " + id);
-                System.out.println("ФИО: " + fio);
-                System.out.println("Должность: " + post);
-                System.out.println("Логин: " + login);
-                System.out.println("Пароль: " + password);
-            } */
         } catch (Exception exception) {
             exception.printStackTrace();
         }
     }
 
-    public static void addRecordToTable() {                // Метод добавления записи в таблицу TABLE_HISTORY
-
+    public static String addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
+        int userID = record.getUserID();
+        int typeMessage = record.getTypeMessage();
+        String message = record.getMessage();
+        String query = "INSERT INTO History VALUES (default, default, " + userID + ", " + typeMessage + ", '" + message + "')";
+        return query;
     }
 
-    public static void transferRecordInDuplicatedTable() { // Метод перемещения записи из таблицы TABLE_HISTORY в ее дубликат TABLE_HISTORY_DUPLICATED
-
+    public static String addRecordInDuplicatedTable(Record record) { // Метод перемещения записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
+        int userID = record.getUserID();
+        int typeMessage = record.getTypeMessage();
+        String message = record.getMessage();
+        String query = "INSERT INTO History_d VALUES (default, default, " + userID + ", " + typeMessage + ", '" + message + "')";
+        return query;
     }
 
-    public static void deleteRecordFromTable() {           // Метод удаления записи в таблице TABLE_HISTORY
-
+    public static String deleteRecordFromTable(int id) {           // Метод удаления записи в таблице TABLE_HISTORY
+        String query = "DELETE FROM History WHERE MessageID = " + id + "";
+        return query;
     }
 
-    public static String addUserToTable(User user) {              // Метод создание пользователя в таблице TABLE_USER и в ее дубликат TABLE_USER_DUPLICATED
+    public static String addUserToTable(User user) {              // Метод создание пользователя в таблице TABLE_USER
         String fio = user.getFio();
         String post = user.getPost();
         String login = user.getLogin();
@@ -178,13 +184,17 @@ public class ApacheDerby {
         return query;
     }
 
-    public static String addUserInDuplicatedTable(int id) { // Метод перемещения пользователя из таблицы TABLE_USER в ее дубликат TABLE_USER_DUPLICATED
-        String query = "INSERT INTO Users_d SELECT * FROM Users WHERE UserID = '" + id+ "'";
+    public static String addUserInDuplicatedTable(User user) { // Метод перемещения пользователя в таблицу-дубликат TABLE_USER_DUPLICATED
+        String fio = user.getFio();
+        String post = user.getPost();
+        String login = user.getLogin();
+        String password = user.getPassword();
+        String query = "INSERT INTO Users_d VALUES (default, '" + fio + "', '" + post + "', '" + login + "', '" + password + "')";
         return query;
     }
 
     public static String deleteUserFromTable(int id) {          // Метод удаления пользователя из таблицы TABLE_USER
-        String query = "DELETE FROM chatDB.Users WHERE UserID = '" + id + "'";
+        String query = "DELETE FROM Users WHERE UserID = " + id + "";
         return query;
     }
 
@@ -227,6 +237,52 @@ public class ApacheDerby {
                 System.out.println("Должность: " + post);
                 System.out.println("Логин: " + login);
                 System.out.println("Пароль: " + password);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void selectMessageFromTable() {
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM History");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String messageID = resultSet.getString("messageID");
+                String dateMessage = resultSet.getString("dateMessage");
+                String userID = resultSet.getString("userID");
+                String typeMessage = resultSet.getString("typeMessage");
+                String message = resultSet.getString("message");
+                System.out.println("ID: " + messageID);
+                System.out.println("Дата/время: " + dateMessage);
+                System.out.println("Пользователь: " + userID);
+                System.out.println("Тип сообщения: " + typeMessage);
+                System.out.println("Сообщение: " + message);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void selectMessageFromDuplicatedTable() {
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM History_d");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String messageID = resultSet.getString("messageID");
+                String dateMessage = resultSet.getString("dateMessage");
+                String userID = resultSet.getString("userID");
+                String typeMessage = resultSet.getString("typeMessage");
+                String message = resultSet.getString("message");
+                System.out.println("ID: " + messageID);
+                System.out.println("Дата/время: " + dateMessage);
+                System.out.println("Пользователь: " + userID);
+                System.out.println("Тип сообщения: " + typeMessage);
+                System.out.println("Сообщение: " + message);
             }
         }
         catch (Exception exception) {
