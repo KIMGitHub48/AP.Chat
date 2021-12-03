@@ -47,7 +47,7 @@ public class ApacheDerby {
             + "Message VARCHAR (3000), "
             + "PRIMARY KEY (MessageID))";
 
-    public static void createDataBase() {
+    public static void createDataBase() {                       // Метод для создания новой базы данных
         System.out.println("Создаем базу данных...");
         try {
             forName(DRIVER);
@@ -78,7 +78,7 @@ public class ApacheDerby {
             Connection connection = DriverManager.getConnection(DB_URL);
             System.out.println("Подключение выполнено");
             System.out.println("Выберите действие: ");                                              // проверка корректности работы методов класса
-            System.out.println("1. Создать нового пользователя");
+            System.out.println("1. Создать нового пользователя");                                   // после тестирования удалить все со строки 80 до конца блока switch/case
             System.out.println("2. Удалить пользователя из основной таблицы");
             System.out.println("3. Показать всех пользователей в таблице Users");
             System.out.println("4. Показать всех пользователей в дубликате таблицы Users");
@@ -156,17 +156,19 @@ public class ApacheDerby {
 
     public static String addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
         int userID = record.getUserID();
-        int typeMessage = record.getTypeMessage();
+        String typeMessage = record.getTypeMessage();
+        String datetime = record.getTimestamp();
         String message = record.getMessage();
-        String query = "INSERT INTO History VALUES (default, default, " + userID + ", " + typeMessage + ", '" + message + "')";
+        String query = "INSERT INTO History VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "')";
         return query;
     }
 
-    public static String addRecordInDuplicatedTable(Record record) { // Метод перемещения записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
+    public static String addRecordInDuplicatedTable(Record record) { // Метод добавления записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
         int userID = record.getUserID();
-        int typeMessage = record.getTypeMessage();
+        String typeMessage = record.getTypeMessage();
+        String datetime = record.getTimestamp();
         String message = record.getMessage();
-        String query = "INSERT INTO History_d VALUES (default, default, " + userID + ", " + typeMessage + ", '" + message + "')";
+        String query = "INSERT INTO History_d VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "')";
         return query;
     }
 
@@ -184,7 +186,7 @@ public class ApacheDerby {
         return query;
     }
 
-    public static String addUserInDuplicatedTable(User user) { // Метод перемещения пользователя в таблицу-дубликат TABLE_USER_DUPLICATED
+    public static String addUserInDuplicatedTable(User user) { // Метод добавления пользователя в таблицу-дубликат TABLE_USER_DUPLICATED
         String fio = user.getFio();
         String post = user.getPost();
         String login = user.getLogin();
@@ -198,7 +200,7 @@ public class ApacheDerby {
         return query;
     }
 
-    public static void selectUserFromTable() {
+    public static void selectUserFromTable() {                  // тестовый метод, для запроса всех данных из таблицы TABLE_USER
         try {
         Connection connection = DriverManager.getConnection(DB_URL);
         PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
@@ -221,7 +223,7 @@ public class ApacheDerby {
         }
     }
 
-    public static void selectUserFromDuplicatedTable() {
+    public static void selectUserFromDuplicatedTable() {        // тестовый метод, для запроса всех данных из дубликата таблицы TABLE_USER
         try {
             Connection connection = DriverManager.getConnection(DB_URL);
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users_d");
@@ -244,7 +246,7 @@ public class ApacheDerby {
         }
     }
 
-    public static void selectMessageFromTable() {
+    public static void selectMessageFromTable() {               // тестовый метод, для запроса всех данных из таблицы TABLE_HISTORY
         try {
             Connection connection = DriverManager.getConnection(DB_URL);
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM History");
@@ -267,7 +269,7 @@ public class ApacheDerby {
         }
     }
 
-    public static void selectMessageFromDuplicatedTable() {
+    public static void selectMessageFromDuplicatedTable() {         // тестовый метод, для запроса всех данных из дубликата таблицы TABLE_HISTORY
         try {
             Connection connection = DriverManager.getConnection(DB_URL);
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM History_d");
@@ -290,13 +292,13 @@ public class ApacheDerby {
         }
     }
 
-    private static String createDatabaseAdmin() {       // Метод-команда на добавление Админа в базу данных
+    private static String createDatabaseAdmin() {       // Метод-команда на добавление Админа в базу данных (технический пользователь)
         String query = "INSERT INTO Users VALUES (default, 'Админ', 'Администратор', 'admin', '123')";
         return query;
     }
 
     public static boolean findDataBase() {              // Метод поиска базы данных (возвращает true если нашел)
-        Boolean find = false;                           // Ищет пока по имени, позже поменяю на более надежный метод поиска
+        Boolean find = false;                           // Ищет есть ли таблицы, потом поменяю на более надежный метод поиска
         try {
             Class.forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);

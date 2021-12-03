@@ -1,16 +1,16 @@
 package org.DATA.ApacheDerby;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Record {
 
     private int id;
 
-    private Date datetime;
+    private Timestamp datetime;
 
-    private int userID;
+    private int userID = 1;
 
-    private int typeMessage;
+    private String typeMessage = "1";
 
     private String message;
 
@@ -18,15 +18,16 @@ public class Record {
         this.message = message;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public String getTimestamp() {
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
+        return timestamp.toString();
     }
 
     public int getUserID() {
         return userID;
     }
 
-    public int getTypeMessage() {
+    public String getTypeMessage() {
         return typeMessage;
     }
 
