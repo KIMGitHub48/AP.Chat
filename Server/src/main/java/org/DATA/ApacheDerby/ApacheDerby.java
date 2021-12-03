@@ -77,30 +77,69 @@ public class ApacheDerby {
             forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);
             System.out.println("Подключение выполнено");
-            System.out.println("Выберите действие: ");
+            System.out.println("Выберите действие: ");                                              // проверка корректности работы методов класса
             System.out.println("1. Создать нового пользователя");
-            System.out.println("2. Показать всех пользователей");
+            System.out.println("2. Переместить пользователя в дубликат таблицы");
+            System.out.println("3. Удалить пользователя из основной таблицы");
+            System.out.println("4. Показать всех пользователей в таблице Users");
+            System.out.println("5. Показать всех пользователей в дубликате таблицы Users");
+            System.out.println("6. Создать новую запись");
+            System.out.println("7. Переместить запись в дубликат таблицы");
+            System.out.println("8. Удалить запись из основной таблицы");
+            System.out.println("9. Показать все записи в таблице History");
+            System.out.println("10. Показать все записи в дубликате таблицы History");
             BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
             int i = Integer.parseInt(reader.readLine());
-
-            if (i == 1) {
-                Statement statement = connection.createStatement();
-                System.out.println("Введите ФИО пользователя: ");
-                String fio = reader.readLine();
-                System.out.println("Введите должность пользователя: ");
-                String post = reader.readLine();
-                System.out.println("Введите логин пользователя: ");
-                String login = reader.readLine();
-                System.out.println("Введите пароль пользователя: ");
-                String password = reader.readLine();
-                statement.execute(addUserToTable(new User(fio, post, login, password)));
-                statement.close();
-            } else {
-
+            Statement statement = connection.createStatement();
+            switch (i) {
+                case 1: {
+                    System.out.println("Введите ФИО пользователя: ");
+                    String fio = reader.readLine();
+                    System.out.println("Введите должность пользователя: ");
+                    String post = reader.readLine();
+                    System.out.println("Введите логин пользователя: ");
+                    String login = reader.readLine();
+                    System.out.println("Введите пароль пользователя: ");
+                    String password = reader.readLine();
+                    statement.execute(addUserToTable(new User(fio, post, login, password)));
+                    statement.close();
+                    break;
+                }
+                case 2: {
+                    System.out.println("Введите ID пользователя, которого нужно переместить: ");
+                    int id = Integer.parseInt(reader.readLine());
+                    transferUserInDuplicatedTable(id);
+                    statement.close();
+                    break;
+                }
+                case 3: {
+                    System.out.println("Введите ID пользователя, которого нужно удалить: ");
+                    int id = Integer.parseInt(reader.readLine());
+                    deleteUserFromTable(id);
+                    statement.close();
+                    break;
+                }
+                case 4: {
+                    selectUserFromTable();
+                    statement.close();
+                    break;
+                }
+                case 5: {
+                    selectUserFromDuplicatedTable();
+                    statement.close();
+                    break;
+                }
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                default:
+                    break;
             }
 
-            PreparedStatement statement = connection.prepareStatement("SELECT * FROM Users");
-            ResultSet resultSet = statement.executeQuery();
+           /* PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String id = resultSet.getString("userID");
                 String fio = resultSet.getString("fio");
@@ -112,7 +151,7 @@ public class ApacheDerby {
                 System.out.println("Должность: " + post);
                 System.out.println("Логин: " + login);
                 System.out.println("Пароль: " + password);
-            }
+            } */
         } catch (Exception exception) {
             exception.printStackTrace();
         }
@@ -130,7 +169,7 @@ public class ApacheDerby {
 
     }
 
-    public static String addUserToTable(User user) {              // Метод создание пользователя в таблице TABLE_USER
+    public static String addUserToTable(User user) {              // Метод создание пользователя в таблице TABLE_USER и в ее дубликат TABLE_USER_DUPLICATED
         String fio = user.getFio();
         String post = user.getPost();
         String login = user.getLogin();
@@ -139,12 +178,60 @@ public class ApacheDerby {
         return query;
     }
 
-    public static void transferUserInDuplicatedTable() { // Метод перемещения пользователя из таблицы TABLE_USER в ее дубликат TABLE_USER_DUPLICATED
-
+    public static String addUserInDuplicatedTable(int id) { // Метод перемещения пользователя из таблицы TABLE_USER в ее дубликат TABLE_USER_DUPLICATED
+        String query = "INSERT INTO Users_d SELECT * FROM Users WHERE UserID = '" + id+ "'";
+        return query;
     }
 
-    public static void deleteUserFromTable() {          // Метод удаления пользователя из таблицы TABLE_USER
+    public static String deleteUserFromTable(int id) {          // Метод удаления пользователя из таблицы TABLE_USER
+        String query = "DELETE FROM chatDB.Users WHERE UserID = '" + id + "'";
+        return query;
+    }
 
+    public static void selectUserFromTable() {
+        try {
+        Connection connection = DriverManager.getConnection(DB_URL);
+        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
+        ResultSet resultSet = preparedStatement.executeQuery();
+        while (resultSet.next()) {
+            String id = resultSet.getString("userID");
+            String fio = resultSet.getString("fio");
+            String post = resultSet.getString("post");
+            String login = resultSet.getString("login");
+            String password = resultSet.getString("password");
+            System.out.println("ID: " + id);
+            System.out.println("ФИО: " + fio);
+            System.out.println("Должность: " + post);
+            System.out.println("Логин: " + login);
+            System.out.println("Пароль: " + password);
+        }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void selectUserFromDuplicatedTable() {
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users_d");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("userID");
+                String fio = resultSet.getString("fio");
+                String post = resultSet.getString("post");
+                String login = resultSet.getString("login");
+                String password = resultSet.getString("password");
+                System.out.println("ID: " + id);
+                System.out.println("ФИО: " + fio);
+                System.out.println("Должность: " + post);
+                System.out.println("Логин: " + login);
+                System.out.println("Пароль: " + password);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     private static String createDatabaseAdmin() {       // Метод-команда на добавление Админа в базу данных

@@ -1,6 +1,6 @@
 package org.DATA.ApacheDerby;
 
-public class User {
+public class UserD {
 
     private int id;
 
@@ -12,7 +12,7 @@ public class User {
 
     private String password;
 
-    public User(String fio, String post, String login, String password) {
+    public UserD(String fio, String post, String login, String password) {
         this.fio = fio;
         this.post = post;
         this.login = login;
