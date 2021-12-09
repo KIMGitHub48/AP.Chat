@@ -3,6 +3,10 @@ package org.DATA.ApacheDerby;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.UUID;
 
 import static java.lang.Class.forName;
 
@@ -29,10 +33,11 @@ public class ApacheDerby {
             + "UserID INT NOT NULL REFERENCES Users(UserID), "
             + "TypeMessage VARCHAR (2), "
             + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
             + "PRIMARY KEY (MessageID))";
 
     static final String TABLE_USER_DUPLICATED = "CREATE TABLE Users_d("
-            + "UserID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
+            + "UserID VARCHAR (255), "
             + "Fio VARCHAR (255), "
             + "Post VARCHAR (255), "
             + "Login VARCHAR (255), "
@@ -40,10 +45,17 @@ public class ApacheDerby {
             + "PRIMARY KEY (UserID))";
 
     static final String TABLE_HISTORY_DUPLICATED = "CREATE TABLE History_d("
+            + "MessageID INT, "
+            + "DateMessage TIMESTAMP, "
+            + "UserID INT, "
+            + "TypeMessage VARCHAR (2), "
+            + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
+            + "PRIMARY KEY (MessageID))";
+
+    static final String TABLE_TECHNICAL_LOG = "CREATE TABLE Log_technical("
             + "MessageID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
             + "DateMessage TIMESTAMP, "
-            + "UserID INT NOT NULL REFERENCES Users(UserID), "
-            + "TypeMessage VARCHAR (2), "
             + "Message VARCHAR (3000), "
             + "PRIMARY KEY (MessageID))";
 
@@ -61,6 +73,8 @@ public class ApacheDerby {
             System.out.println("Таблица " + TABLE_HISTORY.trim() + " создана");
             statement.execute(TABLE_HISTORY_DUPLICATED);
             System.out.println("Таблица " + TABLE_HISTORY_DUPLICATED.trim() + " создана");
+            statement.execute(TABLE_TECHNICAL_LOG);
+            System.out.println("Таблица " + TABLE_TECHNICAL_LOG.trim() + " создана");
             statement.execute(createDatabaseAdmin());
             statement.close();
             connection.close();
@@ -124,9 +138,16 @@ public class ApacheDerby {
                 case 5: {
                     System.out.println("Введите сообщение: ");
                     String message = reader.readLine();
-                    statement.execute(addRecordToTable(new Record(message)));
-                    statement.execute(addRecordInDuplicatedTable(new Record(message)));
-                    statement.close();
+                    HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
+                    Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
+                        while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
+                            Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
+                            UUID uuid = entry.getKey();
+                            String query = entry.getValue();
+                            statement.execute(query);
+                            statement.execute(addRecordInDuplicatedTable(uuid));
+                            statement.close();
+                        }
                     break;
                 }
                 case 6: {
@@ -154,21 +175,22 @@ public class ApacheDerby {
         }
     }
 
-    public static String addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
+    public static Map<UUID, String> addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
+        UUID uuid = record.getId();
         int userID = record.getUserID();
         String typeMessage = record.getTypeMessage();
         String datetime = record.getTimestamp();
         String message = record.getMessage();
-        String query = "INSERT INTO History VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "')";
-        return query;
+        String query = "INSERT INTO History VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "', '" + uuid + "')";
+        HashMap<UUID, String> hashMap = new HashMap<>();
+        hashMap.put(uuid, query);
+        return hashMap;
     }
 
-    public static String addRecordInDuplicatedTable(Record record) { // Метод добавления записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
-        int userID = record.getUserID();
-        String typeMessage = record.getTypeMessage();
-        String datetime = record.getTimestamp();
-        String message = record.getMessage();
-        String query = "INSERT INTO History_d VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "')";
+    public static String addRecordInDuplicatedTable(UUID uuidString) { // Метод добавления записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
+        UUID uuid = UUID.fromString(String.valueOf(uuidString));
+        System.out.println(uuid);
+        String query = "INSERT INTO History_d SELECT * FROM History WHERE UUID = '" + uuid + "'";
         return query;
     }
 
@@ -200,23 +222,29 @@ public class ApacheDerby {
         return query;
     }
 
+    public static String addRecordTechnicalLog(Log message) {
+        String datetime = message.getDatetime();
+        String query =  "INSERT INTO Log_technical VALUES (default, '" + datetime + "', '" + message + "')";
+        return query;
+    }
+
     public static void selectUserFromTable() {                  // тестовый метод, для запроса всех данных из таблицы TABLE_USER
         try {
-        Connection connection = DriverManager.getConnection(DB_URL);
-        PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()) {
-            String id = resultSet.getString("userID");
-            String fio = resultSet.getString("fio");
-            String post = resultSet.getString("post");
-            String login = resultSet.getString("login");
-            String password = resultSet.getString("password");
-            System.out.println("ID: " + id);
-            System.out.println("ФИО: " + fio);
-            System.out.println("Должность: " + post);
-            System.out.println("Логин: " + login);
-            System.out.println("Пароль: " + password);
-        }
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                    String id = resultSet.getString("userID");
+                    String fio = resultSet.getString("fio");
+                    String post = resultSet.getString("post");
+                    String login = resultSet.getString("login");
+                    String password = resultSet.getString("password");
+                    System.out.println("ID: " + id);
+                    System.out.println("ФИО: " + fio);
+                    System.out.println("Должность: " + post);
+                    System.out.println("Логин: " + login);
+                    System.out.println("Пароль: " + password);
+            }
         }
         catch (Exception exception) {
             exception.printStackTrace();
@@ -229,16 +257,16 @@ public class ApacheDerby {
             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Users_d");
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String id = resultSet.getString("userID");
-                String fio = resultSet.getString("fio");
-                String post = resultSet.getString("post");
-                String login = resultSet.getString("login");
-                String password = resultSet.getString("password");
-                System.out.println("ID: " + id);
-                System.out.println("ФИО: " + fio);
-                System.out.println("Должность: " + post);
-                System.out.println("Логин: " + login);
-                System.out.println("Пароль: " + password);
+                    String id = resultSet.getString("userID");
+                    String fio = resultSet.getString("fio");
+                    String post = resultSet.getString("post");
+                    String login = resultSet.getString("login");
+                    String password = resultSet.getString("password");
+                    System.out.println("ID: " + id);
+                    System.out.println("ФИО: " + fio);
+                    System.out.println("Должность: " + post);
+                    System.out.println("Логин: " + login);
+                    System.out.println("Пароль: " + password);
             }
         }
         catch (Exception exception) {
@@ -257,11 +285,13 @@ public class ApacheDerby {
                 String userID = resultSet.getString("userID");
                 String typeMessage = resultSet.getString("typeMessage");
                 String message = resultSet.getString("message");
+                String uuidMessage = resultSet.getString("UUID");
                 System.out.println("ID: " + messageID);
                 System.out.println("Дата/время: " + dateMessage);
                 System.out.println("Пользователь: " + userID);
                 System.out.println("Тип сообщения: " + typeMessage);
                 System.out.println("Сообщение: " + message);
+                System.out.println("UUID: " + uuidMessage);
             }
         }
         catch (Exception exception) {
@@ -280,11 +310,13 @@ public class ApacheDerby {
                 String userID = resultSet.getString("userID");
                 String typeMessage = resultSet.getString("typeMessage");
                 String message = resultSet.getString("message");
+                String uuidMessage = resultSet.getString("UUID");
                 System.out.println("ID: " + messageID);
                 System.out.println("Дата/время: " + dateMessage);
                 System.out.println("Пользователь: " + userID);
                 System.out.println("Тип сообщения: " + typeMessage);
                 System.out.println("Сообщение: " + message);
+                System.out.println("UUID: " + uuidMessage);
             }
         }
         catch (Exception exception) {

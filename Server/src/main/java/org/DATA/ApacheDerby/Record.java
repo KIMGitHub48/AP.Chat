@@ -1,10 +1,11 @@
 package org.DATA.ApacheDerby;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Record {
 
-    private int id;
+    private UUID id = UUID.randomUUID();
 
     private Timestamp datetime;
 
@@ -35,7 +36,7 @@ public class Record {
         return message;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public UUID getId() {
+        return id;
     }
 }
