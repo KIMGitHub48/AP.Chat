@@ -25,6 +25,7 @@ public class ApacheDerby {
             + "Post VARCHAR (255), "
             + "Login VARCHAR (255), "
             + "Password VARCHAR (255), "
+            + "UUID VARCHAR (36),"
             + "PRIMARY KEY (UserID))";
 
     static final String TABLE_HISTORY = "CREATE TABLE History("
@@ -37,11 +38,12 @@ public class ApacheDerby {
             + "PRIMARY KEY (MessageID))";
 
     static final String TABLE_USER_DUPLICATED = "CREATE TABLE Users_d("
-            + "UserID VARCHAR (255), "
+            + "UserID INT, "
             + "Fio VARCHAR (255), "
             + "Post VARCHAR (255), "
             + "Login VARCHAR (255), "
             + "Password VARCHAR (255), "
+            + "UUID VARCHAR (36),"
             + "PRIMARY KEY (UserID))";
 
     static final String TABLE_HISTORY_DUPLICATED = "CREATE TABLE History_d("
@@ -57,6 +59,7 @@ public class ApacheDerby {
             + "MessageID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
             + "DateMessage TIMESTAMP, "
             + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
             + "PRIMARY KEY (MessageID))";
 
     public static void createDataBase() {                       // Метод для создания новой базы данных

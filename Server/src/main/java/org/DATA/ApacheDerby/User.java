@@ -1,8 +1,10 @@
 package org.DATA.ApacheDerby;
 
+import java.util.UUID;
+
 public class User {
 
-    private int id;
+    private UUID id = UUID.randomUUID();
 
     private String fio;
 
@@ -19,7 +21,7 @@ public class User {
         this.password = password;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
