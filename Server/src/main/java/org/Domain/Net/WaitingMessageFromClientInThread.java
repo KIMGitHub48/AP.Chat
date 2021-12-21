@@ -28,7 +28,7 @@ public class WaitingMessageFromClientInThread extends Thread {
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
-            ApacheDerby.addRecord(message.getChatChannelText());                                    // запись сообщения в базу данных
+            ApacheDerby.addRecord(message.getChatChannelText());// запись сообщения в базу данных
             org.DATA.Facade.MessageFromClient(message);
         }
     }

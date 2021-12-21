@@ -182,6 +182,7 @@ public class ApacheDerby {
 
     public static Statement connect() {
         try {
+            System.out.println("Коннектимся");
             forName(DRIVER);
             Connection connection = DriverManager.getConnection(DB_URL);
             Statement statement = connection.createStatement();
@@ -194,6 +195,7 @@ public class ApacheDerby {
 
     public static void addRecord(String message) {
         Statement statement = connect();
+        System.out.println("Передаем сообщение в базу");
         HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
         Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
         while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу

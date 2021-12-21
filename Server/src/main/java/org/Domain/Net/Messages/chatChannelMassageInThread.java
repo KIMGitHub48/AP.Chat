@@ -18,14 +18,13 @@ public class chatChannelMassageInThread extends Thread {
 
     @Override
     public void run() {
-        if(CheckMessageInDatabase()) {                              // Если сообщение записано в базе данных, рассылаем его остальным
+                                    // Если сообщение записано в базе данных, рассылаем его остальным
             System.out.println("Запущен перебор сокетов");
             ArrayList<Socket> arrayListClientSocket = Main.domainMainRef.getArrayListClientSocket();
             for (Socket element : arrayListClientSocket) {
                 SendMessage(element);
                 System.out.println("Элементы:"+element);
             }
-        }
     }
 
     public void SendMessage(Socket clientSocket) {
@@ -47,15 +46,5 @@ public class chatChannelMassageInThread extends Thread {
         } catch (IOException e) {
             return null;
         }
-    }
-
-    private boolean CheckMessageInDatabase() {                      // Проверка записано ли сообщение в базе данных
-        boolean check = false;
-        Record record = new Record(message.getChatChannelText());
-        ApacheDerby.selectMessageFromTable();
-        if (message.equals(record)) {
-            check = true;
-        }
-        return check;
     }
 }
