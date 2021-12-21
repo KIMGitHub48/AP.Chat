@@ -13,6 +13,8 @@ import static java.lang.Class.forName;
 
 public class ApacheDerby {
 
+    public static ApacheDerby apacheDerby;
+
     private static final String DB_URL = "jdbc:derby:Database/chatDB";
 
     private static final String DB_URL_MODIFY = ";create=true";
@@ -175,6 +177,36 @@ public class ApacheDerby {
             }
         } catch (Exception exception) {
             exception.printStackTrace();
+        }
+    }
+
+    public static Statement connect() {
+        try {
+            forName(DRIVER);
+            Connection connection = DriverManager.getConnection(DB_URL);
+            Statement statement = connection.createStatement();
+            return statement;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void addRecord(String message) {
+        Statement statement = connect();
+        HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
+        Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
+        while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
+            Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
+            UUID uuid = entry.getKey();
+            String query = entry.getValue();
+            try {
+                statement.execute(query);
+                statement.execute(addRecordInDuplicatedTable(uuid));
+                statement.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package org.Domain.Net.Messages;
 
+import org.DATA.ApacheDerby.ApacheDerby;
+import org.DATA.ApacheDerby.Record;
 import org.Domain.Main;
 
 import java.io.IOException;
@@ -16,11 +18,13 @@ public class chatChannelMassageInThread extends Thread {
 
     @Override
     public void run() {
-        System.out.println("Запущен перебор сокетов");
-        ArrayList<Socket> arrayListClientSocket = Main.domainMainRef.getArrayListClientSocket();
-        for (Socket element : arrayListClientSocket) {
-            SendMessage(element);
-            System.out.println("Элементы:"+element);
+        if(CheckMessageInDatabase()) {                              // Если сообщение записано в базе данных, рассылаем его остальным
+            System.out.println("Запущен перебор сокетов");
+            ArrayList<Socket> arrayListClientSocket = Main.domainMainRef.getArrayListClientSocket();
+            for (Socket element : arrayListClientSocket) {
+                SendMessage(element);
+                System.out.println("Элементы:"+element);
+            }
         }
     }
 
@@ -43,5 +47,15 @@ public class chatChannelMassageInThread extends Thread {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    private boolean CheckMessageInDatabase() {                      // Проверка записано ли сообщение в базе данных
+        boolean check = false;
+        Record record = new Record(message.getChatChannelText());
+        ApacheDerby.selectMessageFromTable();
+        if (message.equals(record)) {
+            check = true;
+        }
+        return check;
     }
 }

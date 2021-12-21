@@ -1,9 +1,12 @@
 package org.Domain.Net;
 
+import org.DATA.ApacheDerby.ApacheDerby;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
+import java.security.AlgorithmParameterGenerator;
 
 public class WaitingMessageFromClientInThread extends Thread {
     private Socket clientSocket;
@@ -25,6 +28,7 @@ public class WaitingMessageFromClientInThread extends Thread {
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
+            ApacheDerby.addRecord(message.getChatChannelText());                                    // запись сообщения в базу данных
             org.DATA.Facade.MessageFromClient(message);
         }
     }
