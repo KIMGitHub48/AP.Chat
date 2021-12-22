@@ -48,4 +48,5 @@ public class Message implements Serializable {
     public void setChatChannelName(String chatChannelName) {
         this.chatChannelName = chatChannelName;
     }
+
 }

@@ -212,6 +212,22 @@ public class ApacheDerby {
         }
     }
 
+    public static boolean checkRecord(String message) {
+        boolean check = false;
+        Statement statement = connect();
+        String query = "SELECT * FROM History WHERE Message = '" + message + "'";
+        System.out.println(query);
+        try {
+            if (statement.execute(query)) {
+                check = true;
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
     public static Map<UUID, String> addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
         UUID uuid = record.getId();
         int userID = record.getUserID();
