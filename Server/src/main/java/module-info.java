@@ -1,4 +1,4 @@
-module org {
+module ap {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
@@ -7,6 +7,8 @@ module org {
     requires java.sql;
     requires derby;
 
-    opens org.Presentation to javafx.fxml;
-    exports org.Presentation;
+    opens ap.Presentation to javafx.fxml;
+    exports ap.Presentation;
+    opens ap.Presentation.Controllers to javafx.fxml;
+    exports ap.Presentation.Controllers;
 }
