@@ -8,14 +8,16 @@ import javafx.stage.Stage;
 import ap.Presentation.Controllers.*;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
     Не является точкой входа в приложение.
  */
 public class MainServerPresentation extends Application {
     public static MainServerPresentation mainServerPresentation;
-    private Scene scene;
     private FXMLLoader fxmlLoader;
+    private List<Stage> listStage;
+    private List<String> listName;
 
     public MainServerPresentation(){
         mainServerPresentation = this;
@@ -23,9 +25,8 @@ public class MainServerPresentation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 1024, 768);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+//        LoadStage(true,"Chat");
+        LoadStage(true,"Options");
         primaryStage.setOnCloseRequest(event -> {
             System.out.println("Stage is closing");
             System.exit(0);
@@ -37,8 +38,19 @@ public class MainServerPresentation extends Application {
         launch();
     }
 
-    private void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    private void LoadStage(Boolean showOnStart,String fxmlName){
+        Scene scene;
+        Stage stage = new Stage();
+        try {
+            scene = new Scene(loadFXML(fxmlName));
+            stage.setScene(scene);
+            if (showOnStart == true){
+                stage.show();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка загрузки сцены");
+        }
     }
 
     private Parent loadFXML(String fxml) throws IOException {
@@ -47,17 +59,17 @@ public class MainServerPresentation extends Application {
     }
 
     public void AddSystemMessage(String text){
-        ChatControllerServerPresentation controller = fxmlLoader.getController();
+        MainControllerServerPresentation controller = fxmlLoader.getController();
         controller.SetSystemText(text);
     }
 
     public void AddTextToStartServerButtonAfterStart(){
-        ChatControllerServerPresentation controller = fxmlLoader.getController();
+        MainControllerServerPresentation controller = fxmlLoader.getController();
         controller.AddTextToStartServerButtonAfterStart();
     }
 
     public void AddTextToStartServerButtonAfterStop(){
-        ChatControllerServerPresentation controller = fxmlLoader.getController();
+        MainControllerServerPresentation controller = fxmlLoader.getController();
         controller.AddTextToStartServerButtonAfterStop();
     }
 

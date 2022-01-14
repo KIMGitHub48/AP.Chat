@@ -3,16 +3,16 @@ package ap.Domain;
 
 import ap.Domain.Net.Message;
 
-public class Facade {
+public class FacadeClientDomain {
     public static void SendMessageToServer(Message message){
-        Main.domainMainRef.SendMessage(message);
+        MainClientDomain.mainDomainRef.SendMessage(message);
     }
     public static void ConnectToServer(){
-        Main.domainMainRef.ConnectToServer();
+        MainClientDomain.mainDomainRef.ConnectToServer();
     }
 
     public static void MessageFromServer(Message message) {
-        Main.domainMainRef.SortMessage(message);
+        MainClientDomain.mainDomainRef.SortMessage(message);
     }
     //gfgdfgdfrgrd
 }

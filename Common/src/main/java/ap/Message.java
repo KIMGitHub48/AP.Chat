@@ -1,4 +1,4 @@
-package ap.Message;
+package ap;
 
 public class Message {
 }

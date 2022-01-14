@@ -1,5 +1,6 @@
 package ap.Presentation;
 
+import ap.Presentation.Controllers.ChatControllerClientPresentation;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,18 +12,18 @@ import java.io.IOException;
 /**
     Не является точкой входа в приложение.
  */
-public class Main extends Application {
-    public static Main presentationMainRef;
+public class MainClientPresentation extends Application {
+    public static MainClientPresentation mainPresentationRef;
     private Scene scene;
     private FXMLLoader fxmlLoader;
 
-    public Main(){
-        presentationMainRef = this;
+    public MainClientPresentation(){
+        mainPresentationRef = this;
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        scene = new Scene(loadFXML("Primary"), 1024, 768);
+        scene = new Scene(loadFXML("Chat"), 1024, 768);
         primaryStage.setScene(scene);
         primaryStage.show();
         primaryStage.setOnCloseRequest(event -> {
@@ -41,28 +42,28 @@ public class Main extends Application {
     }
 
     private Parent loadFXML(String fxml) throws IOException {
-        fxmlLoader = new FXMLLoader(Main.class.getResource(fxml + ".fxml"));
+        fxmlLoader = new FXMLLoader(MainClientPresentation.class.getResource(fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
     public String GetIPFromTextField(){
-        PrimaryController controller = fxmlLoader.getController();
+        ChatControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetIPFromTextField();
     }
 
     public Integer GetPortFromTextField(){
-        PrimaryController controller = fxmlLoader.getController();
+        ChatControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetPortFromTextField();
     }
 
     public void AddSystemMessage(String text){
-        PrimaryController controller = fxmlLoader.getController();
+        ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.SetSystemText(text);
     }
 
     public void chatChannelMessage(String channelMessage, String channelName) {
         System.out.println("Пришло сообщение");
-        PrimaryController controller = fxmlLoader.getController();
+        ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.setChatChannelMessage(channelMessage,channelName);
     }
 }

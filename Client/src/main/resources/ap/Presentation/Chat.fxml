@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="panePrimary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.Presentation.Controllers.ChatControllerServerPresentation">
+<Pane fx:id="panePrimary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.Presentation.Controllers.ChatControllerClientPresentation">
    <children>
       <TextArea fx:id="textAreaChatDialog" editable="false" layoutX="10.0" layoutY="56.0" prefHeight="664.0" prefWidth="750.0" />
       <TextArea fx:id="textAreaNames" editable="false" layoutX="770.0" layoutY="56.0" prefHeight="664.0" prefWidth="245.0" />

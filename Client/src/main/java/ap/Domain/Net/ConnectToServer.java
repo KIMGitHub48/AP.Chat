@@ -1,6 +1,6 @@
 package ap.Domain.Net;
 
-import ap.Presentation.Facade;
+import ap.Presentation.FacadeClientPresentation;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -19,16 +19,16 @@ public class ConnectToServer {
     }
 
     private Socket Connect() {
-        String IP = Facade.GetIPFromTextField();
-        Integer Port = Facade.GetPortFromTextField();
+        String IP = FacadeClientPresentation.GetIPFromTextField();
+        Integer Port = FacadeClientPresentation.GetPortFromTextField();
         try {
             serverSocket = new Socket(IP, Port);
             waitingMessageFromServerInThread = new WaitingMessageFromServerInThread(serverSocket);
             waitingMessageFromServerInThread.start();
-            Facade.AddSystemMessage("Подключение к серверу установленно.");
+            FacadeClientPresentation.AddSystemMessage("Подключение к серверу установленно.");
             return serverSocket;
         } catch (IOException e) {
-            Facade.AddSystemMessage("Не удалось установить подключение.");
+            FacadeClientPresentation.AddSystemMessage("Не удалось установить подключение.");
             return null;
         }
     }

@@ -8,4 +8,6 @@ module ap {
 
     opens ap.Presentation to javafx.fxml;
     exports ap.Presentation;
+    exports ap.Presentation.Controllers;
+    opens ap.Presentation.Controllers to javafx.fxml;
 }

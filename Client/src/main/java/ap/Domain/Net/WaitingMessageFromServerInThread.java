@@ -1,6 +1,6 @@
 package ap.Domain.Net;
 
-import ap.DATA.Facade;
+import ap.DATA.FacadeClientDATA;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -27,7 +27,7 @@ public class WaitingMessageFromServerInThread extends Thread {
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
-            Facade.MessageFromServer(message);
+            FacadeClientDATA.MessageFromServer(message);
         }
     }
 //test

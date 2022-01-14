@@ -6,27 +6,27 @@ package ap.Presentation;
 
 import ap.Domain.Net.Message;
 
-public class Facade {
+public class FacadeClientPresentation {
     public static void Launcher(String[] args){
         Runnable mainRunnable = () -> {
-            Main.main(args);
+            MainClientPresentation.main(args);
         };
         new Thread(mainRunnable, "UIThread").start();
     }//Запускает UI в новом потоке.
     public static void AddSystemMessage(String text){
-        Main.presentationMainRef.AddSystemMessage(text);
+        MainClientPresentation.mainPresentationRef.AddSystemMessage(text);
     }
     public static String GetIPFromTextField(){
-        return Main.presentationMainRef.GetIPFromTextField();
+        return MainClientPresentation.mainPresentationRef.GetIPFromTextField();
     }
     public static Integer GetPortFromTextField(){
-        return Main.presentationMainRef.GetPortFromTextField();
+        return MainClientPresentation.mainPresentationRef.GetPortFromTextField();
     }
     public static void MessageFromServer(Message message) {
 
     }
 
     public static void chatChannelMessage(String channelMessage, String channelName) {
-        Main.presentationMainRef.chatChannelMessage(channelMessage, channelName);
+        MainClientPresentation.mainPresentationRef.chatChannelMessage(channelMessage, channelName);
     }
 }

@@ -1,7 +1,7 @@
 package ap.Domain.Net.Messages.In;
 
 import ap.Domain.Net.Message;
-import ap.Presentation.Facade;
+import ap.Presentation.FacadeClientPresentation;
 
 public class ChatChannelText {
     private Message message;
@@ -9,6 +9,6 @@ public class ChatChannelText {
         message = chatChannelMessage;
     }
     public void Process(){
-        Facade.chatChannelMessage(message.getChatChannelText(),message.getChatChannelName());
+        FacadeClientPresentation.chatChannelMessage(message.getChatChannelText(),message.getChatChannelName());
     }
 }

@@ -1,6 +1,6 @@
-package ap.Presentation;
+package ap.Presentation.Controllers;
 
-import ap.Domain.Facade;
+import ap.Domain.FacadeClientDomain;
 import ap.Domain.Net.Message;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,7 +9,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 
-public class PrimaryController {
+public class ChatControllerClientPresentation {
 
     @FXML
     private Pane panePrimary;
@@ -42,12 +42,12 @@ public class PrimaryController {
         message.setId("chatChannelText");
         message.setChatChannelText(textFieldChannelMessage.getText());
         message.setChatChannelName("Default");
-        Facade.SendMessageToServer(message);
+        FacadeClientDomain.SendMessageToServer(message);
     }
 
     @FXML
     public void ConnectToServer(ActionEvent actionEvent) {
-        Facade.ConnectToServer();
+        FacadeClientDomain.ConnectToServer();
     }
 
     public String GetIPFromTextField(){

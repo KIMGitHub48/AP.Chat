@@ -7,18 +7,18 @@ import ap.Domain.Net.ConnectToServer;
 import ap.Domain.Net.Message;
 import ap.Domain.Net.Messages.In.ChatChannelText;
 import ap.Domain.Net.Messages.Out.SendMessageInThread;
-import ap.Presentation.Facade;
+import ap.Presentation.FacadeClientPresentation;
 
 import java.net.Socket;
 
-public class Main {
-    public static Main domainMainRef;
+public class MainClientDomain {
+    public static MainClientDomain mainDomainRef;
     private ConnectToServer connectToServer;
 
-    Main(String[] args){
+    MainClientDomain(String[] args){
         System.out.println("Запущен Клиент");
-        domainMainRef = this;
-        Facade.Launcher(args);
+        mainDomainRef = this;
+        FacadeClientPresentation.Launcher(args);
     }
 
     public void ConnectToServer(){
