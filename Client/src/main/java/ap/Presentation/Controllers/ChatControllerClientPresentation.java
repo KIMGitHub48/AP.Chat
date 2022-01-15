@@ -1,13 +1,15 @@
 package ap.Presentation.Controllers;
 
 import ap.Domain.FacadeClientDomain;
-import ap.Domain.Net.Message;
+import ap.common.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+
+import java.util.UUID;
 
 public class ChatControllerClientPresentation {
 
@@ -38,11 +40,12 @@ public class ChatControllerClientPresentation {
     @FXML
     private void SendMessage(ActionEvent actionEvent){
         //Тип сообщения
-        Message message = new Message();
-        message.setId("chatChannelText");
-        message.setChatChannelText(textFieldChannelMessage.getText());
-        message.setChatChannelName("Default");
-        FacadeClientDomain.SendMessageToServer(message);
+        ApMessage apMessage = new ApMessage();
+        apMessage.setType(ApMessageEnumType.chatChannelText);
+        apMessage.setUUID(UUID.randomUUID());
+        apMessage.setChatChannelText(textFieldChannelMessage.getText());
+        apMessage.setChatChannelName("Default");
+        FacadeClientDomain.SendMessageToServer(apMessage);
     }
 
     @FXML

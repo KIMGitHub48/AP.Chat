@@ -26,7 +26,7 @@ public class MainServerPresentation extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
 //        LoadStage(true,"Chat");
-        LoadStage(true,"Options");
+        LoadStage(true,"Main");
         primaryStage.setOnCloseRequest(event -> {
             System.out.println("Stage is closing");
             System.exit(0);

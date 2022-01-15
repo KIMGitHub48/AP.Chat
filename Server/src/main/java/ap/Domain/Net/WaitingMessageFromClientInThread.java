@@ -2,6 +2,7 @@ package ap.Domain.Net;
 
 import ap.DATA.ApacheDerby.ApacheDerby;
 import ap.DATA.FacadeServerDATA;
+import ap.common.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class WaitingMessageFromClientInThread extends Thread {
     }
 
     private void SocketThreadInStart() {
-        Message message;
+        ApMessage message;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             message = SocketStreamIn();
@@ -33,10 +34,10 @@ public class WaitingMessageFromClientInThread extends Thread {
         }
     }
 
-    private Message SocketStreamIn() {
-        Message message;
+    private ApMessage SocketStreamIn() {
+        ApMessage message;
         try {
-            message = (Message) ClientObjectInputStream().readObject();
+            message = (ApMessage) ClientObjectInputStream().readObject();
             return message;
         } catch (ClassNotFoundException | IOException e) {
             return null;

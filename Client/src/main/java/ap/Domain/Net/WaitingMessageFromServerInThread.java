@@ -1,7 +1,7 @@
 package ap.Domain.Net;
 
 import ap.DATA.FacadeClientDATA;
-
+import ap.common.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -23,19 +23,19 @@ public class WaitingMessageFromServerInThread extends Thread {
     }
 
     private void SocketThreadInStart() {
-        Message message;
+        ApMessage apMessage;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
-            message = SocketStreamIn();
-            FacadeClientDATA.MessageFromServer(message);
+            apMessage = SocketStreamIn();
+            FacadeClientDATA.MessageFromServer(apMessage);
         }
     }
 //test
-    private Message SocketStreamIn() {
-        Message message;
+    private ApMessage SocketStreamIn() {
+        ApMessage apMessage;
         try {
-            message = (Message) ClientObjectInputStream().readObject();
-            return message;
+            apMessage = (ApMessage) ClientObjectInputStream().readObject();
+            return apMessage;
         } catch (ClassNotFoundException | IOException e) {
             return null;
         }

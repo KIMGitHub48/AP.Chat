@@ -4,7 +4,7 @@ package ap.Presentation;
  */
 
 
-import ap.Domain.Net.Message;
+import ap.common.*;
 
 public class FacadeClientPresentation {
     public static void Launcher(String[] args){
@@ -22,7 +22,7 @@ public class FacadeClientPresentation {
     public static Integer GetPortFromTextField(){
         return MainClientPresentation.mainPresentationRef.GetPortFromTextField();
     }
-    public static void MessageFromServer(Message message) {
+    public static void MessageFromServer(ApMessage apMessage) {
 
     }
 

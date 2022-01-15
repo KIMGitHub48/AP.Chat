@@ -1,7 +1,7 @@
 package ap.Presentation.Controllers;
 
 import ap.Domain.FacadeServerDomain;
-import ap.Domain.Net.Message;
+import ap.common.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -40,8 +40,8 @@ public class ChatControllerServerPresentation {
 
     @FXML
     private void SendMessage(ActionEvent actionEvent){
-        Message chatMessage = new Message();
-        chatMessage.setId("channel");
+        ApMessage chatMessage = new ApMessage();
+        chatMessage.setType(ApMessageEnumType.chatChannelText);
         chatMessage.setChatChannelText(textFieldMessage.getText());
         FacadeServerDomain.SendMessage(chatMessage);
     }

@@ -1,3 +1,3 @@
-module ap {
-    exports ap;
+module ap.common {
+    exports ap.common;
 }

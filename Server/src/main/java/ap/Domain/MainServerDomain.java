@@ -3,8 +3,8 @@ package ap.Domain;
     Точка входа в приложение.
  */
 
-import ap.Domain.Net.Message;
-import ap.Domain.Net.Messages.chatChannelMassageInThread;
+import ap.common.*;
+import ap.Domain.Net.OutMessages.chatChannelMassageInThread;
 import ap.Domain.Net.Server;
 import ap.Presentation.FacadeServerPresentation;
 
@@ -30,19 +30,18 @@ public class MainServerDomain {
         server.Stop();
     }
 
-    public void SortMessage(Message message) {
-        String id = message.getId();
-        switch (id) {
-            case "chatChannelText":
-                ChatMessageToAll(message);
-                break;
+    public void SortMessage(ApMessage apMessage) {
+        ApMessageEnumType type = apMessage.getType();
+        switch (type) {
+            case chatChannelText:
+                ChatMessageToAll(apMessage);               break;
             default:
-                System.out.println("ID отправляемого сообщения не найдено, ID:"+id);
+                System.out.println("ID отправляемого сообщения не найдено, ID:"+type);
         }
     }
 
-    public void ChatMessageToAll(Message message) {
-        Thread chatMessageToAllInThread = new chatChannelMassageInThread(message);
+    public void ChatMessageToAll(ApMessage apMessage) {
+        Thread chatMessageToAllInThread = new chatChannelMassageInThread(apMessage);
         chatMessageToAllInThread.start();
     }
 

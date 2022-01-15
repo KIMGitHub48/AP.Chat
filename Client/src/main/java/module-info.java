@@ -5,6 +5,7 @@ module ap {
     requires reflections;
     requires java.persistence;
     requires java.sql;
+    requires ap.common;
 
     opens ap.Presentation to javafx.fxml;
     exports ap.Presentation;

@@ -1,0 +1,13 @@
+ap\Domain\Net\Message.class
+ap\Domain\MainClientDomain.class
+ap\Domain\Net\InMessages\ChatChannelText.class
+ap\Domain\LauncherClient.class
+ap\Presentation\Controllers\ChatControllerClientPresentation.class
+ap\Presentation\MainClientPresentation.class
+ap\Domain\Net\OutMessages\SendMessageInThread.class
+ap\DATA\FacadeClientDATA.class
+ap\Domain\Net\WaitingMessageFromServerInThread.class
+module-info.class
+ap\Domain\Net\ConnectToServer.class
+ap\Presentation\FacadeClientPresentation.class
+ap\Domain\FacadeClientDomain.class

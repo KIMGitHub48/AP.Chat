@@ -1,0 +1,13 @@
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\DATA\FacadeClientDATA.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\Net\InMessages\ChatChannelText.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Presentation\FacadeClientPresentation.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\Net\WaitingMessageFromServerInThread.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\module-info.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\MainClientDomain.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Presentation\MainClientPresentation.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\Net\ConnectToServer.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Presentation\Controllers\ChatControllerClientPresentation.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\LauncherClient.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\Net\OutMessages\SendMessageInThread.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\FacadeClientDomain.java
+D:\Java\Projects\AP.Chat\Client\src\main\java\ap\Domain\Net\Message.java

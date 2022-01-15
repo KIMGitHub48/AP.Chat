@@ -1,10 +1,10 @@
 package ap.Domain;
 
-import ap.Domain.Net.Message;
+import ap.common.*;
 
 public class FacadeServerDomain {
-    public static void SendMessage(Message message) {
-        MainServerDomain.mainServerDomainRef.SortMessage(message);
+    public static void SendMessage(ApMessage apMessage) {
+        MainServerDomain.mainServerDomainRef.SortMessage(apMessage);
     }
 
 //    public static void chatMessageToAll(org.Domain.Net.Message message){
