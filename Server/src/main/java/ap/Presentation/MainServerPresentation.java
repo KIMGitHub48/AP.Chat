@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import ap.Presentation.Controllers.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,8 +17,8 @@ import java.util.List;
 public class MainServerPresentation extends Application {
     public static MainServerPresentation mainServerPresentation;
     private FXMLLoader fxmlLoader;
-    private List<Stage> listStage;
-    private List<String> listName;
+    private ArrayList<Stage> listStage = new ArrayList<>();
+    private ArrayList<String> listName = new ArrayList<>();
 
     public MainServerPresentation(){
         mainServerPresentation = this;
@@ -44,13 +45,35 @@ public class MainServerPresentation extends Application {
         try {
             scene = new Scene(loadFXML(fxmlName));
             stage.setScene(scene);
+            listStage.add(stage);
+            listName.add(fxmlName);
             if (showOnStart == true){
                 stage.show();
             }
+            setCloseStageEvent(stage);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Ошибка загрузки сцены");
         }
+    }
+
+    private void setCloseStageEvent(Stage stage) {
+        stage.setOnHidden(event -> {
+            boolean allStageCloseFlag = true;
+            for (int i = 0; i < listStage.size(); i++) {
+                if (listStage.get(i).isShowing()) {
+                    listStage.get(i).show();
+                    allStageCloseFlag = false;
+                    break;
+                } else {
+                    System.out.println("Сцена не видна");
+                }
+            }
+            if (allStageCloseFlag){
+                System.out.println("Stage is closing");
+                System.exit(0);
+            }
+        });//Закрывает все потоки при выходе
     }
 
     private Parent loadFXML(String fxml) throws IOException {

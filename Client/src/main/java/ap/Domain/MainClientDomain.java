@@ -6,7 +6,7 @@ package ap.Domain;
 import ap.Domain.Net.ConnectToServer;
 import ap.common.*;
 import ap.Domain.Net.InMessages.ChatChannelText;
-import ap.Domain.Net.OutMessages.SendMessageInThread;
+import ap.Domain.Net.SendMessageInThread;
 import ap.Presentation.FacadeClientPresentation;
 
 import java.net.Socket;
@@ -14,6 +14,8 @@ import java.net.Socket;
 public class MainClientDomain {
     public static MainClientDomain mainDomainRef;
     private ConnectToServer connectToServer;
+    private String login;
+    private String password;
 
     MainClientDomain(String[] args) {
         System.out.println("Запущен Клиент");
@@ -21,9 +23,13 @@ public class MainClientDomain {
         FacadeClientPresentation.Launcher(args);
     }
 
-    public void ConnectToServer() {
-        connectToServer = new ConnectToServer();
-        connectToServer.ConnectToServer();
+    public void ConnectToServer(String IP, Integer Port) {
+        if (connectToServer == null) {
+            connectToServer = new ConnectToServer();
+            connectToServer.ConnectToServer(IP,Port);
+        } else {
+            connectToServer.ConnectToServer(IP,Port);
+        }
     }
 
     public void SendMessage(ApMessage apMessage) {
@@ -44,5 +50,29 @@ public class MainClientDomain {
             default:
                 System.out.println("type отправляемого сообщения не распознано");
         }
+    }
+
+    public boolean IsConnected(){
+        if ((connectToServer != null) && (connectToServer.IsConnected())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

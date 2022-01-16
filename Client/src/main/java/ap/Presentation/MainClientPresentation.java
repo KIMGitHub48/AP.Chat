@@ -1,62 +1,102 @@
+/*
+setShowHideEvent(Stage stage) - Метод следит за открытыми окнами, если все окна закрыты завершает программу,
+    метод необходим для закрытия потоков работающих отдельно от окон.
+* */
 package ap.Presentation;
 
 import ap.Presentation.Controllers.ChatControllerClientPresentation;
+import ap.Presentation.Controllers.OptionsControllerClientPresentation;
+import ap.common.ApFinals;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
-    Не является точкой входа в приложение.
+ * Не является точкой входа в приложение.
  */
 public class MainClientPresentation extends Application {
     public static MainClientPresentation mainPresentationRef;
     private Scene scene;
-    private FXMLLoader fxmlLoader;
+    //private FXMLLoader fxmlLoader;
+    private ArrayList<Stage> listStage = new ArrayList<>();
+    private ArrayList<String> listFileName = new ArrayList<>();
+    private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
 
-    public MainClientPresentation(){
+    public MainClientPresentation() {
         mainPresentationRef = this;
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        scene = new Scene(loadFXML("Chat"), 1024, 768);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        primaryStage.setOnCloseRequest(event -> {
-            System.out.println("Stage is closing");
-            System.exit(0);
-            // Save file
-        });//Закрывает все потоки при выходе
+        LoadStage(true, ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoadStage(false, ApFinals.FXML_OPTIONS_FILE_NAME);
+        LoadStage(false,ApFinals.FXML_CHAT_FILE_NAME);
+//        primaryStage.setOnCloseRequest(event -> {
+//            System.out.println("Stage is closing");
+//            System.exit(0);
+        // Save file
+//        });//Закрывает все потоки при выходе
     }
 
     public static void main(String[] args) {
         launch();
     }
 
-    private void setRoot(String fxml) throws IOException {
-        scene.setRoot(loadFXML(fxml));
+    private void LoadStage(Boolean showOnStart, String fxmlName) {
+        Scene scene;
+        Stage stage = new Stage();
+        FXMLLoader fxmlLoader;
+        try {
+            fxmlLoader = new FXMLLoader(MainClientPresentation.class.getResource(fxmlName));
+            scene = new Scene(fxmlLoader.load());
+            stage.setScene(scene);
+            listStage.add(stage);
+            listFileName.add(fxmlName);
+            listFxmlLoader.add(fxmlLoader);
+            if (showOnStart == true) {
+                stage.show();
+            }
+            setCloseStageEvent(stage);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Ошибка загрузки сцены");
+        }
     }
 
-    private Parent loadFXML(String fxml) throws IOException {
-        fxmlLoader = new FXMLLoader(MainClientPresentation.class.getResource(fxml + ".fxml"));
-        return fxmlLoader.load();
+    private void setCloseStageEvent(Stage stage) {
+        stage.setOnHidden(event -> {
+            boolean allStageCloseFlag = true;
+            for (int i = 0; i < listStage.size(); i++) {
+                if (listStage.get(i).isShowing()) {
+                    listStage.get(i).show();
+                    allStageCloseFlag = false;
+                    break;
+                } else {
+                    System.out.println("Сцена не видна");
+                }
+            }
+            if (allStageCloseFlag){
+                System.out.println("Stage is closing");
+                System.exit(0);
+            }
+        });//Закрывает все потоки при выходе
     }
 
-    public String GetIPFromTextField(){
-        ChatControllerClientPresentation controller = fxmlLoader.getController();
+    public String GetIPFromTextField() {
+        OptionsControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetIPFromTextField();
     }
 
-    public Integer GetPortFromTextField(){
-        ChatControllerClientPresentation controller = fxmlLoader.getController();
+    public Integer GetPortFromTextField() {
+        OptionsControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetPortFromTextField();
     }
 
-    public void AddSystemMessage(String text){
+    public void AddSystemMessage(String text) {
         ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.SetSystemText(text);
     }
@@ -64,6 +104,18 @@ public class MainClientPresentation extends Application {
     public void chatChannelMessage(String channelMessage, String channelName) {
         System.out.println("Пришло сообщение");
         ChatControllerClientPresentation controller = fxmlLoader.getController();
-        controller.setChatChannelMessage(channelMessage,channelName);
+        controller.setChatChannelMessage(channelMessage, channelName);
+    }
+
+    public void ShowOptionsStage() {
+        ShowHideStage("Options");
+    }
+
+    private void ShowHideStage(String Name) {
+        for (int i = 0; i < listStage.size(); i++) {
+            if (Name.equals(listFileName.get(i))) {
+                listStage.get(i).show();
+            }
+        }
     }
 }

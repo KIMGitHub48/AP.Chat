@@ -1,6 +1,7 @@
 package ap.Presentation.Controllers;
 
 import ap.Domain.FacadeClientDomain;
+import ap.Presentation.MainClientPresentation;
 import ap.common.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,15 +51,7 @@ public class ChatControllerClientPresentation {
 
     @FXML
     public void ConnectToServer(ActionEvent actionEvent) {
-        FacadeClientDomain.ConnectToServer();
-    }
-
-    public String GetIPFromTextField(){
-        return this.textFieldIP.getText();
-    }
-
-    public Integer GetPortFromTextField(){
-        return Integer.parseInt(this.textFieldPort.getText());
+        FacadeClientDomain.ConnectToServer(MainClientPresentation.mainPresentationRef.GetIPFromTextField(),MainClientPresentation.mainPresentationRef.GetPortFromTextField());
     }
 
     public void SetSystemText(String text){

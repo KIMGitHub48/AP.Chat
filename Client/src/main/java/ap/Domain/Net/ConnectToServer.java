@@ -10,29 +10,31 @@ public class ConnectToServer {
     private Socket serverSocket;
     private WaitingMessageFromServerInThread waitingMessageFromServerInThread;
 
-    public void ConnectToServer() {
+    public void ConnectToServer(String IP,Integer Port) {
         Runnable runnableStart = () -> {
-            Connect();
+            Connect(IP,Port);
         };
         thisThread = new Thread(runnableStart, "ConnectToServerThread");
         thisThread.start();
     }
 
-    private Socket Connect() {
-        String IP = FacadeClientPresentation.GetIPFromTextField();
-        Integer Port = FacadeClientPresentation.GetPortFromTextField();
+    private void Connect(String IP,Integer Port) {
         try {
             serverSocket = new Socket(IP, Port);
             waitingMessageFromServerInThread = new WaitingMessageFromServerInThread(serverSocket);
             waitingMessageFromServerInThread.start();
             FacadeClientPresentation.AddSystemMessage("Подключение к серверу установленно.");
-            return serverSocket;
         } catch (IOException e) {
             FacadeClientPresentation.AddSystemMessage("Не удалось установить подключение.");
-            return null;
         }
     }
-
+    public boolean IsConnected(){
+        if (serverSocket.isConnected()){
+            return true;
+        } else {
+            return false;
+        }
+    }
     public Socket GetServerSocket(){
         return serverSocket;
     }
