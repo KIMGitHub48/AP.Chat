@@ -1,21 +1,20 @@
 package ap.Presentation.Controllers;
 
-import ap.Domain.MainClientDomain;
 import ap.Domain.Net.OutMessages.Authorization;
 import ap.Presentation.MainClientPresentation;
+import ap.common.ApFinals;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
 
 import java.util.concurrent.TimeUnit;
 
 import static java.lang.Thread.sleep;
 
 public class LoginPasswordControllerClientPresentation {
-    private String buttonEnterEnter = "Вход";
-    private String buttonEnterEntering = "Вход...";
-    private String buttonEnterError = "Ошибка";
 
     @FXML
     private TextField textFieldLogin;
@@ -30,6 +29,9 @@ public class LoginPasswordControllerClientPresentation {
     private Button buttonOptions;
 
     @FXML
+    private Tooltip toolTipButtonEnter;
+
+    @FXML
     public void initialize() {
 //        Image image = new Image("OptionsPict.png");
 //        Image image = new Image(getClass().getResource("OptionsPict.png").toExternalForm());
@@ -39,10 +41,10 @@ public class LoginPasswordControllerClientPresentation {
 
     @FXML
     private void Authorization(ActionEvent actionEvent){
-        buttonEnter.setText(buttonEnterEntering);
+        buttonEnter.setText(ApFinals.ENTER_1);
         buttonEnter.setDisable(true);
         if (ap.Domain.FacadeClientDomain.IsConnected()){
-            ap.Domain.Net.OutMessages.Authorization authorization = new Authorization();
+            ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(textFieldLogin.getText(),textFieldPassword.getText());
             authorization.Send();
         } else {
             ConnectionWithAuthorizationAndTimer();
@@ -53,34 +55,55 @@ public class LoginPasswordControllerClientPresentation {
         ap.Domain.FacadeClientDomain.ConnectToServer(MainClientPresentation.mainPresentationRef.GetIPFromTextField(),MainClientPresentation.mainPresentationRef.GetPortFromTextField());
         Runnable runnable = () -> {
             boolean connectedFailFlag = true;
-            for (int i=5;i==0;i--){
+            for (int i=0;i<10;i++){
                 System.out.println("Цикл таймера");
                 try {
                     if (ap.Domain.FacadeClientDomain.IsConnected()){
-                        ap.Domain.Net.OutMessages.Authorization authorization = new Authorization();
+                        ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(textFieldLogin.getText(),textFieldPassword.getText());
                         authorization.Send();
-                        buttonEnter.setDisable(false);
-                        buttonEnter.setText(buttonEnterEnter);
+                        Platform.runLater(() -> buttonEnter.setDisable(false));
+                        Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER));
                         connectedFailFlag = false;
                         break;
                     } else {
                         System.out.println("Ожидаю");
-                        TimeUnit.SECONDS.sleep(1);
+                        TimeUnit.MILLISECONDS.sleep(500);
+                        ChangeButtonEnterWaitingText(buttonEnter.getText());
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
             if (connectedFailFlag){
-//                buttonEnter.setDisable(false);
-//                buttonEnter.setText("Ошибка входа");
+                Platform.runLater(() -> SetButtonEnterTooltipTextAndShow(ApFinals.SERVER_CONNECT_ERROR));
+                Platform.runLater(() -> buttonEnter.setDisable(false));
+                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER));
             }
         };
         new Thread(runnable).start();
     }
 
+    private void ChangeButtonEnterWaitingText(String buttonEnterText){
+        switch (buttonEnter.getText()) {
+            case (ApFinals.ENTER_1):
+                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_2));
+                break;
+            case (ApFinals.ENTER_2):
+                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_3));
+                break;
+            case (ApFinals.ENTER_3):
+                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_1));
+                break;
+        }
+    }
+
     @FXML
     private void OpenOptions(ActionEvent actionEvent){
         MainClientPresentation.mainPresentationRef.ShowOptionsStage();
+    }
+
+    public void SetButtonEnterTooltipTextAndShow(String text){
+        buttonEnter.getTooltip().setText(text);
+        buttonEnter.getTooltip().show(buttonEnter.getTooltip().getOwnerWindow());
     }
 }

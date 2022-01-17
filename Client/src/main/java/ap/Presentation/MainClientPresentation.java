@@ -5,6 +5,7 @@ setShowHideEvent(Stage stage) - Метод следит за открытыми 
 package ap.Presentation;
 
 import ap.Presentation.Controllers.ChatControllerClientPresentation;
+import ap.Presentation.Controllers.LoginPasswordControllerClientPresentation;
 import ap.Presentation.Controllers.OptionsControllerClientPresentation;
 import ap.common.ApFinals;
 import javafx.application.Application;
@@ -87,33 +88,52 @@ public class MainClientPresentation extends Application {
     }
 
     public String GetIPFromTextField() {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_OPTIONS_FILE_NAME);
         OptionsControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetIPFromTextField();
     }
 
     public Integer GetPortFromTextField() {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_OPTIONS_FILE_NAME);
         OptionsControllerClientPresentation controller = fxmlLoader.getController();
         return controller.GetPortFromTextField();
     }
 
     public void AddSystemMessage(String text) {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_CHAT_FILE_NAME);
         ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.SetSystemText(text);
     }
 
     public void chatChannelMessage(String channelMessage, String channelName) {
         System.out.println("Пришло сообщение");
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_CHAT_FILE_NAME);
         ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.setChatChannelMessage(channelMessage, channelName);
     }
 
-    public void ShowOptionsStage() {
-        ShowHideStage("Options");
+    public void SetButtonEnterTooltipTextAndShow(String text){
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoginPasswordControllerClientPresentation controller = fxmlLoader.getController();
+        controller.SetButtonEnterTooltipTextAndShow(text);
     }
 
-    private void ShowHideStage(String Name) {
+    private FXMLLoader GetFXMLLoader(String fileName){
+        for (int i=0;i<listFileName.size();i++){
+            if (fileName.equals(listFileName.get(i))){
+                return listFxmlLoader.get(i);
+            }
+        }
+        return null;
+    }
+
+    public void ShowOptionsStage() {
+        ShowHideStage(ApFinals.FXML_OPTIONS_FILE_NAME);
+    }
+
+    private void ShowHideStage(String fileName) {
         for (int i = 0; i < listStage.size(); i++) {
-            if (Name.equals(listFileName.get(i))) {
+            if (fileName.equals(listFileName.get(i))) {
                 listStage.get(i).show();
             }
         }

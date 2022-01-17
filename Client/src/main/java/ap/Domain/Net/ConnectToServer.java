@@ -29,7 +29,7 @@ public class ConnectToServer {
         }
     }
     public boolean IsConnected(){
-        if (serverSocket.isConnected()){
+        if ((serverSocket != null)&&(serverSocket.isConnected())){
             return true;
         } else {
             return false;

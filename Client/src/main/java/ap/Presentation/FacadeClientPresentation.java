@@ -23,7 +23,10 @@ public class FacadeClientPresentation {
         return MainClientPresentation.mainPresentationRef.GetPortFromTextField();
     }
     public static void MessageFromServer(ApMessage apMessage) {
+    }
 
+    public static void SetButtonEnterTooltipTextAndShow(String text){
+        MainClientPresentation.mainPresentationRef.SetButtonEnterTooltipTextAndShow(text);
     }
 
     public static void chatChannelMessage(String channelMessage, String channelName) {

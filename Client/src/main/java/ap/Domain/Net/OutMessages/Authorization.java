@@ -7,7 +7,7 @@ public class Authorization {
     private String login;
     private String password;
     //++++++++++++++++++++++++
-    public void Authorization (String loginFromOutside, String passwordFromOutside){
+    public Authorization (String loginFromOutside, String passwordFromOutside){
         login = loginFromOutside;
         password = passwordFromOutside;
     }
