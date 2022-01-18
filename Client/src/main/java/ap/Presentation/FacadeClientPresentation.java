@@ -29,6 +29,10 @@ public class FacadeClientPresentation {
         MainClientPresentation.mainPresentationRef.SetButtonEnterTooltipTextAndShow(text);
     }
 
+    public static void AuthorizationPassed(boolean passed){
+        MainClientPresentation.mainPresentationRef.AuthorizationPassed(passed);
+    }
+
     public static void chatChannelMessage(String channelMessage, String channelName) {
         MainClientPresentation.mainPresentationRef.chatChannelMessage(channelMessage, channelName);
     }

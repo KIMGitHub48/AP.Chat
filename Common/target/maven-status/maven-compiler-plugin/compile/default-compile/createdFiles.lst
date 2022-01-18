@@ -1,3 +1,4 @@
-ap\common\Message.class
+ap\common\ApMessage.class
 module-info.class
-ap\common\MessageEnumType.class
+ap\common\ApFinals.class
+ap\common\ApMessageEnumType.class

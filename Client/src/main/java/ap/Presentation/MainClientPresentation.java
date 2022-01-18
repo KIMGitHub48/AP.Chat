@@ -138,4 +138,13 @@ public class MainClientPresentation extends Application {
             }
         }
     }
+
+    public void AuthorizationPassed(boolean passed){
+        String nextStage = ApFinals.FXML_CHAT_FILE_NAME;
+        for (int i = 0; i < listStage.size(); i++) {
+            if (ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME.equals(listFileName.get(i))) {
+                listStage.get(i).show();
+            }
+        }
+    }
 }

@@ -16,11 +16,14 @@ public class MainClientDomain {
     private ConnectToServer connectToServer;
     private String login;
     private String password;
+    private boolean IsAuthorizationAvailable;
+    private boolean IsAuthorizationPassed;
 
     MainClientDomain(String[] args) {
         System.out.println("Запущен Клиент");
         mainDomainRef = this;
         FacadeClientPresentation.Launcher(args);
+        IsAuthorizationAvailable = true;
     }
 
     public void ConnectToServer(String IP, Integer Port) {
@@ -46,10 +49,29 @@ public class MainClientDomain {
                 chatChannelText.Process();
                 break;
             case authorization:
+                AuthorizationResponse(apMessage);
                 break;
             default:
                 System.out.println("type отправляемого сообщения не распознано");
         }
+    }
+
+    private void AuthorizationResponse(ApMessage apMessage){
+        if (IsAuthorizationAvailable){
+            if(apMessage.getAuthorizationStatus()){
+                IsAuthorizationAvailable = false;
+                IsAuthorizationPassed = true;
+                login = apMessage.getLogin();
+                password = apMessage.getPassword();
+            }
+        }
+    }
+
+    public void ClearAuthorizationStatus(){
+        IsAuthorizationAvailable = true;
+        IsAuthorizationPassed = false;
+        login = null;
+        password = null;
     }
 
     public boolean IsConnected(){
@@ -74,5 +96,21 @@ public class MainClientDomain {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAuthorizationAvailable() {
+        return IsAuthorizationAvailable;
+    }
+
+    public void setAuthorizationAvailable(boolean authorizationAvailable) {
+        IsAuthorizationAvailable = authorizationAvailable;
+    }
+
+    public boolean isAuthorizationPassed() {
+        return IsAuthorizationPassed;
+    }
+
+    public void setAuthorizationPassed(boolean authorizationPassed) {
+        IsAuthorizationPassed = authorizationPassed;
     }
 }

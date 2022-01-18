@@ -8,6 +8,7 @@ public class ApMessage implements Serializable {
     private UUID uuid;
     private String login;
     private String password;
+    private boolean authorizationStatus;
     private String chatChannelText;
     private String chatChannelName;
 
@@ -33,6 +34,14 @@ public class ApMessage implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean getAuthorizationStatus() {
+        return authorizationStatus;
+    }
+
+    public void setAuthorizationStatus(boolean authorizationStatus) {
+        this.authorizationStatus = authorizationStatus;
     }
 
     public String getChatChannelText() {
