@@ -11,8 +11,8 @@ public class FacadeClientDomain {
         MainClientDomain.mainDomainRef.ConnectToServer(IP,Port);
     }
 
-    public static void MessageFromServer(ApMessage apMessage) {
-        MainClientDomain.mainDomainRef.SortMessage(apMessage);
+    public static void SortMessageInNewThread(ApMessage apMessage) {
+        MainClientDomain.mainDomainRef.SortMessageInNewThread(apMessage);
     }
 
     public static boolean IsConnected(){return MainClientDomain.mainDomainRef.IsConnected();}

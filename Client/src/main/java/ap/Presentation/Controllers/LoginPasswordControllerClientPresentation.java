@@ -52,14 +52,18 @@ public class LoginPasswordControllerClientPresentation {
     }
 
     private void ConnectionWithAuthorizationAndTimer(){
-        ap.Domain.FacadeClientDomain.ConnectToServer(MainClientPresentation.mainPresentationRef.GetIPFromTextField(),MainClientPresentation.mainPresentationRef.GetPortFromTextField());
+        String login = textFieldLogin.getText();
+        String password = textFieldPassword.getText();
+        String IP = MainClientPresentation.mainPresentationRef.GetIPFromTextField();
+        Integer Port = MainClientPresentation.mainPresentationRef.GetPortFromTextField();
+        ap.Domain.FacadeClientDomain.ConnectToServer(IP,Port);
         Runnable runnable = () -> {
             boolean connectedFailFlag = true;
             for (int i=0;i<10;i++){
                 System.out.println("Цикл таймера");
                 try {
                     if (ap.Domain.FacadeClientDomain.IsConnected()){
-                        ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(textFieldLogin.getText(),textFieldPassword.getText());
+                        ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(login,password);
                         authorization.Send();
                         Platform.runLater(() -> buttonEnter.setDisable(false));
                         Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER));

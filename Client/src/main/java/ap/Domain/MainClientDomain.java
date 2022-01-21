@@ -16,7 +16,7 @@ public class MainClientDomain {
     private ConnectToServer connectToServer;
     private String login;
     private String password;
-    private boolean IsAuthorizationAvailable;
+    private boolean IsAuthorizationAvailable;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
     private boolean IsAuthorizationPassed;
 
     MainClientDomain(String[] args) {
@@ -41,7 +41,14 @@ public class MainClientDomain {
         sendMessageThread.start();
     }
 
-    public void SortMessage(ApMessage apMessage) {
+    public void SortMessageInNewThread(ApMessage apMessage){
+            Runnable sortMessage = () -> {
+                SortMessage(apMessage);
+            };
+            new Thread(sortMessage).start();
+    }
+
+    private void SortMessage(ApMessage apMessage) {
         ApMessageEnumType type = apMessage.getType();
         switch (type) {
             case chatChannelText:
@@ -58,7 +65,7 @@ public class MainClientDomain {
 
     private void AuthorizationResponse(ApMessage apMessage){
         if (IsAuthorizationAvailable){
-            if(apMessage.getAuthorizationStatus()){
+            if(apMessage.getAuthorizationPassed()){
                 IsAuthorizationAvailable = false;
                 IsAuthorizationPassed = true;
                 login = apMessage.getLogin();
@@ -81,6 +88,8 @@ public class MainClientDomain {
             return false;
         }
     }
+
+
 
     public String getLogin() {
         return login;
