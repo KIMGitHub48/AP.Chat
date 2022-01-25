@@ -51,6 +51,8 @@ public class LoginPasswordControllerClientPresentation {
         }
     }
 
+    //TODO доработать цикл проверки сообщений
+
     private void ConnectionWithAuthorizationAndTimer(){
         String login = textFieldLogin.getText();
         String password = textFieldPassword.getText();
@@ -72,7 +74,7 @@ public class LoginPasswordControllerClientPresentation {
                     } else {
                         System.out.println("Ожидаю");
                         TimeUnit.MILLISECONDS.sleep(500);
-                        ChangeButtonEnterWaitingText(buttonEnter.getText());
+                        //ChangeLoginPasswordButtonEnter(buttonEnter.getText());
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -87,23 +89,29 @@ public class LoginPasswordControllerClientPresentation {
         new Thread(runnable).start();
     }
 
-    private void ChangeButtonEnterWaitingText(String buttonEnterText){
-        switch (buttonEnter.getText()) {
-            case (ApFinals.ENTER_1):
-                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_2));
-                break;
-            case (ApFinals.ENTER_2):
-                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_3));
-                break;
-            case (ApFinals.ENTER_3):
-                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_1));
-                break;
-        }
+    public void ChangeLoginPasswordButtonEnter(String text, boolean disable){
+        Platform.runLater(() -> buttonEnter.setText(text));
+        Platform.runLater(() -> buttonEnter.setDisable(disable));
     }
+
+
+//    private void ChangeButtonEnterWaitingText(String buttonEnterText){
+//        switch (buttonEnter.getText()) {
+//            case (ApFinals.ENTER_1):
+//                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_2));
+//                break;
+//            case (ApFinals.ENTER_2):
+//                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_3));
+//                break;
+//            case (ApFinals.ENTER_3):
+//                Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER_1));
+//                break;
+//        }
+//    }
 
     @FXML
     private void OpenOptions(ActionEvent actionEvent){
-        MainClientPresentation.mainPresentationRef.ShowOptionsStage();
+        MainClientPresentation.mainPresentationRef.ShowHideOptionsStage(true);
     }
 
     public void SetButtonEnterTooltipTextAndShow(String text){

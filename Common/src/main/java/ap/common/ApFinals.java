@@ -14,5 +14,5 @@ public class ApFinals {
 
     //Текст для подсказки в форме LoginPassword.fxml (Tooltip)
     public final static String SERVER_CONNECT_ERROR = "Сервер недоступен";
-    public final static String AUTHORIZATION_ERROR = "Ошибка авторизации";
+    public final static String AUTHORIZATION_ERROR = "Ошибка авторизации, проверьте имя и пароль";
 }

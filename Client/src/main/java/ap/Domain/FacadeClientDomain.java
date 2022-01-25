@@ -16,4 +16,7 @@ public class FacadeClientDomain {
     }
 
     public static boolean IsConnected(){return MainClientDomain.mainDomainRef.IsConnected();}
+    public static ApMessage GetPresentationApMessageFromList(){
+        return MainClientDomain.mainDomainRef.GetOrAddPresentationApMessageList(null,false);
+    };
 }

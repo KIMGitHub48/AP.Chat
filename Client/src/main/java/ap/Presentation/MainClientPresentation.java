@@ -9,6 +9,7 @@ import ap.Presentation.Controllers.LoginPasswordControllerClientPresentation;
 import ap.Presentation.Controllers.OptionsControllerClientPresentation;
 import ap.common.ApFinals;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 public class MainClientPresentation extends Application {
     public static MainClientPresentation mainPresentationRef;
     private Scene scene;
-    //private FXMLLoader fxmlLoader;
+    private boolean IsAuthorizationAvailable;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
     private ArrayList<Stage> listStage = new ArrayList<>();
     private ArrayList<String> listFileName = new ArrayList<>();
     private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
@@ -33,6 +34,8 @@ public class MainClientPresentation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        IsAuthorizationAvailable = false;
+
         LoadStage(true, ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
         LoadStage(false, ApFinals.FXML_OPTIONS_FILE_NAME);
         LoadStage(false,ApFinals.FXML_CHAT_FILE_NAME);
@@ -84,8 +87,8 @@ public class MainClientPresentation extends Application {
                 System.out.println("Stage is closing");
                 System.exit(0);
             }
-        });//Закрывает все потоки при выходе
-    }
+        });
+    }//Событие закрытия окна проверяет есть ли хоть одно открытое окно иначе закрывает все потоки и приложение.
 
     public String GetIPFromTextField() {
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_OPTIONS_FILE_NAME);
@@ -127,24 +130,49 @@ public class MainClientPresentation extends Application {
         return null;
     }
 
-    public void ShowOptionsStage() {
-        ShowHideStage(ApFinals.FXML_OPTIONS_FILE_NAME);
+    public void ShowHideOptionsStage(boolean show) {
+        ShowHideStage(ApFinals.FXML_OPTIONS_FILE_NAME,show);
+    }
+    public void ShowHideChatStage(boolean show) {
+        ShowHideStage(ApFinals.FXML_CHAT_FILE_NAME,show);
+    }
+    public void ShowHideLoginPasswordStage(boolean show) {
+        ShowHideStage(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME,show);
     }
 
-    private void ShowHideStage(String fileName) {
+    private void ShowHideStage(String fileName, boolean show) {
         for (int i = 0; i < listStage.size(); i++) {
             if (fileName.equals(listFileName.get(i))) {
-                listStage.get(i).show();
+                if (show){
+                    listStage.get(i).show();
+                } else
+                {
+                    listStage.get(i).hide();
+                }
             }
         }
     }
 
-    public void AuthorizationPassed(boolean passed){
-        String nextStage = ApFinals.FXML_CHAT_FILE_NAME;
-        for (int i = 0; i < listStage.size(); i++) {
-            if (ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME.equals(listFileName.get(i))) {
-                listStage.get(i).show();
-            }
-        }
+    public void ChangeLoginPasswordButtonEnter(String text, boolean disable){
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoginPasswordControllerClientPresentation loginPasswordControllerClientPresentation = fxmlLoader.getController();
+        loginPasswordControllerClientPresentation.ChangeLoginPasswordButtonEnter(text, disable);
+    }
+
+//    public void AuthorizationPassed(boolean passed){
+//        String nextStage = ApFinals.FXML_CHAT_FILE_NAME;
+//        for (int i = 0; i < listStage.size(); i++) {
+//            if (ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME.equals(listFileName.get(i))) {
+//                listStage.get(i).show();
+//            }
+//        }
+//    }
+
+    public boolean GetIsAuthorizationAvailable() {
+        return IsAuthorizationAvailable;
+    }
+
+    public void setAuthorizationAvailable(boolean authorizationAvailable) {
+        IsAuthorizationAvailable = authorizationAvailable;
     }
 }
