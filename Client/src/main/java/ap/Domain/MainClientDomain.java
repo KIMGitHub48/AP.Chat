@@ -4,8 +4,9 @@ package ap.Domain;
  */
 
 import ap.Domain.Net.ConnectToServer;
+import ap.Domain.Net.OutMessages.AuthorizationOut;
 import ap.common.*;
-import ap.Domain.Net.InMessages.ChatChannelText;
+import ap.Domain.Net.InMessages.ChatChannelTextIn;
 import ap.Domain.Net.SendMessageInThread;
 import ap.Presentation.FacadeClientPresentation;
 
@@ -38,32 +39,34 @@ public class MainClientDomain {
     }
 
     public void SendMessage(ApMessage apMessage) {
-        Socket serverSocket = connectToServer.GetServerSocket();
-        SendMessageInThread sendMessageThread = new SendMessageInThread(serverSocket, apMessage);
-        sendMessageThread.start();
-    }
-
-    public void SortMessageInNewThread(ApMessage apMessage){
-            Runnable sortMessage = () -> {
-                SortMessage(apMessage);
-            };
-            new Thread(sortMessage).start();
-    }
-
-    private void SortMessage(ApMessage apMessage) {
-        ApMessageEnumType type = apMessage.getType();
-        switch (type) {
-            case chatChannelText:
-                ChatChannelText chatChannelText = new ChatChannelText(apMessage);
-                chatChannelText.Process();
-                break;
-            case authorization:
-                //AuthorizationResponse(apMessage);
-                break;
-            default:
-                System.out.println("type отправляемого сообщения не распознано");
+        if (IsConnected()) {
+            Socket serverSocket = connectToServer.GetServerSocket();
+            SendMessageInThread sendMessageThread = new SendMessageInThread(serverSocket, apMessage);
+            sendMessageThread.start();
         }
     }
+
+//    public void SortMessageInNewThread(ApMessage apMessage){
+//            Runnable sortMessage = () -> {
+//                SortMessage(apMessage);
+//            };
+//            new Thread(sortMessage).start();
+//    }
+//
+//    private void SortMessage(ApMessage apMessage) {
+//        ApMessageEnumType type = apMessage.getType();
+//        switch (type) {
+//            case chatChannelText:
+//                ChatChannelTextIn chatChannelTextIn = new ChatChannelTextIn(apMessage);
+//                chatChannelTextIn.Process();
+//                break;
+//            case authorization:
+//                //AuthorizationResponse(apMessage);
+//                break;
+//            default:
+//                System.out.println("type отправляемого сообщения не распознано");
+//        }
+//    }
 
 //    private void AuthorizationResponse(ApMessage apMessage){
 //        if (IsAuthorizationAvailable){
@@ -93,21 +96,21 @@ public class MainClientDomain {
 
 
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
+//    public String getLogin() {
+//        return login;
+//    }
+//
+//    public void setLogin(String login) {
+//        this.login = login;
+//    }
+//
+//    public String getPassword() {
+//        return password;
+//    }
+//
+//    public void setPassword(String password) {
+//        this.password = password;
+//    }
 
 //    public boolean isAuthorizationAvailable() {
 //        return IsAuthorizationAvailable;
@@ -142,5 +145,10 @@ public class MainClientDomain {
 
     public void AddApMessageToPresentationList(ApMessage apMessage){
         presentationApMessageList.add(apMessage);
+    }
+
+    public void SendAuthorizationMessage(String loginToDomainField, String passwordToDomainField) {
+        AuthorizationOut authorizationOut = new AuthorizationOut(login,password);
+        authorizationOut.Send();
     }
 }

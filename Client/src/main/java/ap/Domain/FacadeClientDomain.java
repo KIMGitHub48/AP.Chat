@@ -10,10 +10,12 @@ public class FacadeClientDomain {
     public static void ConnectToServer(String IP, Integer Port){
         MainClientDomain.mainDomainRef.ConnectToServer(IP,Port);
     }
-
-    public static void SortMessageInNewThread(ApMessage apMessage) {
-        MainClientDomain.mainDomainRef.SortMessageInNewThread(apMessage);
+    public static void SendAuthorizationMessage(String loginToDomainField, String passwordToDomainField){
+        MainClientDomain.mainDomainRef.SendAuthorizationMessage();
     }
+//    public static void SortMessageInNewThread(ApMessage apMessage) {
+//        MainClientDomain.mainDomainRef.SortMessageInNewThread(apMessage);
+//    }
 
     public static boolean IsConnected(){return MainClientDomain.mainDomainRef.IsConnected();}
     public static ApMessage GetPresentationApMessageFromList(){

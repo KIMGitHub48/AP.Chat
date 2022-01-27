@@ -35,10 +35,11 @@ public class MainClientPresentation extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         IsAuthorizationAvailable = false;
-
         LoadStage(true, ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
         LoadStage(false, ApFinals.FXML_OPTIONS_FILE_NAME);
         LoadStage(false,ApFinals.FXML_CHAT_FILE_NAME);
+        GrabApMessageFromClientDomainInCycle grabApMessageFromClientDomainInCycle = new GrabApMessageFromClientDomainInCycle();
+        grabApMessageFromClientDomainInCycle.run();
 //        primaryStage.setOnCloseRequest(event -> {
 //            System.out.println("Stage is closing");
 //            System.exit(0);

@@ -12,6 +12,6 @@ public class FacadeClientDATA {
         String text = apMessage.getChatChannelText();
         text = "(Отметка с севера) "+text;
         apMessage.setChatChannelText(text);
-        FacadeClientDomain.SortMessageInNewThread(apMessage);
+       // FacadeClientDomain.SortMessageInNewThread(apMessage);
     }
 }

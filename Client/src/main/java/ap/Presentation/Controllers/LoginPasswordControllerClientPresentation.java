@@ -1,6 +1,7 @@
 package ap.Presentation.Controllers;
 
-import ap.Domain.Net.OutMessages.Authorization;
+import ap.Domain.MainClientDomain;
+import ap.Domain.Net.OutMessages.AuthorizationOut;
 import ap.Presentation.MainClientPresentation;
 import ap.common.ApFinals;
 import javafx.application.Platform;
@@ -44,8 +45,11 @@ public class LoginPasswordControllerClientPresentation {
         buttonEnter.setText(ApFinals.ENTER_1);
         buttonEnter.setDisable(true);
         if (ap.Domain.FacadeClientDomain.IsConnected()){
-            ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(textFieldLogin.getText(),textFieldPassword.getText());
-            authorization.Send();
+            String login = textFieldLogin.getText();
+            String password = textFieldPassword.getText();
+            ap.Domain.FacadeClientDomain.SendAuthorizationMessage(login, password);
+//            AuthorizationOut authorizationOut = new AuthorizationOut(login,password);
+//            authorizationOut.Send();
         } else {
             ConnectionWithAuthorizationAndTimer();
         }
@@ -65,8 +69,9 @@ public class LoginPasswordControllerClientPresentation {
                 System.out.println("Цикл таймера");
                 try {
                     if (ap.Domain.FacadeClientDomain.IsConnected()){
-                        ap.Domain.Net.OutMessages.Authorization authorization = new Authorization(login,password);
-                        authorization.Send();
+                        ap.Domain.FacadeClientDomain.SendAuthorizationMessage(login, password);
+//                        AuthorizationOut authorizationOut = new AuthorizationOut(login,password);
+//                        authorizationOut.Send();
                         Platform.runLater(() -> buttonEnter.setDisable(false));
                         Platform.runLater(() -> buttonEnter.setText(ApFinals.ENTER));
                         connectedFailFlag = false;

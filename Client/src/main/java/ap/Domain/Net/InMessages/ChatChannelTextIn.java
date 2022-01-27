@@ -3,9 +3,9 @@ package ap.Domain.Net.InMessages;
 import ap.common.*;
 import ap.Presentation.FacadeClientPresentation;
 
-public class ChatChannelText {
+public class ChatChannelTextIn {
     private ApMessage apMessage;
-    public ChatChannelText(ApMessage chatChannelApMessage){
+    public ChatChannelTextIn(ApMessage chatChannelApMessage){
         apMessage = chatChannelApMessage;
     }
     public void Process(){

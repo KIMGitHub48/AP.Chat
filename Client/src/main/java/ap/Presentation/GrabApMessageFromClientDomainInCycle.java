@@ -6,10 +6,11 @@ import ap.common.ApMessage;
 import java.util.concurrent.TimeUnit;
 
 public class GrabApMessageFromClientDomainInCycle extends Thread {
+    private ApMessage apMessage;
     @Override
     public void run(){
         while(true) {
-            ApMessage apMessage = ap.Domain.FacadeClientDomain.GetPresentationApMessageFromList();
+            apMessage = ap.Domain.FacadeClientDomain.GetPresentationApMessageFromList();
             if (apMessage != null) {
                 switch (apMessage.getType()){
                     case authorization:

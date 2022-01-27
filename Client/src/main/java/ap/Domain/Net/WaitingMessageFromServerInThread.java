@@ -28,10 +28,11 @@ public class WaitingMessageFromServerInThread extends Thread {
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             apMessage = SocketStreamIn();
-            FacadeClientDomain.SortMessageInNewThread(apMessage);
+            SortMessageInThread sortMessageInThread = new SortMessageInThread(apMessage);
+            sortMessageInThread.start();
         }
     }
-//test
+
     private ApMessage SocketStreamIn() {
         ApMessage apMessage;
         try {

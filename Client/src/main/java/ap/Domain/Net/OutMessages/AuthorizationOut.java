@@ -1,13 +1,14 @@
 package ap.Domain.Net.OutMessages;
 
+import ap.Domain.MainClientDomain;
 import ap.common.*;
 import java.util.UUID;
 
-public class Authorization {
+public class AuthorizationOut {
     private String login;
     private String password;
     //++++++++++++++++++++++++
-    public Authorization (String loginFromOutside, String passwordFromOutside){
+    public AuthorizationOut(String loginFromOutside, String passwordFromOutside){
         login = loginFromOutside;
         password = passwordFromOutside;
     }
@@ -22,6 +23,6 @@ public class Authorization {
     }
     public void Send(){
         ApMessage apMessage = CreateMessage();
-        ap.Domain.FacadeClientDomain.SendMessageToServer(apMessage);
+        MainClientDomain.mainDomainRef.SendMessage(apMessage);
     }
 }
