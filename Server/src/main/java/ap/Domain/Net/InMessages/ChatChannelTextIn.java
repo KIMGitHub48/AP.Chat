@@ -16,6 +16,7 @@ public class ChatChannelTextIn {
         ApMetaMessage apMetaMessage = ap.DATA.FacadeServerDATA.MessageToData(apMessage);
         if (apMetaMessage.isAuthorizationPassed()){
             ChatChannelTextOut chatChannelTextOut = new ChatChannelTextOut(apMetaMessage);
+            chatChannelTextOut.Send();
         } else {
             //TODO отправить сообщение для разлогивания.
         }

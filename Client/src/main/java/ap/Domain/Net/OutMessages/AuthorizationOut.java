@@ -5,7 +5,6 @@ import ap.Domain.Net.SendMessageInThread;
 import ap.common.*;
 
 import java.net.Socket;
-import java.util.UUID;
 
 public class AuthorizationOut {
     ApMessage apMessage;

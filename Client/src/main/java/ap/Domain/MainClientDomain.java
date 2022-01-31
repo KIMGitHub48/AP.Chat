@@ -3,12 +3,11 @@ package ap.Domain;
     Точка входа в приложение.
  */
 
-import ap.Domain.Net.ConnectToServer;
 import ap.Domain.Net.InMessages.Authorization.WaitingAuthorizationResponse;
+import ap.Domain.Net.ConnectToServer;
 import ap.Domain.Net.SortOutMessageInThread;
 import ap.Presentation.MainClientPresentation;
 import ap.common.*;
-import ap.Domain.Net.SendMessageInThread;
 import ap.Presentation.FacadeClientPresentation;
 
 import java.net.Socket;

@@ -1,8 +1,6 @@
 package ap.Domain.Net.InMessages.Authorization;
 
 import ap.Domain.MainClientDomain;
-import ap.Presentation.MainClientPresentation;
-import ap.common.ApFinals;
 import ap.common.ApMessage;
 
 //Описание:

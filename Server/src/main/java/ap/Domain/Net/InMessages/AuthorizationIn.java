@@ -17,10 +17,10 @@ public class AuthorizationIn {
 
     public void Process(){
         ApMetaMessage apMetaMessage = ap.DATA.FacadeServerDATA.MessageToData(apMessage);
+        ApMessage apMessageFromApMetaMessage = apMetaMessage.getApMessage();
+        ap.Domain.Net.OutMessages.AuthorizationOut authorizationOut = new AuthorizationOut(apMessageFromApMetaMessage, socket);
+        authorizationOut.Send();
         if (apMetaMessage.isAuthorizationPassed()) {
-            ApMessage apMessageFromApMetaMessage = apMetaMessage.getApMessage();
-            ap.Domain.Net.OutMessages.AuthorizationOut authorizationOut = new AuthorizationOut(apMessageFromApMetaMessage, socket);
-            authorizationOut.Send();
             MainServerDomain.mainServerDomainRef.AddActualLoginInfo(apMessage.getLogin(),socket);
         }
     }

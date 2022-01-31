@@ -12,8 +12,8 @@ public class ChatChannelSendButtonInThread extends Thread {
     @Override
     public void run(){
         ApMessage apMessage = new ApMessage();
-        apMessage.setLogin(ap.Domain.FacadeClientDomain.GetLogin());
-        apMessage.setPassword(ap.Domain.FacadeClientDomain.GetPassword());
+        apMessage.setLogin(FacadeClientDomain.GetLogin());
+        apMessage.setPassword(FacadeClientDomain.GetPassword());
         apMessage.setType(ApMessageEnumType.chatChannelText);
         apMessage.setUUID(UUID.randomUUID());
         apMessage.setChatChannelText(MainClientPresentation.mainPresentationRef.GetTextFromChatMessageTextField());

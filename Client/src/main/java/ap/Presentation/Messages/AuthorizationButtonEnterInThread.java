@@ -1,6 +1,7 @@
 package ap.Presentation.Messages;
 
 import ap.Domain.MainClientDomain;
+import ap.Domain.FacadeClientDomain;
 import ap.Domain.Net.InMessages.Authorization.AuthorizationResponseAction;
 import ap.Presentation.MainClientPresentation;
 import ap.common.ApFinals;
@@ -19,13 +20,13 @@ public class AuthorizationButtonEnterInThread extends Thread {
     }
 
     private void AuthorizationOrConnect() {
-        if (ap.Domain.FacadeClientDomain.IsConnected()) {
+        if (FacadeClientDomain.IsConnected()) {
             SendAuthorizationMessage();
         } else {
             if (ConnectWithTimer()){
                 SendAuthorizationMessage();
             } else {
-                ap.Domain.Net.InMessages.Authorization.AuthorizationResponseAction authorizationResponseAction = new AuthorizationResponseAction();
+                AuthorizationResponseAction authorizationResponseAction = new AuthorizationResponseAction();
                 authorizationResponseAction.ConnectionError();
             }
         }
@@ -63,12 +64,12 @@ public class AuthorizationButtonEnterInThread extends Thread {
     }
 
     private void SendAuthorizationMessage() {
-        ap.Domain.FacadeClientDomain.setAuthorizationAvailable(true);
+        FacadeClientDomain.setAuthorizationAvailable(true);
 
         ApMessage apMessage = new ApMessage();
         apMessage = WriteDateInMessage(apMessage);
-        ap.Domain.FacadeClientDomain.SortOutMessageInThread(apMessage);
-        ap.Domain.FacadeClientDomain.WaitingAuthorizationResponse();
+        FacadeClientDomain.SortOutMessageInThread(apMessage);
+        FacadeClientDomain.WaitingAuthorizationResponse();
     }
 
     private ApMessage WriteDateInMessage(ApMessage apMessage) {

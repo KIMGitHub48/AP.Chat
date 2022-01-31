@@ -31,8 +31,13 @@ public class FacadeServerDATA {
     }
 
     public static ApMetaMessage TheHUCK_ApMetaMessage(ApMessage apMessage){
+        System.out.println(apMessage.getLogin());
         ApMetaMessage apMetaMessage = new ApMetaMessage(apMessage);
-        apMetaMessage.setAuthorizationPassed(true);
+        if (apMessage.getLogin().equals("Провал")) {
+            apMetaMessage.setAuthorizationPassed(false);
+        } else {
+            apMetaMessage.setAuthorizationPassed(true);
+        }
         apMetaMessage.addToLoginsPassedToChannel("Admin");
         apMetaMessage.addToLoginsPassedToChannel("Илья");
         apMetaMessage.addToLoginsPassedToChannel("Стас");

@@ -39,6 +39,7 @@ public class ChatControllerClientPresentation {
     @FXML
     private void SendMessageButtonAction(ActionEvent actionEvent){
         ChatChannelSendButtonInThread chatChannelSendButtonInThread = new ChatChannelSendButtonInThread();
+        chatChannelSendButtonInThread.start();
     }
 
     @FXML

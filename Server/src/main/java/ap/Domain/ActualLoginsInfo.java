@@ -6,8 +6,8 @@ import java.util.ArrayList;
 //TODO Разобраться с синхронизацией
 
 public class ActualLoginsInfo {
-    private ArrayList<String> actualLogins;
-    private ArrayList<Socket> actualSockets;
+    private ArrayList<String> actualLogins = new ArrayList<>();
+    private ArrayList<Socket> actualSockets = new ArrayList<>();
 
     public void AddActualInfo(String login, Socket socket) {
         actualLogins.add(login);
@@ -20,7 +20,7 @@ public class ActualLoginsInfo {
             for (int j=0; j<actualLogins.size(); j++){
                 boolean isEquals = loginsFromMeta.get(i).equals(actualLogins.get(j));
                 if (isEquals){
-                    compareSocketList.add(actualSockets.get(i));
+                    compareSocketList.add(actualSockets.get(j));
                     break;
                 }
             }
