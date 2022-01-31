@@ -6,11 +6,11 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class SendMessageToSocketInThread {
+public class SendMessageToSocket {
     private final ApMessage apMessage;
     private final Socket socket;
 
-    public SendMessageToSocketInThread(ApMessage apMessage, Socket socket) {
+    public SendMessageToSocket(ApMessage apMessage, Socket socket) {
         this.apMessage = apMessage;
         this.socket = socket;
 

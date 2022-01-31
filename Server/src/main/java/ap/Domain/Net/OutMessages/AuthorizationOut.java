@@ -1,13 +1,18 @@
 package ap.Domain.Net.OutMessages;
 
-import ap.Domain.Net.OutMessages.SendMessages.SendMessageToSocketInThread;
+import ap.Domain.Net.OutMessages.SendMessages.SendMessageToSocket;
 import ap.common.ApMessage;
+import ap.common.ApMetaMessage;
 
 import java.net.Socket;
 
 public class AuthorizationOut {
-    public AuthorizationOut(ApMessage apMessage, Socket socket){
-        SendMessageToSocketInThread sendMessageToSocketInThread = new SendMessageToSocketInThread(apMessage, socket);
-        sendMessageToSocketInThread.start();
+    SendMessageToSocket sendMessageToSocket;
+    public AuthorizationOut(ApMessage apMessage,Socket socket){
+        sendMessageToSocket = new SendMessageToSocket(apMessage, socket);
+    }
+
+    public void Send(){
+        sendMessageToSocket.Send();
     }
 }

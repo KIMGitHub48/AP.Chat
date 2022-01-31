@@ -1,11 +1,9 @@
 package ap.Domain.Net.InMessages;
 
-import ap.Domain.Net.OutMessages.AuthorizationOut;
 import ap.Domain.Net.OutMessages.ChatChannelTextOut;
-import ap.Domain.Net.OutMessages.SendMessages.CheckPassedLoginsListInThread;
 import ap.common.ApMessage;
+import ap.common.ApMetaMessage;
 
-import java.net.Socket;
 import java.util.ArrayList;
 
 public class ChatChannelTextIn {
@@ -15,18 +13,11 @@ public class ChatChannelTextIn {
     }
 
     public void Process(){
-        String login = apMessage.getLogin();
-        String password = apMessage.getPassword();
-        String text = apMessage.getChatChannelText();
-        String channelName = apMessage.getChatChannelName();
-        boolean authorizationPassed = ap.DATA.FacadeServerDATA.Authorization(login, password);
-        if (authorizationPassed) {
-            apMessage.setAuthorizationPassed(false);
-            ArrayList<String> passedLoginsList = new ArrayList<>();
-            passedLoginsList = ap.DATA.FacadeServerDATA.AddChatChannelText(login,text,channelName);
-            CheckPassedLoginsListInThread checkPassedLoginsListInThread = new CheckPassedLoginsListInThread(apMessage, passedLoginsList);
+        ApMetaMessage apMetaMessage = ap.DATA.FacadeServerDATA.MessageToData(apMessage);
+        if (apMetaMessage.isAuthorizationPassed()){
+            ChatChannelTextOut chatChannelTextOut = new ChatChannelTextOut(apMetaMessage);
         } else {
-            //TODO Послать сообщение для того чтоб клиент разлогинился.
+            //TODO отправить сообщение для разлогивания.
         }
     }
 }

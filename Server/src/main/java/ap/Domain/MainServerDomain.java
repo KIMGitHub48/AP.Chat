@@ -4,7 +4,7 @@ package ap.Domain;
  */
 
 import ap.common.*;
-import ap.Domain.Net.OutMessages.chatChannelMassageInThread;
+//import ap.Domain.Net.OutMessages.chatChannelMassageInThread;
 import ap.Domain.Net.Server;
 import ap.Presentation.FacadeServerPresentation;
 
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class MainServerDomain {
     public static MainServerDomain mainServerDomainRef;
     private static Server server;
+    ActualLoginsInfo actualLoginsInfo = new ActualLoginsInfo();
 
     public MainServerDomain(String[] args) {
         System.out.println("Запущен Сервер");
@@ -30,23 +31,31 @@ public class MainServerDomain {
         server.Stop();
     }
 
-    public void SortMessage(ApMessage apMessage) {
-        ApMessageEnumType type = apMessage.getType();
-        switch (type) {
-            case chatChannelText:
-                ChatMessageToAll(apMessage);
-                break;
-            default:
-                System.out.println("ID отправляемого сообщения не найдено, ID:"+type);
-        }
-    }
+//    public void SortMessage(ApMessage apMessage) {
+//        ApMessageEnumType type = apMessage.getType();
+//        switch (type) {
+//            case chatChannelText:
+//                ChatMessageToAll(apMessage);
+//                break;
+//            default:
+//                System.out.println("ID отправляемого сообщения не найдено, ID:"+type);
+//        }
+//    }
 
-    public void ChatMessageToAll(ApMessage apMessage) {
-        Thread chatMessageToAllInThread = new chatChannelMassageInThread(apMessage);
-        chatMessageToAllInThread.start();
-    }
+//    public void ChatMessageToAll(ApMessage apMessage) {
+//        Thread chatMessageToAllInThread = new chatChannelMassageInThread(apMessage);
+//        chatMessageToAllInThread.start();
+//    }
 
     public ArrayList<Socket> getArrayListClientSocket() {
         return server.getArrayListClientSocket();
+    }
+
+    public void AddActualLoginInfo(String login, Socket socket){
+        actualLoginsInfo.AddActualInfo(login,socket);
+    }
+
+    public ArrayList<Socket> CompareActualLoginsWithMeta(ArrayList<String> loginsFromMeta){
+        return actualLoginsInfo.CompareActualLoginsWithMeta(loginsFromMeta);
     }
 }

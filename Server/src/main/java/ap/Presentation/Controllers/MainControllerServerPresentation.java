@@ -57,7 +57,7 @@ public class MainControllerServerPresentation {
         ApMessage chatMessage = new ApMessage();
         chatMessage.setType(ApMessageEnumType.chatChannelText);
         chatMessage.setChatChannelText(textFieldMessage.getText());
-        FacadeServerDomain.SendMessage(chatMessage);
+//        FacadeServerDomain.SendMessage(chatMessage);
     }
 
     @FXML

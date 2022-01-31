@@ -18,7 +18,7 @@ public class AuthorizationIn {
     public void Process(){
         if (MainClientDomain.mainDomainRef.isAuthorizationAvailable()){
             AuthorizationResponseAction authorizationResponseAction = new AuthorizationResponseAction();
-            if (apMessage.getAuthorizationPassed()) {
+            if (apMessage.isAuthorizationPassed()) {
                 authorizationResponseAction.AuthorizationPassed(apMessage.getLogin(), apMessage.getPassword());
             } else {
                 authorizationResponseAction.AuthorizationError();

@@ -37,7 +37,7 @@ public class ApMessage implements Serializable {
         this.password = password;
     }
 
-    public boolean getAuthorizationPassed() {
+    public boolean isAuthorizationPassed() {
         return authorizationPassed;
     }
 
