@@ -31,6 +31,7 @@ public class SortInMessageInThread extends Thread {
                 break;
             default:
                 System.out.println("type принимаемого сообщения не распознано");
+                break;
         }
     }
 }
