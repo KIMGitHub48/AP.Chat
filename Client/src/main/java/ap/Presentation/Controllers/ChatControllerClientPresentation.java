@@ -1,16 +1,14 @@
 package ap.Presentation.Controllers;
 
-import ap.Domain.FacadeClientDomain;
 import ap.Presentation.MainClientPresentation;
-import ap.common.*;
+import ap.Presentation.Messages.ChatChannelSendButtonInThread;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
-import java.util.UUID;
 
 public class ChatControllerClientPresentation {
 
@@ -39,19 +37,13 @@ public class ChatControllerClientPresentation {
     private TextField textFieldPort;
 
     @FXML
-    private void SendMessage(ActionEvent actionEvent){
-        //Тип сообщения
-        ApMessage apMessage = new ApMessage();
-        apMessage.setType(ApMessageEnumType.chatChannelText);
-        apMessage.setUUID(UUID.randomUUID());
-        apMessage.setChatChannelText(textFieldChannelMessage.getText());
-        apMessage.setChatChannelName("Default");
-        FacadeClientDomain.SendMessageToServer(apMessage);
+    private void SendMessageButtonAction(ActionEvent actionEvent){
+        ChatChannelSendButtonInThread chatChannelSendButtonInThread = new ChatChannelSendButtonInThread();
     }
 
     @FXML
-    public void ConnectToServer(ActionEvent actionEvent) {
-        FacadeClientDomain.ConnectToServer(MainClientPresentation.mainPresentationRef.GetIPFromTextField(),MainClientPresentation.mainPresentationRef.GetPortFromTextField());
+    public void OptionsButtonAction(ActionEvent actionEvent) {
+        MainClientPresentation.mainPresentationRef.ShowHideOptionsStage(true);
     }
 
     public void SetSystemText(String text){
@@ -59,6 +51,10 @@ public class ChatControllerClientPresentation {
     }
 
     public void setChatChannelMessage(String channelMessage, String channelName) {
-        this.textAreaChatDialog.appendText(channelMessage+"\n");
+        Platform.runLater(() ->this.textAreaChatDialog.appendText(channelMessage+"\n"));
+    }
+
+    public String GetTextFromChatMessageTextField(){
+        return textFieldChannelMessage.getText();
     }
 }

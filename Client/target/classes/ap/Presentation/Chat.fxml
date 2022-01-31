@@ -6,20 +6,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="panePrimary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/15" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.Presentation.Controllers.ChatControllerClientPresentation">
+<Pane fx:id="panePrimary" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ap.Presentation.Controllers.ChatControllerClientPresentation">
    <children>
-      <TextArea fx:id="textAreaChatDialog" editable="false" layoutX="10.0" layoutY="56.0" prefHeight="664.0" prefWidth="750.0" />
-      <TextArea fx:id="textAreaNames" editable="false" layoutX="770.0" layoutY="56.0" prefHeight="664.0" prefWidth="245.0" />
-      <TextField fx:id="textFieldIP" layoutX="191.0" layoutY="7.0" prefHeight="40.0" prefWidth="136.0" text="127.0.0.1">
-         <font>
-            <Font size="14.0" />
-         </font></TextField>
-      <Button fx:id="buttonConnect" layoutX="10.0" layoutY="7.0" mnemonicParsing="false" onAction="#ConnectToServer" prefHeight="40.0" prefWidth="175.0" text="Присоединиться к серверу" />
-      <TextField fx:id="textFieldPort" layoutX="334.0" layoutY="7.0" prefHeight="40.0" prefWidth="136.0" text="4848">
-         <font>
-            <Font size="14.0" />
-         </font></TextField>
-      <Button fx:id="buttonSendMessage" layoutX="770.0" layoutY="726.0" mnemonicParsing="false" onAction="#SendMessage" prefHeight="31.0" prefWidth="245.0" text="Отправить">
+      <TextArea fx:id="textAreaChatDialog" editable="false" layoutX="10.0" layoutY="50.0" prefHeight="664.0" prefWidth="750.0" />
+      <TextArea fx:id="textAreaNames" editable="false" layoutX="770.0" layoutY="50.0" prefHeight="664.0" prefWidth="245.0" />
+      <Button fx:id="buttonOptions" layoutX="770.0" layoutY="5.0" mnemonicParsing="false" onAction="#OptionsButtonAction" prefHeight="40.0" prefWidth="245.0" text="Настройки" />
+      <Button fx:id="buttonSendMessage" layoutX="770.0" layoutY="726.0" mnemonicParsing="false" onAction="#SendMessageButtonAction" prefHeight="31.0" prefWidth="245.0" text="Отправить">
          <font>
             <Font size="14.0" />
          </font>

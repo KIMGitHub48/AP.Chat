@@ -1,6 +1,7 @@
 package ap.Domain.Net;
 
 import ap.Presentation.FacadeClientPresentation;
+import ap.common.ApFinals;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -23,9 +24,9 @@ public class ConnectToServer {
             serverSocket = new Socket(IP, Port);
             waitingMessageFromServerInThread = new WaitingMessageFromServerInThread(serverSocket);
             waitingMessageFromServerInThread.start();
-            FacadeClientPresentation.AddSystemMessage("Подключение к серверу установленно.");
+            FacadeClientPresentation.AddSystemMessage(ApFinals.SYSTEM_MESSAGE_SERVER_CONNECT);
         } catch (IOException e) {
-            FacadeClientPresentation.AddSystemMessage("Не удалось установить подключение.");
+            FacadeClientPresentation.AddSystemMessage(ApFinals.SYSTEM_MESSAGE_SERVER_CONNECT_ERROR);
         }
     }
     public boolean IsConnected(){

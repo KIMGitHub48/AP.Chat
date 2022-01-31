@@ -1,0 +1,26 @@
+Файл для описание текущих задач.
+
+
+
+Стасу:
+Если чтото хочешь отправить базу не отправляй напрямую как тут:
+        while (threadInBreakFlag) {
+            message = SocketStreamIn();
+            ApacheDerby.addRecord(message.getChatChannelText());// запись сообщения в базу данных
+            FacadeServerDATA.MessageFromClient(message);
+        }
+ Специально для этого есть Фасад:
+            FacadeServerDATA.MessageFromClient(message);
+
+ Переделай метод из фасада под свои нужды, так мы не запутаемся.
+            Из такого:
+                public static void MessageFromClient(ApMessage apMessage){
+                    //Заглушка
+                    Zaglushka(apMessage);
+                }
+            В такой:
+                    public static void MessageFromClient(ApMessage apMessage){
+                        //Заглушка
+                        ApacheDerby.addRecord(apMessage.getChatChannelText());// запись сообщения в базу данных
+                        Zaglushka(apMessage);
+                    }

@@ -22,18 +22,12 @@ public class FacadeClientPresentation {
     public static Integer GetPortFromTextField(){
         return MainClientPresentation.mainPresentationRef.GetPortFromTextField();
     }
-    public static void MessageFromServer(ApMessage apMessage) {
-    }
 
     public static void SetButtonEnterTooltipTextAndShow(String text){
         MainClientPresentation.mainPresentationRef.SetButtonEnterTooltipTextAndShow(text);
     }
 
-    public static void AuthorizationPassed(boolean passed){
-        MainClientPresentation.mainPresentationRef.AuthorizationPassed(passed);
-    }
-
-    public static void chatChannelMessage(String channelMessage, String channelName) {
-        MainClientPresentation.mainPresentationRef.chatChannelMessage(channelMessage, channelName);
+    public static void chatChannelMessage(ApMessage apMessage) {
+        MainClientPresentation.mainPresentationRef.chatChannelMessage(apMessage);
     }
 }

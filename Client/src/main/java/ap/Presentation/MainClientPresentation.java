@@ -8,6 +8,7 @@ import ap.Presentation.Controllers.ChatControllerClientPresentation;
 import ap.Presentation.Controllers.LoginPasswordControllerClientPresentation;
 import ap.Presentation.Controllers.OptionsControllerClientPresentation;
 import ap.common.ApFinals;
+import ap.common.ApMessage;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -22,8 +23,6 @@ import java.util.ArrayList;
  */
 public class MainClientPresentation extends Application {
     public static MainClientPresentation mainPresentationRef;
-    private Scene scene;
-    private boolean IsAuthorizationAvailable;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
     private ArrayList<Stage> listStage = new ArrayList<>();
     private ArrayList<String> listFileName = new ArrayList<>();
     private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
@@ -34,17 +33,9 @@ public class MainClientPresentation extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        IsAuthorizationAvailable = false;
         LoadStage(true, ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
         LoadStage(false, ApFinals.FXML_OPTIONS_FILE_NAME);
         LoadStage(false,ApFinals.FXML_CHAT_FILE_NAME);
-        GrabApMessageFromClientDomainInCycle grabApMessageFromClientDomainInCycle = new GrabApMessageFromClientDomainInCycle();
-        grabApMessageFromClientDomainInCycle.run();
-//        primaryStage.setOnCloseRequest(event -> {
-//            System.out.println("Stage is closing");
-//            System.exit(0);
-        // Save file
-//        });//Закрывает все потоки при выходе
     }
 
     public static void main(String[] args) {
@@ -103,23 +94,46 @@ public class MainClientPresentation extends Application {
         return controller.GetPortFromTextField();
     }
 
+    public String GetLoginFromTextField() {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoginPasswordControllerClientPresentation controller = fxmlLoader.getController();
+        return controller.GetLoginFromTextField();
+    }
+
+    public String GetPasswordFromTextField() {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoginPasswordControllerClientPresentation controller = fxmlLoader.getController();
+        return controller.GetPasswordFromTextField();
+    }
+
+    public String GetButtonEnterText() {
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
+        LoginPasswordControllerClientPresentation controller = fxmlLoader.getController();
+        return controller.GetButtonEnterText();
+    }
+
     public void AddSystemMessage(String text) {
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_CHAT_FILE_NAME);
         ChatControllerClientPresentation controller = fxmlLoader.getController();
         controller.SetSystemText(text);
     }
 
-    public void chatChannelMessage(String channelMessage, String channelName) {
+    public void chatChannelMessage(ApMessage apMessage) {
         System.out.println("Пришло сообщение");
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_CHAT_FILE_NAME);
         ChatControllerClientPresentation controller = fxmlLoader.getController();
-        controller.setChatChannelMessage(channelMessage, channelName);
+        controller.setChatChannelMessage(apMessage.getChatChannelText(), apMessage.getChatChannelName());
     }
 
     public void SetButtonEnterTooltipTextAndShow(String text){
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
         LoginPasswordControllerClientPresentation controller = fxmlLoader.getController();
         controller.SetButtonEnterTooltipTextAndShow(text);
+    }
+
+    public void ChangeButtonEnterTextAndDisable(String text, boolean disable) {
+        LoginPasswordControllerClientPresentation controller = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME).getController();
+        controller.ChangeButtonEnterTextAndDisable(text, disable);
     }
 
     private FXMLLoader GetFXMLLoader(String fileName){
@@ -140,40 +154,31 @@ public class MainClientPresentation extends Application {
     public void ShowHideLoginPasswordStage(boolean show) {
         ShowHideStage(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME,show);
     }
-
     private void ShowHideStage(String fileName, boolean show) {
+        Stage stage;
         for (int i = 0; i < listStage.size(); i++) {
             if (fileName.equals(listFileName.get(i))) {
                 if (show){
-                    listStage.get(i).show();
+                    stage = listStage.get(i);
+                    Platform.runLater(stage::show);
                 } else
                 {
-                    listStage.get(i).hide();
+                    stage = listStage.get(i);
+                    Platform.runLater(stage::hide);
                 }
             }
         }
     }
-
     public void ChangeLoginPasswordButtonEnter(String text, boolean disable){
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME);
         LoginPasswordControllerClientPresentation loginPasswordControllerClientPresentation = fxmlLoader.getController();
-        loginPasswordControllerClientPresentation.ChangeLoginPasswordButtonEnter(text, disable);
+        loginPasswordControllerClientPresentation.ChangeButtonEnterTextAndDisable(text, disable);
     }
 
-//    public void AuthorizationPassed(boolean passed){
-//        String nextStage = ApFinals.FXML_CHAT_FILE_NAME;
-//        for (int i = 0; i < listStage.size(); i++) {
-//            if (ApFinals.FXML_LOGIN_PASSWORD_FILE_NAME.equals(listFileName.get(i))) {
-//                listStage.get(i).show();
-//            }
-//        }
-//    }
-
-    public boolean GetIsAuthorizationAvailable() {
-        return IsAuthorizationAvailable;
+    public String GetTextFromChatMessageTextField(){
+        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_CHAT_FILE_NAME);
+        ChatControllerClientPresentation controller = fxmlLoader.getController();
+        return controller.GetTextFromChatMessageTextField();
     }
 
-    public void setAuthorizationAvailable(boolean authorizationAvailable) {
-        IsAuthorizationAvailable = authorizationAvailable;
-    }
 }

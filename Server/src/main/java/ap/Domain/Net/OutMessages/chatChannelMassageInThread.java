@@ -18,14 +18,14 @@ public class chatChannelMassageInThread extends Thread {
 
     @Override
     public void run() {
-            if (ApacheDerby.checkRecord(message.getChatChannelText())) {          // Если сообщение записано в базе данных, рассылаем его остальным
-                System.out.println("Запущен перебор сокетов");
-                ArrayList<Socket> arrayListClientSocket = MainServerDomain.mainServerDomainRef.getArrayListClientSocket();
-                for (Socket element : arrayListClientSocket) {
-                    SendMessage(element);
-                    System.out.println("Элементы:"+element);
-                }
+        if (ApacheDerby.checkRecord(message.getChatChannelText())) {          // Если сообщение записано в базе данных, рассылаем его остальным
+            System.out.println("Запущен перебор сокетов");
+            ArrayList<Socket> arrayListClientSocket = MainServerDomain.mainServerDomainRef.getArrayListClientSocket();
+            for (Socket element : arrayListClientSocket) {
+                SendMessage(element);
+                System.out.println("Элементы:" + element);
             }
+        }
     }
 
     public void SendMessage(Socket clientSocket) {

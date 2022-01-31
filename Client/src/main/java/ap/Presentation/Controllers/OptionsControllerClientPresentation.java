@@ -23,6 +23,6 @@ public class OptionsControllerClientPresentation {
 
     @FXML
     public void ConnectToServer(ActionEvent actionEvent) {
-        FacadeClientDomain.ConnectToServer(GetIPFromTextField(),GetPortFromTextField());
+        FacadeClientDomain.ConnectToServer();
     }
 }

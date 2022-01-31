@@ -1,28 +1,24 @@
 package ap.Domain.Net.OutMessages;
 
 import ap.Domain.MainClientDomain;
+import ap.Domain.Net.SendMessageInThread;
 import ap.common.*;
+
+import java.net.Socket;
 import java.util.UUID;
 
 public class AuthorizationOut {
-    private String login;
-    private String password;
-    //++++++++++++++++++++++++
-    public AuthorizationOut(String loginFromOutside, String passwordFromOutside){
-        login = loginFromOutside;
-        password = passwordFromOutside;
+    ApMessage apMessage;
+    public AuthorizationOut(ApMessage apMessageLocal){
+        apMessage = apMessageLocal;
     }
-    //++++++++++++++++++++++++
-    private ApMessage CreateMessage(){
-        ApMessage apMessage = new ApMessage();
-        apMessage.setType(ApMessageEnumType.authorization);
-        apMessage.setUUID(UUID.randomUUID());
-        apMessage.setLogin(login);
-        apMessage.setPassword(password);
-        return apMessage;
-    }
+
+
     public void Send(){
-        ApMessage apMessage = CreateMessage();
-        MainClientDomain.mainDomainRef.SendMessage(apMessage);
+        Socket serverSocket = MainClientDomain.mainDomainRef.GetServerSocket();
+        if (serverSocket != null) {
+            SendMessageInThread sendMessageInThread = new SendMessageInThread(serverSocket, apMessage);
+            sendMessageInThread.start();
+        }
     }
 }

@@ -9,6 +9,6 @@ public class ChatChannelTextIn {
         apMessage = chatChannelApMessage;
     }
     public void Process(){
-        FacadeClientPresentation.chatChannelMessage(apMessage.getChatChannelText(), apMessage.getChatChannelName());
+        FacadeClientPresentation.chatChannelMessage(apMessage);
     }
 }

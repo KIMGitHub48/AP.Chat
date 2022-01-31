@@ -1,21 +1,17 @@
 package ap.Domain.Net;
 
-import ap.DATA.FacadeClientDATA;
-import ap.Domain.FacadeClientDomain;
 import ap.common.*;
-import java.io.BufferedReader;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class WaitingMessageFromServerInThread extends Thread {
-    private Socket serverSocket;
-    private BufferedReader clientSockedStreamIn; // поток чтения из сокета
-    private Thread threadIn;
+    private final Socket SERVER_SOCKET;
     private boolean threadInBreakFlag;
 
     WaitingMessageFromServerInThread(Socket socket) {
-        serverSocket = socket;
+        SERVER_SOCKET = socket;
     }
 
     @Override
@@ -28,8 +24,8 @@ public class WaitingMessageFromServerInThread extends Thread {
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
             apMessage = SocketStreamIn();
-            SortMessageInThread sortMessageInThread = new SortMessageInThread(apMessage);
-            sortMessageInThread.start();
+            SortInMessageInThread sortInMessageInThread = new SortInMessageInThread(apMessage);
+            sortInMessageInThread.start();
         }
     }
 
@@ -46,21 +42,9 @@ public class WaitingMessageFromServerInThread extends Thread {
 
     private ObjectInputStream ClientObjectInputStream() {
         try {
-            ObjectInputStream clientObjectInputStream = new ObjectInputStream(serverSocket.getInputStream());
-            return clientObjectInputStream;
+            return new ObjectInputStream(SERVER_SOCKET.getInputStream());
         } catch (IOException e) {
             return null;
         }
     }
-
-    public boolean stopClientThread() {
-        try {
-            serverSocket.shutdownInput();
-            threadInBreakFlag = false;
-//            threadIn.interrupt();
-            return true;
-        } catch (IOException e) {
-            return false;
-        }
-    } //Останавливает StreamIn, threadIn
 }

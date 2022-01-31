@@ -34,7 +34,8 @@ public class MainServerDomain {
         ApMessageEnumType type = apMessage.getType();
         switch (type) {
             case chatChannelText:
-                ChatMessageToAll(apMessage);               break;
+                ChatMessageToAll(apMessage);
+                break;
             default:
                 System.out.println("ID отправляемого сообщения не найдено, ID:"+type);
         }

@@ -1,6 +1,7 @@
 package ap.common;
 
 import java.io.Serializable;
+import java.net.Socket;
 import java.util.UUID;
 
 public class ApMessage implements Serializable {
@@ -67,4 +68,5 @@ public class ApMessage implements Serializable {
     public void setType(ApMessageEnumType type) {
         this.type = type;
     }
+
 }

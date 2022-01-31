@@ -1,7 +1,5 @@
 package ap.Domain.Net;
 
-import ap.DATA.ApacheDerby.ApacheDerby;
-import ap.DATA.FacadeServerDATA;
 import ap.common.*;
 
 import java.io.BufferedReader;
@@ -10,13 +8,11 @@ import java.io.ObjectInputStream;
 import java.net.Socket;
 
 public class WaitingMessageFromClientInThread extends Thread {
-    private Socket clientSocket;
-    private BufferedReader clientSockedStreamIn; // поток чтения из сокета
-    private Thread threadIn;
+    private final Socket socket;
     private boolean threadInBreakFlag;
 
     WaitingMessageFromClientInThread(Socket socket) {
-        clientSocket = socket;
+        this.socket = socket;
     }
 
     @Override
@@ -25,12 +21,12 @@ public class WaitingMessageFromClientInThread extends Thread {
     }
 
     private void SocketThreadInStart() {
-        ApMessage message;
+        ApMessage apMessage;
         threadInBreakFlag = true;
         while (threadInBreakFlag) {
-            message = SocketStreamIn();
-            ApacheDerby.addRecord(message.getChatChannelText());// запись сообщения в базу данных
-            FacadeServerDATA.MessageFromClient(message);
+            apMessage = SocketStreamIn();
+            SortInMessageInThread sortInMessageInThread = new SortInMessageInThread(apMessage, socket);
+            sortInMessageInThread.start();
         }
     }
 
@@ -46,7 +42,7 @@ public class WaitingMessageFromClientInThread extends Thread {
 
     private ObjectInputStream ClientObjectInputStream() {
         try {
-            ObjectInputStream clientObjectInputStream = new ObjectInputStream(clientSocket.getInputStream());
+            ObjectInputStream clientObjectInputStream = new ObjectInputStream(socket.getInputStream());
             return clientObjectInputStream;
         } catch (IOException e) {
             return null;
@@ -55,7 +51,7 @@ public class WaitingMessageFromClientInThread extends Thread {
 
     public boolean stopClientThread() {
         try {
-            clientSocket.shutdownInput();
+            socket.shutdownInput();
             threadInBreakFlag = false;
 //            threadIn.interrupt();
             return true;

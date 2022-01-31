@@ -1,16 +1,17 @@
 package ap.Domain.Net;
 
-import ap.Domain.Net.InMessages.AuthorizationIn;
+import ap.Domain.Net.InMessages.Authorization.AuthorizationIn;
 import ap.Domain.Net.InMessages.ChatChannelTextIn;
 import ap.common.ApMessage;
 import ap.common.ApMessageEnumType;
 
-public class SortMessageInThread extends Thread {
+public class SortInMessageInThread extends Thread {
     private ApMessage apMessage;
 
-    public SortMessageInThread(ApMessage apMessageLocal){
+    public SortInMessageInThread(ApMessage apMessageLocal){
         apMessage = apMessageLocal;
     }
+
 
     @Override
     public void run() {
@@ -25,7 +26,7 @@ public class SortMessageInThread extends Thread {
                 authorizationIn.Process();
                 break;
             default:
-                System.out.println("type отправляемого сообщения не распознано");
+                System.out.println("type принимаемого сообщения не распознано");
         }
     }
 }

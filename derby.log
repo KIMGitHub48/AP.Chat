@@ -1,6 +1,6 @@
 ----------------------------------------------------------------
-Mon Jan 17 21:13:30 KRAT 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017e-6862-c23a-00001b859228 
+Sun Jan 30 15:41:14 KRAT 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017e-aa25-3d2c-00001b8d47d0 
 on database directory D:\Java\Projects\AP.Chat\Database\chatDB with class loader jdk.internal.loader.ClassLoaders$AppClassLoader@300ffa5d 
 Loaded from file:/C:/Users/kimth/.m2/repository/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
