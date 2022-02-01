@@ -26,7 +26,7 @@ public class FacadeServerDATA {
         ArrayList<String> loginsChannel = new ArrayList<>();
         loginsChannel.add("Admin");
         loginsChannel.add("Кабаков И.М.");
-        loginsChannel.add("Артамонов С.В.");//Вроде правильно :), если ошибся поправь.
+        loginsChannel.add("Артамонов С.С.");//Вроде правильно :), если ошибся поправь.
         return loginsChannel;
     }
 
