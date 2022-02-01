@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class Record {
 
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     private Timestamp datetime;
 
@@ -15,7 +15,8 @@ public class Record {
 
     private String message;
 
-    public Record(String message) {
+    public Record(UUID id, String message) {
+        this.id = id;
         this.message = message;
     }
 

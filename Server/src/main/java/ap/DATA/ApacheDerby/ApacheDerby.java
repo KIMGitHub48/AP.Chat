@@ -142,6 +142,7 @@ public class ApacheDerby {
                 }
                 case 5: {
                     System.out.println("Введите сообщение: ");
+                    /*
                     String message = reader.readLine();
                     HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
                     Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
@@ -153,6 +154,7 @@ public class ApacheDerby {
                             statement.execute(addRecordInDuplicatedTable(uuid));
                             statement.close();
                         }
+                     */
                     break;
                 }
                 case 6: {
@@ -193,11 +195,11 @@ public class ApacheDerby {
         return null;
     }
 
-    public static void addRecord(String message) {
+    public static void addRecord(UUID id, String message) {
         Statement statement = connect();
         System.out.println("Передаем сообщение в базу");
-        HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
-        Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
+        HashMap hashMap = new HashMap(addRecordToTable(new Record(id, message)));          // Возвращаем в HashMap UUID и Сообщение
+        Iterator itr = hashMap.entrySet().iterator();                                      // пробегаемся по HashMap и получаем ключ и значение
         while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
             Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
             UUID uuid = entry.getKey();

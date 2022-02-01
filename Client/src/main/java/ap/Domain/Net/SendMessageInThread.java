@@ -13,6 +13,7 @@ public class SendMessageInThread extends Thread {
     public SendMessageInThread(Socket socket, ApMessage outApMessage) {
         serverSocket = socket;
         apMessage = outApMessage;
+        System.out.println("Сообщение " + apMessage.getUUID() + " " + apMessage.getChatChannelText());
     }
 
 
