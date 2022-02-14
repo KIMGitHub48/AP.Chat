@@ -1,5 +1,7 @@
 package ap.DATA.ApacheDerby;
 
+import ap.common.ApMessageEnumType;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.sql.*;
@@ -8,6 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.UUID;
 
+import static ap.common.ApMessageEnumType.authorization;
 import static java.lang.Class.forName;
 
 
@@ -214,10 +217,10 @@ public class ApacheDerby {
         }
     }
 
-    public static boolean checkRecord(String message) {
+    public static boolean checkRecord(UUID uuid, String message) {
         boolean check = false;
         Statement statement = connect();
-        String query = "SELECT * FROM History WHERE Message = '" + message + "'";
+        String query = "SELECT * FROM History WHERE UUID = '" + uuid + "' AND Message = '" + message + "'";
         System.out.println(query);
         try {
             if (statement.execute(query)) {
@@ -228,6 +231,29 @@ public class ApacheDerby {
             e.printStackTrace();
         }
         return check;
+    }
+
+    public static boolean authorization(String login, String password) {
+        boolean check = false;
+        Statement statement = connect();
+        String query = "SELECT * FROM Users WHERE Login = '" + login + "' AND Password = '" + password + "'";
+        System.out.println(query);
+        try {
+            if (statement.execute(query)) {
+                check = true;
+            }
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return check;
+    }
+
+    public static void sortTypeMessage(ApMessageEnumType type) {
+        if(type == authorization) {
+
+        }
+
     }
 
     public static Map<UUID, String> addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY

@@ -1,9 +1,13 @@
 package ap.DATA.ApacheDerby;
 
+import ap.common.ApMessageEnumType;
+
 import java.sql.Timestamp;
 import java.util.UUID;
 
 public class Record {
+
+    private ApMessageEnumType type;
 
     private UUID id;
 

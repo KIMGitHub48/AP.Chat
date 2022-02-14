@@ -1,5 +1,6 @@
 package ap.DATA;
 
+import ap.DATA.ApacheDerby.ApacheDerby;
 import ap.DATA.SortApMessage.SortApMessage;
 import ap.common.*;
 import ap.Domain.FacadeServerDomain;
@@ -11,6 +12,8 @@ public class FacadeServerDATA {
     //Это будет основной метод для общения с базой.
     //Метод должен принять сообщение обработать и создать ApMetaMessage, заполнить его и вернуть.
     public static ApMetaMessage MessageToData(ApMessage apMessage){
+//        ApacheDerby.addRecord(apMessage.getUUID(), apMessage.getChatChannelText());
+//        ApacheDerby.checkRecord(apMessage.getUUID(), apMessage.getChatChannelText());
 //        SortApMessage sortApMessage = new SortApMessage(apMessage);
 //        return sortApMessage.Sort();
         return TheHUCK_ApMetaMessage(apMessage);
@@ -26,7 +29,7 @@ public class FacadeServerDATA {
         ArrayList<String> loginsChannel = new ArrayList<>();
         loginsChannel.add("Admin");
         loginsChannel.add("Кабаков И.М.");
-        loginsChannel.add("Артамонов С.С.");//Вроде правильно :), если ошибся поправь.
+        loginsChannel.add("Артамонов С.С.");
         return loginsChannel;
     }
 
