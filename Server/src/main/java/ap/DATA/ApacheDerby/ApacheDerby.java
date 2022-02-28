@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static ap.common.ApMessageEnumType.authorization;
+import static ap.common.ApMessageEnumType.chatChannelText;
 import static java.lang.Class.forName;
 
 
@@ -198,7 +199,7 @@ public class ApacheDerby {
         return null;
     }
 
-    public static void addRecord(UUID id, String message) {
+    public static void addRecord(ApMessageEnumType type, UUID id, String message) {                 //Добавление в БД сообщения (нужно доработать в зависимости от типа)
         Statement statement = connect();
         System.out.println("Передаем сообщение в базу");
         HashMap hashMap = new HashMap(addRecordToTable(new Record(id, message)));          // Возвращаем в HashMap UUID и Сообщение
@@ -217,7 +218,7 @@ public class ApacheDerby {
         }
     }
 
-    public static boolean checkRecord(UUID uuid, String message) {
+    public static boolean checkRecord(UUID uuid, String message) {          //Проверка сообщения на наличие его в БД
         boolean check = false;
         Statement statement = connect();
         String query = "SELECT * FROM History WHERE UUID = '" + uuid + "' AND Message = '" + message + "'";
@@ -233,14 +234,19 @@ public class ApacheDerby {
         return check;
     }
 
-    public static boolean authorization(String login, String password) {
+    public static boolean authorization(String login, String password) {     //Авторизация пользователя
         boolean check = false;
         Statement statement = connect();
         String query = "SELECT * FROM Users WHERE Login = '" + login + "' AND Password = '" + password + "'";
         System.out.println(query);
         try {
-            if (statement.execute(query)) {
-                check = true;
+            ResultSet find = statement.executeQuery(query);
+            while (find.next()) {
+                String loginQuery = find.getString("login");
+                String passwordQuery = find.getString("password");
+                if (login.equals(loginQuery) && password.equals(passwordQuery)) {
+                    check = true;
+                }
             }
             statement.close();
         } catch (SQLException e) {
@@ -249,11 +255,15 @@ public class ApacheDerby {
         return check;
     }
 
-    public static void sortTypeMessage(ApMessageEnumType type) {
-        if(type == authorization) {
-
+    public static String sortTypeMessage(ApMessageEnumType type) {          //Определяем с какой таблицей будем работать в зависимости от типа сообщения
+        String table = null;
+        if (type == authorization) {
+            table = "Users";
+            if (type == chatChannelText) {
+                table = "History";
+            }
         }
-
+        return table;
     }
 
     public static Map<UUID, String> addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY

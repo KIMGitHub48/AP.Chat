@@ -1,5 +1,6 @@
 package ap.Domain.Net.InMessages;
 
+import ap.DATA.ApacheDerby.ApacheDerby;
 import ap.Domain.MainServerDomain;
 import ap.Domain.Net.OutMessages.AuthorizationOut;
 import ap.common.ApMessage;
@@ -21,7 +22,7 @@ public class AuthorizationIn {
         ap.Domain.Net.OutMessages.AuthorizationOut authorizationOut = new AuthorizationOut(apMessageFromApMetaMessage, socket);
         authorizationOut.Send();
         if (apMetaMessage.isAuthorizationPassed()) {
-            MainServerDomain.mainServerDomainRef.AddActualLoginInfo(apMessage.getLogin(),socket);
+            MainServerDomain.mainServerDomainRef.AddActualLoginInfo(apMessage.getLogin(), socket);
         }
     }
 }
