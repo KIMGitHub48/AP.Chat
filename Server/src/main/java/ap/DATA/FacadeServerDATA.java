@@ -12,7 +12,7 @@ public class FacadeServerDATA {
     //Это будет основной метод для общения с базой.
     //Метод должен принять сообщение обработать и создать ApMetaMessage, заполнить его и вернуть.
     public static ApMetaMessage MessageToData(ApMessage apMessage){
-//        ApacheDerby.addRecord(apMessage.getUUID(), apMessage.getChatChannelText());
+        ApacheDerby.addRecord(apMessage.getType(), apMessage.getUUID(), apMessage.getChatChannelText());
 //        ApacheDerby.checkRecord(apMessage.getUUID(), apMessage.getChatChannelText());
 //        SortApMessage sortApMessage = new SortApMessage(apMessage);
 //        return sortApMessage.Sort();

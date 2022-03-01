@@ -19,6 +19,8 @@ public class ApacheDerby {
 
     public static ApacheDerby apacheDerby;
 
+    enum Table {History, Log_technical};
+
     private static final String DB_URL = "jdbc:derby:Database/chatDB";
 
     private static final String DB_URL_MODIFY = ";create=true";
@@ -105,7 +107,7 @@ public class ApacheDerby {
             System.out.println("2. Удалить пользователя из основной таблицы");
             System.out.println("3. Показать всех пользователей в таблице Users");
             System.out.println("4. Показать всех пользователей в дубликате таблицы Users");
-            System.out.println("5. Создать новую запись");
+            System.out.println("5. Показать все записи в таблице Technical_Log");
             System.out.println("6. Удалить запись из основной таблицы");
             System.out.println("7. Показать все записи в таблице History");
             System.out.println("8. Показать все записи в дубликате таблицы History");
@@ -145,20 +147,8 @@ public class ApacheDerby {
                     break;
                 }
                 case 5: {
-                    System.out.println("Введите сообщение: ");
-                    /*
-                    String message = reader.readLine();
-                    HashMap hashMap = new HashMap(addRecordToTable(new Record(message)));                  // Возвращаем в HashMap UUID и Сообщение
-                    Iterator itr = hashMap.entrySet().iterator();                                          // пробегаемся по HashMap и получаем ключ и значение
-                        while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
-                            Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
-                            UUID uuid = entry.getKey();
-                            String query = entry.getValue();
-                            statement.execute(query);
-                            statement.execute(addRecordInDuplicatedTable(uuid));
-                            statement.close();
-                        }
-                     */
+                    showTechnicalLog();
+                    statement.close();
                     break;
                 }
                 case 6: {
@@ -199,23 +189,34 @@ public class ApacheDerby {
         return null;
     }
 
-    public static void addRecord(ApMessageEnumType type, UUID id, String message) {                 //Добавление в БД сообщения (нужно доработать в зависимости от типа)
+    public static void addRecord(ApMessageEnumType type, UUID id, String message) {        // Добавление в БД сообщения (нужно доработать в зависимости от типа)
         Statement statement = connect();
         System.out.println("Передаем сообщение в базу");
-        HashMap hashMap = new HashMap(addRecordToTable(new Record(id, message)));          // Возвращаем в HashMap UUID и Сообщение
-        Iterator itr = hashMap.entrySet().iterator();                                      // пробегаемся по HashMap и получаем ключ и значение
-        while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
-            Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
-            UUID uuid = entry.getKey();
-            String query = entry.getValue();
-            try {
-                statement.execute(query);
-                statement.execute(addRecordInDuplicatedTable(uuid));
-                statement.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        System.out.println("Тип сообщения: " + type);
+        String table;
+        Iterator itr;
+        HashMap hashMap;
+        switch (type) {                                                                    // В зависимости от типа сообщения, передаем запрос в необходимую таблицу
+            case authorization:
+                addRecordToTable(Table.Log_technical, new Record(id, message));                    // Записываем сообщение в таблицу логов
+            case chatChannelText:
+                hashMap = new HashMap(addRecordToTable(Table.History, new Record(id, message)));   // Возвращаем в HashMap UUID и Сообщение
+                itr = hashMap.entrySet().iterator();                                               // пробегаемся по HashMap и получаем ключ и значение
+                while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
+                    Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
+                    UUID uuid = entry.getKey();
+                    String query = entry.getValue();
+                    try {
+                        statement.execute(query);
+                        statement.execute(addRecordInDuplicatedTable(uuid));
+                        statement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            default:
         }
+
     }
 
     public static boolean checkRecord(UUID uuid, String message) {          //Проверка сообщения на наличие его в БД
@@ -266,16 +267,27 @@ public class ApacheDerby {
         return table;
     }
 
-    public static Map<UUID, String> addRecordToTable(Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
+    public static Map<UUID, String> addRecordToTable(Table table, Record record) {                // Метод добавления записи в таблицу TABLE_HISTORY
         UUID uuid = record.getId();
         int userID = record.getUserID();
         String typeMessage = record.getTypeMessage();
         String datetime = record.getTimestamp();
         String message = record.getMessage();
-        String query = "INSERT INTO History VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "', '" + uuid + "')";
         HashMap<UUID, String> hashMap = new HashMap<>();
-        hashMap.put(uuid, query);
-        return hashMap;
+        String query;
+        System.out.println(table);                                          // надо дебажить, не понимаю почему таблица одна а свич/кэйз идет на другую, где-то напортачил
+        switch (table) {
+            case History:
+                query = "INSERT INTO " + table + " VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "', '" + uuid + "')";
+                hashMap.put(uuid, query);
+                System.out.println(table);
+                return hashMap;
+            case Log_technical:
+                query = "INSERT INTO " + table + " VALUES (default, '" + datetime + "', '" + message + "', '" + uuid + "')";
+                hashMap.put(uuid, query);
+                return hashMap;
+        }
+        return null;
     }
 
     public static String addRecordInDuplicatedTable(UUID uuidString) { // Метод добавления записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
@@ -335,6 +347,24 @@ public class ApacheDerby {
                     System.out.println("Должность: " + post);
                     System.out.println("Логин: " + login);
                     System.out.println("Пароль: " + password);
+            }
+        }
+        catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    public static void showTechnicalLog() {                                     // тестовый метод, запрос всех записей в техническом логе
+        try {
+            Connection connection = DriverManager.getConnection(DB_URL);
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM Log_technical");
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String id = resultSet.getString("messageID");
+                String date = resultSet.getString("dateMessage");
+                String message = resultSet.getString("message");
+                String UUID = resultSet.getString("uuid");
+                System.out.println("ID: " + id + " | Дата сообщения: " + date + " | Сообщение: " + message + " | UUID: " + UUID);
             }
         }
         catch (Exception exception) {
