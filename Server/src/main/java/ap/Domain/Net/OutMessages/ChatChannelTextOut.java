@@ -2,8 +2,8 @@ package ap.Domain.Net.OutMessages;
 
 import ap.Domain.MainServerDomain;
 import ap.Domain.Net.OutMessages.SendMessages.SendMessageToArrayListSocket;
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
+import apCommon.ApMetaMessage;
 
 import java.net.Socket;
 import java.util.ArrayList;

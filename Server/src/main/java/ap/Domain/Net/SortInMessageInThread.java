@@ -1,8 +1,8 @@
 package ap.Domain.Net;
 
 import ap.Domain.Net.InMessages.AuthorizationIn;
-import ap.common.ApMessage;
-import ap.common.ApMessageEnumType;
+import apCommon.ApMessage;
+import apCommon.ApMessageEnumType;
 import ap.Domain.Net.InMessages.ChatChannelTextIn;
 
 import java.net.Socket;

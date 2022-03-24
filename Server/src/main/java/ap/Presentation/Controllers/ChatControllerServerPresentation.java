@@ -2,6 +2,8 @@ package ap.Presentation.Controllers;
 
 import ap.Domain.FacadeServerDomain;
 import ap.common.*;
+import apCommon.ApMessage;
+import apCommon.ApMessageEnumType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

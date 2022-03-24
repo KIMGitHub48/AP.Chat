@@ -1,8 +1,8 @@
 package ap.DATA.SortApMessage;
 
-import ap.common.ApMessage;
-import ap.common.ApMessageEnumType;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
+import apCommon.ApMessageEnumType;
+import apCommon.ApMetaMessage;
 
 //Для каждого типа сообщения будет создан свой класс.
 

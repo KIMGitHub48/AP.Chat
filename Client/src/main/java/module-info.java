@@ -1,14 +1,19 @@
-module ap {
+import apClient.Domain.TestInterfaceR;
+
+module apClient {
     requires javafx.controls;
     requires javafx.fxml;
     requires org.hibernate.orm.core;
     requires reflections;
     requires java.persistence;
     requires java.sql;
-    requires ap.common;
+    requires apCommon;
 
-    opens ap.Presentation to javafx.fxml;
-    exports ap.Presentation;
-    exports ap.Presentation.Controllers;
-    opens ap.Presentation.Controllers to javafx.fxml;
+    opens apClient.Presentation to javafx.fxml;
+    exports apClient.Presentation;
+    exports apClient.Presentation.Controllers;
+    opens apClient.Presentation.Controllers to javafx.fxml;
+
+    //exports apClient.Domain to apCommon;
+    provides apCommon.TestInterface with TestInterfaceR;
 }

@@ -1,3 +1,7 @@
-module ap.common {
-    exports ap.common;
+import apCommon.TestInterface;
+
+module apCommon {
+    exports apCommon;
+
+    uses TestInterface;
 }

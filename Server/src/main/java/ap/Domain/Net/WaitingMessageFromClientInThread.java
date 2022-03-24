@@ -1,8 +1,8 @@
 package ap.Domain.Net;
 
 import ap.common.*;
+import apCommon.ApMessage;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.net.Socket;

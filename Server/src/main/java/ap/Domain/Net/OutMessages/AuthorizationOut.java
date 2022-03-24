@@ -1,8 +1,7 @@
 package ap.Domain.Net.OutMessages;
 
 import ap.Domain.Net.OutMessages.SendMessages.SendMessageToSocket;
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
 
 import java.net.Socket;
 

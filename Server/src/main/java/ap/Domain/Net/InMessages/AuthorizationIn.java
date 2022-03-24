@@ -1,10 +1,9 @@
 package ap.Domain.Net.InMessages;
 
-import ap.DATA.ApacheDerby.ApacheDerby;
 import ap.Domain.MainServerDomain;
 import ap.Domain.Net.OutMessages.AuthorizationOut;
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
+import apCommon.ApMetaMessage;
 
 import java.net.Socket;
 

@@ -1,7 +1,7 @@
 package ap.DATA.SortApMessage;
 
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
+import apCommon.ApMetaMessage;
 
 public class Authorization {
     private ApMessage apMessage;

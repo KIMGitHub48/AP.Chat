@@ -1,10 +1,8 @@
 package ap.Domain.Net.InMessages;
 
 import ap.Domain.Net.OutMessages.ChatChannelTextOut;
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
-
-import java.util.ArrayList;
+import apCommon.ApMessage;
+import apCommon.ApMetaMessage;
 
 public class ChatChannelTextIn {
     private ApMessage apMessage;

@@ -1,6 +1,6 @@
 package ap.Domain.Net.OutMessages.SendMessages;
 
-import ap.common.ApMessage;
+import apCommon.ApMessage;
 
 import java.io.IOException;
 import java.io.ObjectOutputStream;

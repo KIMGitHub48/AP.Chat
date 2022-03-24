@@ -1,7 +1,7 @@
 package ap.DATA.SortApMessage;
 
-import ap.common.ApMessage;
-import ap.common.ApMetaMessage;
+import apCommon.ApMessage;
+import apCommon.ApMetaMessage;
 
 //Обязательно докрутить авторизацию, я буду проверять прошло ли это сообщение авторизацию.
 //Тоесть сначала проверить логин и пароли потом обработка сообщения.

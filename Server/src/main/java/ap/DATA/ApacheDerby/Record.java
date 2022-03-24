@@ -1,6 +1,6 @@
 package ap.DATA.ApacheDerby;
 
-import ap.common.ApMessageEnumType;
+import apCommon.ApMessageEnumType;
 
 import java.sql.Timestamp;
 import java.util.UUID;
