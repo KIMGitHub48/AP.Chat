@@ -23,6 +23,11 @@
             <artifactId>ClientAuthorization</artifactId>
             <version>1.0.0</version>
         </dependency>
+        <dependency>
+            <groupId>AP.Chat</groupId>
+            <artifactId>ClientOptions</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

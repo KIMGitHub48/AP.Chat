@@ -10,6 +10,7 @@
         <module>Server</module>
         <module>Common</module>
         <module>ClientAuthorization</module>
+        <module>ClientOptions</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

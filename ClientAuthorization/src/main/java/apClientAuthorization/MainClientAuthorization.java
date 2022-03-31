@@ -4,6 +4,8 @@ import apClientAuthorization.Controllers.AuthorizationController;
 import apClientAuthorization.Messages.In.*;
 import apCommon.ApFinals;
 import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientCoreMapService;
+import apCommon.apModuleServices.ClientOptionsService;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +21,8 @@ public class MainClientAuthorization extends Application {
     private ArrayList<String> listFileName = new ArrayList<>();
     private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
     private ClientCoreService clientCoreService = apCommon.apModuleServices.ClientCoreService.getFirst();
+    private ClientCoreMapService clientCoreMapService = apCommon.apModuleServices.ClientCoreMapService.getFirst();
+    private ClientOptionsService clientOptionsService = apCommon.apModuleServices.ClientOptionsService.getFirst();
     private boolean IsAuthorizationAvailable=false;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
 
     public MainClientAuthorization() {
@@ -76,18 +80,6 @@ public class MainClientAuthorization extends Application {
         });
     }//Событие закрытия окна проверяет есть ли хоть одно открытое окно иначе закрывает все потоки и приложение.
 
-//    public String GetIPFromTextField() {
-//        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_OPTIONS_FILE_NAME);
-//        OptionsControllerClientPresentation controller = fxmlLoader.getController();
-//        return controller.GetIPFromTextField();
-//    }
-
-//    public Integer GetPortFromTextField() {
-//        FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_OPTIONS_FILE_NAME);
-//        OptionsControllerClientPresentation controller = fxmlLoader.getController();
-//        return controller.GetPortFromTextField();
-//    }
-
     public String GetLoginFromTextField() {
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_AUTHORIZATION_FILE_NAME);
         AuthorizationController authorizationController = fxmlLoader.getController();
@@ -139,30 +131,18 @@ public class MainClientAuthorization extends Application {
         return null;
     }
 
-    public void ShowHideOptionsStage(boolean show) {
-        ShowHideStage(ApFinals.FXML_OPTIONS_FILE_NAME,show);
-    }
-    public void ShowHideChatStage(boolean show) {
-        ShowHideStage(ApFinals.FXML_CHAT_FILE_NAME,show);
-    }
-    public void ShowHideLoginPasswordStage(boolean show) {
-        ShowHideStage(ApFinals.FXML_AUTHORIZATION_FILE_NAME,show);
-    }
-    private void ShowHideStage(String fileName, boolean show) {
-        Stage stage;
-        for (int i = 0; i < listStage.size(); i++) {
+    private Stage GetStage(String fileName) {
+        for (int i = 0; i < listFileName.size(); i++) {
             if (fileName.equals(listFileName.get(i))) {
-                if (show){
-                    stage = listStage.get(i);
-                    Platform.runLater(stage::show);
-                } else
-                {
-                    stage = listStage.get(i);
-                    Platform.runLater(stage::hide);
-                }
+                return listStage.get(i);
             }
         }
+        return null;
     }
+    public void ShowOptionsStage(){
+        clientCoreMapService.ShowOptionsStage();
+    };
+
     public void ChangeAuthorizationButtonEnterTextAndDisable(String text, boolean disable){
         FXMLLoader fxmlLoader = GetFXMLLoader(ApFinals.FXML_AUTHORIZATION_FILE_NAME);
         AuthorizationController authorizationController = fxmlLoader.getController();
@@ -183,6 +163,11 @@ public class MainClientAuthorization extends Application {
     public void WaitingAuthorizationResponse() {
         WaitingAuthorizationResponse waitingAuthorizationResponse = new WaitingAuthorizationResponse();
         waitingAuthorizationResponse.waitResponse();
+    }
+
+    public void HideAuthorizationStage(){
+        Stage stage = GetStage(ApFinals.FXML_AUTHORIZATION_FILE_NAME);
+        stage.hide();
     }
 
 //    public String GetTextFromChatMessageTextField(){

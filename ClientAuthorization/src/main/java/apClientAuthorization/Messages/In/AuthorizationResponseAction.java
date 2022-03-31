@@ -26,8 +26,8 @@ public class AuthorizationResponseAction {
 
         clientCoreService.setLogin(login);
         clientCoreService.setPassword(Password);
-        clientCoreService.ShowHideChatStage(true);
-        main.ShowHideLoginPasswordStage(false);
+        //clientCoreService.ShowHideChatStage(true);
+        main.HideAuthorizationStage();
         main.ChangeButtonEnterTextAndDisable(ApFinals.ENTER, false);
     }
     public void AuthorizationTimeError(){

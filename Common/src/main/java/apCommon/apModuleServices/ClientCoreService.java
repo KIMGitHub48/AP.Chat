@@ -7,17 +7,6 @@ import java.util.ServiceLoader;
 import java.util.stream.Collectors;
 
 public interface ClientCoreService {
-    //Метод показывает Options Stage
-    void ShowOptionsStage();
-
-    //Метод возвращает состояние подключения
-    boolean IsConnected();
-
-    //Метод Инициирует соединение
-    void ConnectToServer();
-
-    void SortOutMessageInThread(ApMessage apMessage);
-
     //Метод возвращает первую имплиментацию этого интерфейса.
     static ClientCoreService getFirst() {
         List<ClientCoreService> clientCoreServiceList = ServiceLoader
@@ -27,6 +16,14 @@ public interface ClientCoreService {
                 .collect(Collectors.toList());
         return clientCoreServiceList.get(0);
     }
+
+    //Метод возвращает состояние подключения
+    boolean IsConnected();
+
+    //Метод Инициирует соединение
+    void ConnectToServer();
+
+    void SortOutMessageInThread(ApMessage apMessage);
 
     void setLogin(String login);
 

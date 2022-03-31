@@ -10,11 +10,11 @@ public interface ClientAuthorizationService {
 
     //Метод возвращает первую имплиментацию этого интерфейса.
     static ClientAuthorizationService getFirst() {
-        List<ClientAuthorizationService> ClientAuthorizationServiceList = ServiceLoader
+        List<ClientAuthorizationService> clientAuthorizationServiceList = ServiceLoader
                 .load(ClientAuthorizationService.class)
                 .stream()
                 .map(ServiceLoader.Provider::get)
                 .collect(Collectors.toList());
-        return ClientAuthorizationServiceList.get(0);
+        return clientAuthorizationServiceList.get(0);
     }
 }

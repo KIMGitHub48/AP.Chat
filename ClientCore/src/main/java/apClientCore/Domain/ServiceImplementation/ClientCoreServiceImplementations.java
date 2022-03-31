@@ -8,11 +8,6 @@ import apClientCore.Domain.MainClientDomain;
 public class ClientCoreServiceImplementations implements ClientCoreService {
 
     @Override
-    public void ShowOptionsStage() {
-
-    }
-
-    @Override
     public boolean IsConnected() {
         boolean isConnected = MainClientDomain.mainDomainRef.IsConnected();
         return isConnected;

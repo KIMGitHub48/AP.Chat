@@ -11,6 +11,7 @@ import apClientCore.Presentation.MainClientPresentation;
 import apClientCore.Presentation.FacadeClientPresentation;
 import apCommon.ApMessage;
 import apCommon.apModuleServices.ClientAuthorizationService;
+import apCommon.apModuleServices.ClientOptionsService;
 //import apAuthorization.Test;
 
 import java.net.Socket;
@@ -24,18 +25,21 @@ public class MainClientDomain {
     private boolean IsAuthorizationAvailable;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
     private ArrayList<ApMessage> presentationApMessageList = new ArrayList<>(); //Лист синхронизирован, использовать нельзя, использовать только в методе GetSetPresentationApMessageFromList
     private apCommon.apModuleServices.ClientAuthorizationService clientAuthorizationService = ClientAuthorizationService.getFirst();
+    private apCommon.apModuleServices.ClientOptionsService clientOptionsService = ClientOptionsService.getFirst();
+
 
     MainClientDomain(String[] args) {
         System.out.println("Запущен Клиент");
         mainDomainRef = this;
         //FacadeClientPresentation.Launcher(args);
         clientAuthorizationService.launcher(args);
+        clientOptionsService.launcher(args);
         IsAuthorizationAvailable = false;
     }
 
     public void ConnectToServer() {
-        String IP = MainClientPresentation.mainPresentationRef.GetIPFromTextField();
-        Integer Port = MainClientPresentation.mainPresentationRef.GetPortFromTextField();
+        String IP = clientOptionsService.GetServerIP();
+        Integer Port = clientOptionsService.GetServerPort();
         if (connectToServer == null) {
             connectToServer = new ConnectToServer();
             connectToServer.ConnectToServer(IP,Port);
