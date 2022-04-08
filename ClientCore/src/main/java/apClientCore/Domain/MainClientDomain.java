@@ -17,8 +17,8 @@ import apCommon.apModuleServices.ClientOptionsService;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class MainClientDomain {
-    public static MainClientDomain mainDomainRef;
+public class MainClientDomain implements MainClientCoreService {
+    //public static MainClientDomain mainDomainRef;
     private ConnectToServer connectToServer;
     private String login;
     private String password;
@@ -30,13 +30,62 @@ public class MainClientDomain {
 
     MainClientDomain(String[] args) {
         System.out.println("Запущен Клиент");
-        mainDomainRef = this;
+        //mainDomainRef = this;
         //FacadeClientPresentation.Launcher(args);
         clientAuthorizationService.launcher(args);
         clientOptionsService.launcher(args);
         IsAuthorizationAvailable = false;
     }
 
+    //region !! Имплементация MainClientCoreService
+    public boolean isAuthorizationAvailable() {
+        return IsAuthorizationAvailable;
+    }
+
+    @Override
+    public void setAuthorizationAvailable(boolean authorizationAvailable) {
+        IsAuthorizationAvailable = authorizationAvailable;
+    }
+
+    @Override
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    @Override
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Override
+    public String getLogin() {
+        return login;
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public Socket GetServerSocket(){
+        if (IsConnected()) {
+            Socket serverSocket = connectToServer.GetServerSocket();
+            return serverSocket;
+        } else {
+            return null;
+        }
+    }
+    @Override
+    public boolean IsConnected(){
+        if ((connectToServer != null) && (connectToServer.IsConnected())){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public void ConnectToServer() {
         String IP = clientOptionsService.GetServerIP();
         Integer Port = clientOptionsService.GetServerPort();
@@ -47,6 +96,7 @@ public class MainClientDomain {
             connectToServer.ConnectToServer(IP,Port);
         }
     }
+    //endregion
 
 //    public void SendMessageToServer(ApMessage apMessage) {
 //        if (IsConnected()) {
@@ -56,51 +106,9 @@ public class MainClientDomain {
 //        }
 //    }
 
-    public Socket GetServerSocket(){
-        if (IsConnected()) {
-            Socket serverSocket = connectToServer.GetServerSocket();
-            return serverSocket;
-        } else {
-            return null;
-        }
-    }
-
-    public boolean IsConnected(){
-        if ((connectToServer != null) && (connectToServer.IsConnected())){
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public void SortOutMessageInThread(ApMessage apMessage) {
         SortOutMessageInThread sortOutMessageInThread = new SortOutMessageInThread(apMessage);
         sortOutMessageInThread.start();
-    }
-
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isAuthorizationAvailable() {
-        return IsAuthorizationAvailable;
-    }
-
-    public void setAuthorizationAvailable(boolean authorizationAvailable) {
-        IsAuthorizationAvailable = authorizationAvailable;
     }
 
     public void WaitingAuthorizationResponse() {

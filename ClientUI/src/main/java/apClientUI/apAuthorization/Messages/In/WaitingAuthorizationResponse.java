@@ -1,19 +1,17 @@
-package apClientCore.Domain.Net.InMessages.Authorization;
+package apClientUI.apAuthorization.Messages.In;
 
-import apClientCore.Domain.MainClientCoreService;
-import apClientCore.Domain.MainClientDomain;
-import apClientCore.Presentation.MainClientPresentation;
+import apClientAuthorization.MainClientAuthorization;
 import apCommon.ApFinals;
 
 import java.util.concurrent.TimeUnit;
 
 public class WaitingAuthorizationResponse {
-    private boolean timeFlag;
-    private MainClientCoreService mainClientCoreService = MainClientCoreService.getFirst();
+    boolean timeFlag;
+    private MainClientAuthorization main = MainClientAuthorization.mainClientAuthorizationRef;
 
     public void waitResponse() {
         for (int i = 0; i < 10; i++) {
-            if (mainClientCoreService.isAuthorizationAvailable()) {
+            if (main.isAuthorizationAvailable()) {
                 try {
                     TimeUnit.MILLISECONDS.sleep(500);
                 } catch (InterruptedException e) {
@@ -32,15 +30,15 @@ public class WaitingAuthorizationResponse {
     }
 
     private void ChangeButtonEnterWaitingText() {
-        switch (MainClientPresentation.mainPresentationRef.GetButtonEnterText()) {
+        switch (main.GetButtonEnterText()) {
             case (ApFinals.ENTER_1):
-                MainClientPresentation.mainPresentationRef.ChangeLoginPasswordButtonEnter(ApFinals.ENTER_2, true);
+                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_2, true);
                 break;
             case (ApFinals.ENTER_2):
-                MainClientPresentation.mainPresentationRef.ChangeLoginPasswordButtonEnter(ApFinals.ENTER_3, true);
+                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_3, true);
                 break;
             case (ApFinals.ENTER_3):
-                MainClientPresentation.mainPresentationRef.ChangeLoginPasswordButtonEnter(ApFinals.ENTER_1, true);
+                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
                 break;
         }
     }

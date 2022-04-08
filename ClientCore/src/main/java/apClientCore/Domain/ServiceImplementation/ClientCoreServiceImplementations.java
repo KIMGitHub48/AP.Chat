@@ -1,21 +1,23 @@
 package apClientCore.Domain.ServiceImplementation;
 
+import apClientCore.Domain.MainClientCoreService;
 import apClientCore.Domain.Net.SortOutMessageInThread;
 import apCommon.ApMessage;
 import apCommon.apModuleServices.ClientCoreService;
 import apClientCore.Domain.MainClientDomain;
 
 public class ClientCoreServiceImplementations implements ClientCoreService {
+    private MainClientCoreService mainClientCoreService = MainClientCoreService.getFirst();
 
     @Override
     public boolean IsConnected() {
-        boolean isConnected = MainClientDomain.mainDomainRef.IsConnected();
+        boolean isConnected = mainClientCoreService.IsConnected();
         return isConnected;
     }
 
     @Override
     public void ConnectToServer() {
-        MainClientDomain.mainDomainRef.ConnectToServer();
+        mainClientCoreService.ConnectToServer();
     }
 
     @Override
@@ -26,12 +28,12 @@ public class ClientCoreServiceImplementations implements ClientCoreService {
 
     @Override
     public void setLogin(String login) {
-        MainClientDomain.mainDomainRef.setLogin(login);
+        mainClientCoreService.setLogin(login);
     }
 
     @Override
     public void setPassword(String password) {
-        MainClientDomain.mainDomainRef.setPassword(password);
+        mainClientCoreService.setPassword(password);
     }
 
     @Override

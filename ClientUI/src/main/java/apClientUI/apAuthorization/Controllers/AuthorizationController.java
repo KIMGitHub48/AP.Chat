@@ -1,7 +1,7 @@
-package apClientAuthorization.Controllers;
-import apClientAuthorization.MainClientAuthorization;
-import apCommon.apModuleServices.ClientCoreService;
-import apClientAuthorization.AuthorizationButtonEnterInThread;
+package apClientUI.apAuthorization.Controllers;
+
+import apClientUI.OptionsService;
+import apClientUI.apAuthorization.AuthorizationButtonEnterInThread;
 import apCommon.ApFinals;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -11,8 +11,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 
 public class AuthorizationController {
-    MainClientAuthorization main = MainClientAuthorization.mainClientAuthorizationRef;
-
+    //private MainClientUI main = MainClientUI.mainClientUIRef;
+    public static AuthorizationController authorizationController;
+    private OptionsService optionsService = OptionsService.getFirst();
+    public AuthorizationController (){
+        authorizationController = this;
+    };
 
     @FXML
     private TextField textFieldLogin;
@@ -63,7 +67,7 @@ public class AuthorizationController {
 
     @FXML
     private void ShowOptionsStage(ActionEvent actionEvent) {
-        main.ShowOptionsStage();
+        optionsService.ShowOptionsStage();
     }
 
     public void SetButtonEnterTooltipTextAndShow(String text) {

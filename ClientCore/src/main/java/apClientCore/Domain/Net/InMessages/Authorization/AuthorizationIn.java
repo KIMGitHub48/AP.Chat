@@ -1,5 +1,6 @@
 package apClientCore.Domain.Net.InMessages.Authorization;
 
+import apClientCore.Domain.MainClientCoreService;
 import apClientCore.Domain.MainClientDomain;
 import apCommon.ApMessage;
 
@@ -8,18 +9,19 @@ import apCommon.ApMessage;
 
 public class AuthorizationIn {
     private ApMessage apMessage;
+    private MainClientCoreService mainClientCoreService = MainClientCoreService.getFirst();
 
-    public AuthorizationIn(ApMessage apMessageLocal){
-        apMessage = apMessageLocal;
+    public AuthorizationIn(ApMessage apMessage){
+        this.apMessage = apMessage;
     }
 
     public void Process(){
-        if (MainClientDomain.mainDomainRef.isAuthorizationAvailable()){
+        if (mainClientCoreService.isAuthorizationAvailable()){
             AuthorizationResponseAction authorizationResponseAction = new AuthorizationResponseAction();
             if (apMessage.isAuthorizationPassed()) {
                 authorizationResponseAction.AuthorizationPassed(apMessage.getLogin(), apMessage.getPassword());
             } else {
-                authorizationResponseAction.AuthorizationError();
+                authorizationResponseAction.AuthorizationIsNotPassed();
             }
         }
     }
