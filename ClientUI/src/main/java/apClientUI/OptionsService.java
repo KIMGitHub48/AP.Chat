@@ -25,4 +25,8 @@ public interface OptionsService {
 
     //Возвращает Port для подключения к серверу
     Integer GetServerPort();
+
+    String GetLogin();
+
+    String GetPassword();
 }

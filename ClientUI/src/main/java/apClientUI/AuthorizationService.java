@@ -1,8 +1,5 @@
 package apClientUI;
 
-import apCommon.ApFinals;
-import javafx.fxml.FXMLLoader;
-
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -18,11 +15,23 @@ public interface AuthorizationService {
         return authorizationServiceList.get(0);
     }
 
+    void Launcher();
+
     void SetButtonEnterTooltipTextAndShow(String text);
 
-    void ChangeButtonEnterTextAndDisable(String text, boolean disable);
+    void HideAuthorizationStage();
 
-    void Hide();
+    void ShowAuthorizationStage();
 
-    void Show();
+    String GetButtonEnterText();
+
+    void ChangeAuthorizationButtonEnterTextAndDisable(String text, boolean disable);
+
+    void AuthorizationResponseActionConnectionError();
+
+    void AuthorizationResponseActionTimeError();
+
+    void AuthorizationResponseActionNotPassed();
+
+    void AuthorizationResponseActionPassed();
 }

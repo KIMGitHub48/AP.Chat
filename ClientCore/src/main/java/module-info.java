@@ -1,11 +1,12 @@
-import apClientCore.Domain.ServiceImplementation.ClientCoreMapServiceImplementations;
-import apClientCore.Domain.ServiceImplementation.ClientCoreServiceImplementations;
+//import apClientCore.Core.ServiceImplementation.ClientCoreMapServiceImplementations;
+//import apClientCore.Core.ServiceImplementation.ClientCoreServiceImplementations;
+import apClientCore.Core.MainClientCore;
 import apCommon.apModuleServices.ClientCoreMapService;
 import apCommon.apModuleServices.ClientCoreService;
 
 module apClient {
-    requires javafx.controls;
-    requires javafx.fxml;
+//    requires javafx.controls;
+//    requires javafx.fxml;
     requires org.hibernate.orm.core;
     requires reflections;
     requires java.persistence;
@@ -13,14 +14,14 @@ module apClient {
     requires apCommon;
     //requires apAuthorization;
 
-    opens apClientCore.Presentation to javafx.fxml;
-    exports apClientCore.Presentation;
-    exports apClientCore.Presentation.Controllers;
-    opens apClientCore.Presentation.Controllers to javafx.fxml;
+//    opens apClientCore.Presentation to javafx.fxml;
+//    exports apClientCore.Presentation;
+//    exports apClientCore.Presentation.Controllers;
+//    opens apClientCore.Presentation.Controllers to javafx.fxml;
 
-    uses apCommon.apModuleServices.ClientAuthorizationService;
-    uses apCommon.apModuleServices.ClientOptionsService;
+    uses apCommon.apModuleServices.ClientUIService;
+//    uses apCommon.apModuleServices.ClientOptionsService;
 
-    provides ClientCoreService with ClientCoreServiceImplementations;
-    provides ClientCoreMapService with ClientCoreMapServiceImplementations;
+    provides ClientCoreService with MainClientCore;
+//    provides ClientCoreMapService with ClientCoreMapServiceImplementations;
 }

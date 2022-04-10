@@ -1,5 +1,7 @@
 package apClientUI;
 
+import apCommon.ApMessage;
+
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -18,4 +20,12 @@ public interface MainClientUIService {
     boolean IsConnected();
 
     void ConnectToServer();
+
+    boolean isAuthorizationAvailable();
+
+    void AuthorizationButtonEnterInThread();
+
+    void setAuthorizationAvailable(boolean available);
+
+    void SendMessage(ApMessage apMessage);
 }

@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 public interface ClientUIService {
     //Метод запускает UI модуля в отдельном потоке
     //void launcher(String[] args);
-    void main(String[] args);
+    void Launcher(String[] args);
 
     //Метод возвращает первую имплиментацию этого интерфейса.
     static ClientUIService getFirst() {
@@ -18,4 +18,16 @@ public interface ClientUIService {
                 .collect(Collectors.toList());
         return clientUIServiceList.get(0);
     }
+
+    void AuthorizationResponseActionConnectionError();
+
+    void AuthorizationResponseActionTimeError();
+
+    void AuthorizationResponseActionNotPassed();
+
+    void AuthorizationResponseActionPassed();
+
+    String GetServerIP();
+
+    Integer GetServerPort();
 }

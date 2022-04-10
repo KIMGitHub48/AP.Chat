@@ -9,8 +9,8 @@ module apCommon {
     exports apCommon.apModuleServices;
 
     uses ClientUIService;
-    uses ClientAuthorizationService;
-    uses ClientOptionsService;
+//    uses ClientAuthorizationService;
+    //uses ClientOptionsService;
     uses ClientCoreService;
-    uses ClientCoreMapService;
+    //uses ClientCoreMapService;
 }

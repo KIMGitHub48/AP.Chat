@@ -4,42 +4,44 @@ package apClientUI.apAuthorization;
 //import apClient.Domain.MainClientDomain;
 //import apClient.Domain.Net.InMessages.Authorization.AuthorizationResponseAction;
 //import apClient.Presentation.MainClientPresentation;
-import apClientUI.apAuthorization.Messages.In.AuthorizationResponseAction;
+import apClientUI.AuthorizationService;
+import apClientUI.MainClientUIService;
+import apClientUI.OptionsService;
 import apCommon.ApFinals;
 import apCommon.ApMessage;
 import apCommon.ApMessageEnumType;
-import apCommon.apModuleServices.ClientCoreService;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class AuthorizationButtonEnterInThread extends Thread {
-    private MainClientAuthorization main = MainClientAuthorization.mainClientAuthorizationRef;
-    private ClientCoreService clientCoreService = ClientCoreService.getFirst();
+    //private MainClientAuthorization main = MainClientAuthorization.mainClientAuthorizationRef;
+    private AuthorizationService authorizationService = AuthorizationService.getFirst();
+    private MainClientUIService mainClientUIService = MainClientUIService.getFirst();
+    private OptionsService optionsService = OptionsService.getFirst();
 
     @Override
     public void run() {
-        main.ChangeButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
+        authorizationService.ChangeButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
         AuthorizationOrConnect();
     }
 
     private void AuthorizationOrConnect() {
-        if (main.IsConnected()) {
+        if (mainClientUIService.IsConnected()) {
             SendAuthorizationMessage();
         } else {
             if (ConnectWithTimer()){
                 SendAuthorizationMessage();
             } else {
-                AuthorizationResponseAction authorizationResponseAction = new AuthorizationResponseAction();
-                authorizationResponseAction.ConnectionError();
+                authorizationService.AuthorizationResponseActionConnectionError();
             }
         }
     }
 
     private boolean ConnectWithTimer(){
-        main.ConnectToServer();
+        mainClientUIService.ConnectToServer();
         for (int i = 0; i < 10; i++) {
-            if (main.IsConnected()){
+            if (mainClientUIService.IsConnected()){
                 return true;
             } else {
                 try {
@@ -54,32 +56,33 @@ public class AuthorizationButtonEnterInThread extends Thread {
     }
 
     private void ChangeButtonEnterWaitingText() {
-        switch (main.GetButtonEnterText()) {
+        switch (authorizationService.GetButtonEnterText()) {
             case (ApFinals.ENTER_1):
-                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_2, true);
+                authorizationService.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_2, true);
                 break;
             case (ApFinals.ENTER_2):
-                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_3, true);
+                authorizationService.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_3, true);
                 break;
             case (ApFinals.ENTER_3):
-                main.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
+                authorizationService.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
                 break;
         }
     }
 
     private void SendAuthorizationMessage() {
-        main.setAuthorizationAvailable(true);
+        mainClientUIService.setAuthorizationAvailable(true);
 
         ApMessage apMessage = new ApMessage();
         apMessage = WriteDateInMessage(apMessage);
-        clientCoreService.SortOutMessageInThread(apMessage);
-        main.WaitingAuthorizationResponse();
+        mainClientUIService.SendMessage(apMessage);
+        WaitingAuthorizationResponse waitingAuthorizationResponse = new WaitingAuthorizationResponse();
+        waitingAuthorizationResponse.waitResponse();
     }
 
     private ApMessage WriteDateInMessage(ApMessage apMessage) {
         apMessage.setType(ApMessageEnumType.authorization);
-        apMessage.setLogin(main.GetLoginFromTextField());
-        apMessage.setPassword(main.GetPasswordFromTextField());
+        apMessage.setLogin(optionsService.GetLogin());
+        apMessage.setPassword(optionsService.GetPassword());
         apMessage.setUUID(UUID.randomUUID());
         return apMessage;
     }

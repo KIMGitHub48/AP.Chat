@@ -1,5 +1,6 @@
 package apClientUI.apAuthorization.Controllers;
 
+import apClientUI.MainClientUIService;
 import apClientUI.OptionsService;
 import apClientUI.apAuthorization.AuthorizationButtonEnterInThread;
 import apCommon.ApFinals;
@@ -13,10 +14,11 @@ import javafx.scene.control.Tooltip;
 public class AuthorizationController {
     //private MainClientUI main = MainClientUI.mainClientUIRef;
     public static AuthorizationController authorizationController;
-    private OptionsService optionsService = OptionsService.getFirst();
     public AuthorizationController (){
         authorizationController = this;
     };
+    private OptionsService optionsService = OptionsService.getFirst();
+    private MainClientUIService mainClientUIService = MainClientUIService.getFirst();
 
     @FXML
     private TextField textFieldLogin;
@@ -41,6 +43,7 @@ public class AuthorizationController {
     private void ButtonEnterAction(ActionEvent actionEvent) {
         ChangeButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
 
+        mainClientUIService.AuthorizationButtonEnterInThread();
         AuthorizationButtonEnterInThread authorizationButtonEnterInThread = new AuthorizationButtonEnterInThread();
         authorizationButtonEnterInThread.start();
     }
