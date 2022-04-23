@@ -3,7 +3,7 @@ package ap.Domain;
     Точка входа в приложение.
  */
 
-import ap.common.*;
+import apCommon.*;
 //import ap.Domain.Net.OutMessages.chatChannelMassageInThread;
 import ap.Domain.Net.Server;
 import ap.Presentation.FacadeServerPresentation;

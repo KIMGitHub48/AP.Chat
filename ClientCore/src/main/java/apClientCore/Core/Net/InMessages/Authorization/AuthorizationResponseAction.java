@@ -20,8 +20,8 @@ public class AuthorizationResponseAction {
     }
     public void AuthorizationResponseActionPassed(String login, String Password){
         mainClientCoreService.setAuthorizationAvailable(false);
-        mainClientCoreService.setLogin(login);
-        mainClientCoreService.setPassword(Password);
+        mainClientCoreService.SetLogin(login);
+        mainClientCoreService.SetPassword(Password);
         clientUIService.AuthorizationResponseActionPassed();
     }
 //    public void AuthorizationTimeError(){

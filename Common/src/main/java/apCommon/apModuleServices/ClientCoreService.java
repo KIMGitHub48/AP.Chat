@@ -23,16 +23,16 @@ public interface ClientCoreService {
     //Метод Инициирует соединение
     void ConnectToServer();
 
-    void setLogin(String login);
+    void SetLogin(String login);
 
-    void setPassword(String password);
+    void SetPassword(String password);
 
     //Проверяет доступна ли авторизация;
     boolean isAuthorizationAvailable();
 
     void AuthorizationButtonEnterInThread();
 
-    void setAuthorizationAvailable(boolean authorizationAvailable);
+    void SetAuthorizationAvailable(boolean authorizationAvailable);
 
     void SendMessage(ApMessage apMessage);
 }

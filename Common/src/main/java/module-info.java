@@ -1,7 +1,4 @@
-import apCommon.apModuleServices.ClientAuthorizationService;
-import apCommon.apModuleServices.ClientCoreMapService;
 import apCommon.apModuleServices.ClientCoreService;
-import apCommon.apModuleServices.ClientOptionsService;
 import apCommon.apModuleServices.ClientUIService;
 
 module apCommon {

@@ -22,7 +22,7 @@ public class AuthorizationButtonEnterInThread extends Thread {
 
     @Override
     public void run() {
-        authorizationService.ChangeButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
+        authorizationService.ChangeAuthorizationButtonEnterTextAndDisable(ApFinals.ENTER_1, true);
         AuthorizationOrConnect();
     }
 
@@ -81,8 +81,8 @@ public class AuthorizationButtonEnterInThread extends Thread {
 
     private ApMessage WriteDateInMessage(ApMessage apMessage) {
         apMessage.setType(ApMessageEnumType.authorization);
-        apMessage.setLogin(optionsService.GetLogin());
-        apMessage.setPassword(optionsService.GetPassword());
+        apMessage.setLogin(authorizationService.GetLoginFromTextField());
+        apMessage.setPassword(authorizationService.GetPasswordFromTextField());
         apMessage.setUUID(UUID.randomUUID());
         return apMessage;
     }

@@ -4,21 +4,18 @@ package apClientCore.Core;
  */
 
 
-//import apClientCore.Core.Net.InMessages.Authorization.WaitingAuthorizationResponse;
-
 import apClientCore.Core.Net.ConnectToServer;
-import apClientCore.Core.Net.SortInMessageInThread;
 import apClientCore.Core.Net.SortOutMessageInThread;
+import apClientCore.Core.ServiceImplementation.ClientCoreServiceImp;
+import apClientCore.Core.ServiceImplementation.MainClientCoreServiceImp;
 import apCommon.ApMessage;
-import apCommon.apModuleServices.ClientAuthorizationService;
-import apCommon.apModuleServices.ClientOptionsService;
 import apCommon.apModuleServices.ClientUIService;
 //import apAuthorization.Test;
 
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class MainClientCore implements MainClientCoreService, apCommon.apModuleServices.ClientCoreService {
+public class MainClientCore {
     //public static MainClientDomain mainDomainRef;
     private ConnectToServer connectToServer;
     private String login;
@@ -36,6 +33,8 @@ public class MainClientCore implements MainClientCoreService, apCommon.apModuleS
         //FacadeClientPresentation.Launcher(args);
         //clientAuthorizationService.launcher(args);
         //clientOptionsService.launcher(args);
+        MainClientCoreServiceImp.mainClientCore = this;
+        ClientCoreServiceImp.mainClientCore = this;
         isAuthorizationAvailable = false;
     }
 
@@ -44,48 +43,39 @@ public class MainClientCore implements MainClientCoreService, apCommon.apModuleS
     }
 
     //Используется в 2 интерфейсах!
-    @Override
     public boolean isAuthorizationAvailable() {
         return isAuthorizationAvailable;
     }
 
-    @Override
     public void AuthorizationButtonEnterInThread() {
 
     }
 
-    @Override
     public void setAuthorizationAvailable(boolean authorizationAvailable) {
         isAuthorizationAvailable = authorizationAvailable;
     }
 
-    @Override
     public void SendMessage(ApMessage apMessage) {
-        SortInMessageInThread sortInMessageInThread = new SortInMessageInThread(apMessage);
-        sortInMessageInThread.start();
+        SortOutMessageInThread sortOutMessageInThread = new SortOutMessageInThread(apMessage);
+        sortOutMessageInThread.start();
     }
 
-    @Override
-    public void setLogin(String login) {
+    public void SetLogin(String login) {
         this.login = login;
     }
 
-    @Override
-    public void setPassword(String password) {
+    public void SetPassword(String password) {
         this.password = password;
     }
 
-    @Override
     public String getLogin() {
         return login;
     }
 
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
     public Socket GetServerSocket() {
         if (IsConnected()) {
             Socket serverSocket = connectToServer.GetServerSocket();
@@ -95,7 +85,6 @@ public class MainClientCore implements MainClientCoreService, apCommon.apModuleS
         }
     }
 
-    @Override
     public boolean IsConnected() {
         if ((connectToServer != null) && (connectToServer.IsConnected())) {
             return true;
@@ -104,8 +93,8 @@ public class MainClientCore implements MainClientCoreService, apCommon.apModuleS
         }
     }
 
-    @Override
     public void ConnectToServer() {
+        System.out.println("Инициирован Connect");
         String IP = clientUIService.GetServerIP();
         Integer Port = clientUIService.GetServerPort();
         if (connectToServer == null) {

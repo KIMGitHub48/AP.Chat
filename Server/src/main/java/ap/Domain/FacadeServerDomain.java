@@ -1,6 +1,6 @@
 package ap.Domain;
 
-import ap.common.*;
+import apCommon.*;
 
 public class FacadeServerDomain {
 //    public static void SendMessage(ApMessage apMessage) {

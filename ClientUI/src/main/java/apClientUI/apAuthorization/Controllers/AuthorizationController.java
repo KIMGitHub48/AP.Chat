@@ -48,6 +48,13 @@ public class AuthorizationController {
         authorizationButtonEnterInThread.start();
     }
 
+    @FXML
+    private void ShowOptionsStage(ActionEvent actionEvent) {
+        optionsService.ShowOptionsStage();
+    }
+
+
+
     public String GetLoginFromTextField(){
         String login = textFieldLogin.getText();
         return login;
@@ -65,12 +72,6 @@ public class AuthorizationController {
     public void ChangeButtonEnterTextAndDisable(String text, boolean disable) {
         Platform.runLater(() -> buttonEnter.setText(text));
         Platform.runLater(() -> buttonEnter.setDisable(disable));
-    }
-
-
-    @FXML
-    private void ShowOptionsStage(ActionEvent actionEvent) {
-        optionsService.ShowOptionsStage();
     }
 
     public void SetButtonEnterTooltipTextAndShow(String text) {

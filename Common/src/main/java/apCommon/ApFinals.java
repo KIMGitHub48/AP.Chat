@@ -2,10 +2,10 @@ package apCommon;
 
 public class ApFinals {
     //Название файлов сцен и путей
-    public final static String FXML_CHAT_FILE_NAME = "Chat.fxml";
-    public final static String FXML_LOGIN_PASSWORD_FILE_NAME = "LoginPassword.fxml"; //-Удалить
+//    public final static String FXML_CHAT_FILE_NAME = "Chat.fxml";
+//    public final static String FXML_LOGIN_PASSWORD_FILE_NAME = "LoginPassword.fxml"; //-Удалить
     public final static String FXML_AUTHORIZATION_FILE_NAME = "Authorization.fxml";
-    public final static String FXML_AUTHORIZATION_FILE_NAME_PATH = "//apAuthorization";
+//    public final static String FXML_AUTHORIZATION_FILE_NAME_PATH = "//apAuthorization";
     public final static String FXML_OPTIONS_FILE_NAME = "Options.fxml";
 
     //Текст ожидания для кнопки авторизации

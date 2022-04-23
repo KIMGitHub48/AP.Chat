@@ -1,0 +1,17 @@
+АВТОРИЗАЦИЯ:
+    ### ОТПРАВКА СООБЩЕНИЯ.
+    ### В роли сообщения выступает объект класса ApMessage, внешний модуль самостоятельно создаёт и заполняет этот объект.
+    Во внешнем сервисе ClientCoreService создан метод SendMessage, внешние модули используют его для отправки сообщений.
+    SendMessage использует метод SendMessage из класса MainClientCore
+    SendMessage создает объект класса SortOutMessageInThread и запускает его.
+    SortOutMessageInThread определив type поле как authorization создает объект класса AuthorizationOut и выполняет его в отдельном потоке.
+    AuthorizationOut создает объект класса SendMessageInThread и выполняет его.
+    SendMessageInThread принимает как аргумент сокет сервера и отправляет сообщение в обтельном потоке.
+
+    #### ПРИЕМ СООБЩЕНИЯ.
+    Вместе с запуском сервера создается объект класса WaitingMessageFromServerInThread и запускается в отдельном потоке.
+    WaitingMessageFromServerInThread ожидает сообщений от сервера в бесконечном цикле и после того как сообщение поступит
+        создает объект класса SortInMessageInThread передает в него соощение и запускает.
+    SortInMessageInThread определив type поле как authorization создает объект класса AuthorizationIn и выполняет его в отдельном потоке.
+    AuthorizationIn создает объект класса AuthorizationResponseAction и выполняет его методы в зависимости от результатов
+        авторизации.

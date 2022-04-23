@@ -1,6 +1,6 @@
 package ap.Domain.Net;
 
-import ap.common.*;
+import apCommon.*;
 import apCommon.ApMessage;
 
 import java.io.IOException;

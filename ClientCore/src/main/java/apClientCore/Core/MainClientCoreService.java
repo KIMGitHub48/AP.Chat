@@ -21,24 +21,16 @@ public interface MainClientCoreService {
     //Делает процесс авторизации доступным
     void setAuthorizationAvailable(boolean authorizationAvailable);
 
-    //Запоминает логин текущего авторизованного клиента.
-    void setLogin(String login);
-
-    //Запоминает пароль текущего авторищованного клиента.
-    void setPassword(String password);
-
     //Возвращает логин текущего авторизованного клиента.
     String getLogin();
 
-    //Возвращает пароль текущего авторищованного клиента.
+    //Возвращает пароль текущего авторизованного клиента.
     String getPassword();
 
     //Возвращает подключенный к серверу сокет.
     Socket GetServerSocket();
 
-    //Возвращает статус подключения к серверу.
-    boolean IsConnected();
+    public void SetLogin(String login);
 
-    //Устанавливает подключение к серверу.
-    void ConnectToServer();
+    public void SetPassword(String password);
 }

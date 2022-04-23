@@ -12,6 +12,7 @@ public class ConnectToServer {
     private WaitingMessageFromServerInThread waitingMessageFromServerInThread;
 
     public void ConnectToServer(String IP,Integer Port) {
+        System.out.println("Лбъе");
         Runnable runnableStart = () -> {
             Connect(IP,Port);
         };
@@ -25,8 +26,10 @@ public class ConnectToServer {
             waitingMessageFromServerInThread = new WaitingMessageFromServerInThread(serverSocket);
             waitingMessageFromServerInThread.start();
             //TODO FacadeClientPresentation.AddSystemMessage(ApFinals.SYSTEM_MESSAGE_SERVER_CONNECT);
+            System.out.println("Connect установлен");
         } catch (IOException e) {
             //TODO FacadeClientPresentation.AddSystemMessage(ApFinals.SYSTEM_MESSAGE_SERVER_CONNECT_ERROR);
+            System.out.println("Connect НЕ установлен");
         }
     }
     public boolean IsConnected(){

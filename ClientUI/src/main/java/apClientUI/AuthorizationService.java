@@ -14,8 +14,8 @@ public interface AuthorizationService {
                 .collect(Collectors.toList());
         return authorizationServiceList.get(0);
     }
-
-    void Launcher();
+    //Загружает сцену
+    void LoadStage();
 
     void SetButtonEnterTooltipTextAndShow(String text);
 
@@ -34,4 +34,8 @@ public interface AuthorizationService {
     void AuthorizationResponseActionNotPassed();
 
     void AuthorizationResponseActionPassed();
+
+    String GetLoginFromTextField();
+
+    String GetPasswordFromTextField();
 }

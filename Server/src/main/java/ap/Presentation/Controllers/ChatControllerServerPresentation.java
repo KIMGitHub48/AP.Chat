@@ -1,7 +1,7 @@
 package ap.Presentation.Controllers;
 
 import ap.Domain.FacadeServerDomain;
-import ap.common.*;
+import apCommon.*;
 import apCommon.ApMessage;
 import apCommon.ApMessageEnumType;
 import javafx.event.ActionEvent;

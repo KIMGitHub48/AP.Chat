@@ -16,6 +16,10 @@ public interface MainClientUIService {
                 .collect(Collectors.toList());
         return mainClientUIServiceList.get(0);
     }
+    // Метод устанавливает ссылку на объект MainClientUI.
+    void SetMainClientUI(MainClientUI mainClientUI);
+    // Запускает UI.
+    void Launcher(String[] args);
 
     boolean IsConnected();
 
