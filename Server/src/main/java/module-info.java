@@ -7,6 +7,7 @@ module ap {
     requires java.sql;
     requires derby;
     requires ap.common;
+    requires apCommon;
 
     opens ap.Presentation to javafx.fxml;
     exports ap.Presentation;

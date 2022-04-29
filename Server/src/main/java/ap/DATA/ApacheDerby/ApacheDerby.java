@@ -45,6 +45,16 @@ public class ApacheDerby {
             + "UUID VARCHAR (36),"
             + "PRIMARY KEY (MessageID))";
 
+    static final String TABLE_TASKS = "CREATE TABLE Tasks("
+            + "MessageID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
+            + "DateMessage TIMESTAMP, "
+            + "DateExecution TIMESTAMP, "
+            + "UserID INT NOT NULL REFERENCES Users(UserID), "
+            + "UserExecutor INT NOT NULL REFERENCES Users(UserID), "
+            + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
+            + "PRIMARY KEY (MessageID))";
+
     static final String TABLE_USER_DUPLICATED = "CREATE TABLE Users_d("
             + "UserID INT, "
             + "Fio VARCHAR (255), "
@@ -57,6 +67,17 @@ public class ApacheDerby {
     static final String TABLE_HISTORY_DUPLICATED = "CREATE TABLE History_d("
             + "MessageID INT, "
             + "DateMessage TIMESTAMP, "
+            + "DateExecution TIMESTAMP, "
+            + "UserID INT, "
+            + "UserExecutor INT, "
+            + "TypeMessage VARCHAR (2), "
+            + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
+            + "PRIMARY KEY (MessageID))";
+
+    static final String TABLE_TASKS_DUPLICATED = "CREATE TABLE Tasks_d("
+            + "MessageID INT, "
+            + "DateMessage TIMESTAMP, "
             + "UserID INT, "
             + "TypeMessage VARCHAR (2), "
             + "Message VARCHAR (3000), "
@@ -66,6 +87,14 @@ public class ApacheDerby {
     static final String TABLE_TECHNICAL_LOG = "CREATE TABLE Log_technical("
             + "MessageID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
             + "DateMessage TIMESTAMP, "
+            + "Message VARCHAR (3000), "
+            + "UUID VARCHAR (36),"
+            + "PRIMARY KEY (MessageID))";
+
+    static final String TABLE_USERS_ACTIVITY_LOG = "CREATE TABLE Log_activity("
+            + "MessageID INT NOT NULL GENERATED ALWAYS AS IDENTITY, "
+            + "DateMessage TIMESTAMP, "
+            + "UserID INT NOT NULL REFERENCES Users(UserID), "
             + "Message VARCHAR (3000), "
             + "UUID VARCHAR (36),"
             + "PRIMARY KEY (MessageID))";
@@ -84,8 +113,14 @@ public class ApacheDerby {
             System.out.println("Таблица " + TABLE_HISTORY.trim() + " создана");
             statement.execute(TABLE_HISTORY_DUPLICATED);
             System.out.println("Таблица " + TABLE_HISTORY_DUPLICATED.trim() + " создана");
+            statement.execute(TABLE_TASKS);
+            System.out.println("Таблица " + TABLE_TASKS.trim() + " создана");
+            statement.execute(TABLE_TASKS_DUPLICATED);
+            System.out.println("Таблица " + TABLE_TASKS_DUPLICATED.trim() + " создана");
             statement.execute(TABLE_TECHNICAL_LOG);
             System.out.println("Таблица " + TABLE_TECHNICAL_LOG.trim() + " создана");
+            statement.execute(TABLE_USERS_ACTIVITY_LOG);
+            System.out.println("Таблица " + TABLE_USERS_ACTIVITY_LOG.trim() + " создана");
             statement.execute(createDatabaseAdmin());
             statement.close();
             connection.close();
