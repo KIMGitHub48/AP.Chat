@@ -2,7 +2,7 @@ package apClientCore.Core.ServiceImplementation;
 
 import apClientCore.Core.MainClientCore;
 import apCommon.ApMessage;
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
 
 public class ClientCoreServiceImp implements ClientCoreService {
     public static MainClientCore mainClientCore;

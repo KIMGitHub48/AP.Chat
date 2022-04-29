@@ -1,6 +1,6 @@
 package apClientUI;
 
-import apCommon.apModuleServices.ClientUIService;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 
 public class ClientUIServiceImp implements ClientUIService{
     private AuthorizationService authorizationService = AuthorizationService.getFirst();

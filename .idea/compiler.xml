@@ -7,8 +7,10 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ClientUI" />
+        <module name="ServerDATA" />
         <module name="ClientCore" />
-        <module name="Server" />
+        <module name="ServerUI" />
+        <module name="ServerCore" />
         <module name="Common" />
       </profile>
     </annotationProcessing>

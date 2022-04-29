@@ -9,7 +9,9 @@
         <module>Common</module>
         <module>ClientUI</module>
         <module>ClientCore</module>
-        <module>Server</module>
+        <module>ServerCore</module>
+        <module>ServerDATA</module>
+        <module>ServerUI</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

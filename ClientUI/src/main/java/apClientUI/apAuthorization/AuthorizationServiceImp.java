@@ -4,6 +4,7 @@ package apClientUI.apAuthorization;
 import apClientUI.MainClientUI;
 import apClientUI.MainClientUIService;
 import apCommon.ApFinals;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -25,17 +26,17 @@ public class AuthorizationServiceImp implements apClientUI.AuthorizationService 
 
     @Override
     public void SetButtonEnterTooltipTextAndShow(String text) {
-        GetAuthorizationController().SetButtonEnterTooltipTextAndShow(text);
+        Platform.runLater(() -> GetAuthorizationController().SetButtonEnterTooltipTextAndShow(text));
     }
 
     @Override
     public void HideAuthorizationStage() {
-        GetAuthorizationStage().hide();
+        Platform.runLater(() -> GetAuthorizationStage().hide());
     }
 
     @Override
     public void ShowAuthorizationStage() {
-        GetAuthorizationStage().show();
+        Platform.runLater(() -> GetAuthorizationStage().show());
     }
 
     @Override
@@ -45,7 +46,7 @@ public class AuthorizationServiceImp implements apClientUI.AuthorizationService 
 
     @Override
     public void ChangeAuthorizationButtonEnterTextAndDisable(String text, boolean  disable) {
-        GetAuthorizationController().ChangeButtonEnterTextAndDisable(text, disable);
+        Platform.runLater(() -> GetAuthorizationController().ChangeButtonEnterTextAndDisable(text, disable));
     }
 
     @Override

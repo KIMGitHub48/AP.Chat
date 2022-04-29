@@ -1,7 +1,7 @@
 package apClientUI;
 
 import apCommon.ApMessage;
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
 
 import java.util.List;
 import java.util.ServiceLoader;
@@ -24,7 +24,7 @@ public class MainClientUIServiceImp implements MainClientUIService{
     @Override
     public void SetMainClientUI(MainClientUI mainClientUI) {
         this.mainClientUI = mainClientUI;
-    }
+    }//TODO Ненужный метод
 
     @Override
     public void Launcher(String[] args) {

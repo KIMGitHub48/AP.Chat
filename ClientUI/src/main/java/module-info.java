@@ -2,15 +2,11 @@ import apClientUI.*;
 //import apClientUI.ClientUIServiceImplementation;
 import apClientUI.apAuthorization.AuthorizationServiceImp;
 import apClientUI.apOptions.OptionsServiceImp;
-import apCommon.apModuleServices.ClientUIService;
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.*;
 
 module apClientUI {
     requires javafx.controls;
     requires javafx.fxml;
-    requires reflections;
-    requires java.persistence;
-    requires java.sql;
     requires apCommon;
 
     exports apClientUI.apAuthorization;

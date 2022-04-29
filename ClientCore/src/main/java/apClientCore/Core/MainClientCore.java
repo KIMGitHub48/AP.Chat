@@ -9,7 +9,7 @@ import apClientCore.Core.Net.SortOutMessageInThread;
 import apClientCore.Core.ServiceImplementation.ClientCoreServiceImp;
 import apClientCore.Core.ServiceImplementation.MainClientCoreServiceImp;
 import apCommon.ApMessage;
-import apCommon.apModuleServices.ClientUIService;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 //import apAuthorization.Test;
 
 import java.net.Socket;
@@ -24,7 +24,7 @@ public class MainClientCore {
     private ArrayList<ApMessage> presentationApMessageList = new ArrayList<>(); //Лист синхронизирован, использовать нельзя, использовать только в методе GetSetPresentationApMessageFromList
     //    private apCommon.apModuleServices.ClientAuthorizationService clientAuthorizationService = ClientAuthorizationService.getFirst();
 //    private apCommon.apModuleServices.ClientOptionsService clientOptionsService = ClientOptionsService.getFirst();
-    private apCommon.apModuleServices.ClientUIService clientUIService = ClientUIService.getFirst();
+    private ClientUIService clientUIService = ClientUIService.getFirst();
 
 
     public MainClientCore() {

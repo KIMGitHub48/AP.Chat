@@ -3,7 +3,8 @@
 import apClientCore.Core.MainClientCoreService;
 import apClientCore.Core.ServiceImplementation.ClientCoreServiceImp;
 import apClientCore.Core.ServiceImplementation.MainClientCoreServiceImp;
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 
 module apClient {
 //    requires javafx.controls;
@@ -21,7 +22,7 @@ module apClient {
 //    exports apClientCore.Presentation.Controllers;
 //    opens apClientCore.Presentation.Controllers to javafx.fxml;
 
-    uses apCommon.apModuleServices.ClientUIService;
+    uses ClientUIService;
     uses MainClientCoreService;
 //    uses apCommon.apModuleServices.ClientOptionsService;
 

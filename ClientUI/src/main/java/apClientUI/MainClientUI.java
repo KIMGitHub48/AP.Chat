@@ -1,6 +1,6 @@
 package apClientUI;
 
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
