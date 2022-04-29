@@ -1,8 +1,10 @@
 //import apClientCore.Core.ServiceImplementation.ClientCoreMapServiceImplementations;
 //import apClientCore.Core.ServiceImplementation.ClientCoreServiceImplementations;
-import apClientCore.Core.MainClientCore;
-import apCommon.apModuleServices.ClientCoreMapService;
-import apCommon.apModuleServices.ClientCoreService;
+import apClientCore.Core.MainClientCoreService;
+import apClientCore.Core.ServiceImplementation.ClientCoreServiceImp;
+import apClientCore.Core.ServiceImplementation.MainClientCoreServiceImp;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 
 module apClient {
 //    requires javafx.controls;
@@ -12,6 +14,7 @@ module apClient {
     requires java.persistence;
     requires java.sql;
     requires apCommon;
+    requires apClientUI;
     //requires apAuthorization;
 
 //    opens apClientCore.Presentation to javafx.fxml;
@@ -19,9 +22,11 @@ module apClient {
 //    exports apClientCore.Presentation.Controllers;
 //    opens apClientCore.Presentation.Controllers to javafx.fxml;
 
-    uses apCommon.apModuleServices.ClientUIService;
+    uses ClientUIService;
+    uses MainClientCoreService;
 //    uses apCommon.apModuleServices.ClientOptionsService;
 
-    provides ClientCoreService with MainClientCore;
-//    provides ClientCoreMapService with ClientCoreMapServiceImplementations;
+//    provides ClientCoreService with MainClientCore;
+    provides ClientCoreService with ClientCoreServiceImp;
+    provides MainClientCoreService with MainClientCoreServiceImp;
 }

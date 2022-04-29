@@ -1,7 +1,5 @@
 package apClientUI;
 
-import apCommon.apModuleServices.ClientOptionsService;
-
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.stream.Collectors;
@@ -16,9 +14,14 @@ public interface OptionsService {
                 .collect(Collectors.toList());
         return optionsServiceList.get(0);
     }
+    //Загружает сцену
+    void LoadStage();
 
-    //Показывает цену Options
+    //Показывает Options Stage
     void ShowOptionsStage();
+
+    //Скрывает Options Stage
+    void HideOptionsStage();
 
     //Возвращает IP для подключения к серверу
     String GetServerIP();
@@ -26,7 +29,7 @@ public interface OptionsService {
     //Возвращает Port для подключения к серверу
     Integer GetServerPort();
 
-    String GetLogin();
-
-    String GetPassword();
+//    String GetLogin();
+//
+//    String GetPassword();
 }

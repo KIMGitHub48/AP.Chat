@@ -1,14 +1,12 @@
 package apClientUI;
 
-import apCommon.ApFinals;
-import apCommon.ApMessage;
-import apCommon.apModuleServices.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
 
-public class MainClientUI extends Application implements MainClientUIService, apCommon.apModuleServices.ClientUIService {
+public class MainClientUI extends Application {
 //    public static MainClientUI mainClientUIRef;
 
     private ArrayList<Stage> listStage = new ArrayList<>();
@@ -16,84 +14,86 @@ public class MainClientUI extends Application implements MainClientUIService, ap
 //    private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
     private ClientCoreService clientCoreService = ClientCoreService.getFirst();
     //    private ClientCoreMapService clientCoreMapService = ClientCoreMapService.getFirst();
-    private OptionsService clientOptionsService = OptionsService.getFirst();
+    //private OptionsService clientOptionsService = OptionsService.getFirst();
     private AuthorizationService authorizationService = AuthorizationService.getFirst();
+    private MainClientUIService mainClientUIService = MainClientUIService.getFirst();
+    private OptionsService optionsService = OptionsService.getFirst();
     //private boolean IsAuthorizationAvailable = false;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
 
     @Override
     public void start(Stage stage) throws Exception {
-        authorizationService.Launcher();
-//        LoadStage(true, ApFinals.FXML_AUTHORIZATION_FILE_NAME);
+        authorizationService.LoadStage();
+        optionsService.LoadStage();
+        authorizationService.ShowAuthorizationStage();
     }
 
-    @Override
     public void Launcher(String[] args) {
         launch();
     }
 
-    @Override
-    public boolean IsConnected() {
-        return clientCoreService.IsConnected();
-    }
+//    @Override
+//    public boolean IsConnected() {
+//        return clientCoreService.IsConnected();
+//    }
 
-    @Override
-    public void ConnectToServer() {
-        Runnable mainRunnable = () -> {
-            clientCoreService.ConnectToServer();
-        };
-        new Thread(mainRunnable, "ClientAuthorizationConnectToServer").start();
-    }
+//    @Override
+//    public void ConnectToServer() {
+//        Runnable mainRunnable = () -> {
+//            clientCoreService.ConnectToServer();
+//        };
+//        new Thread(mainRunnable, "ClientAuthorizationConnectToServer").start();
+//    }
 
-    @Override
-    public boolean isAuthorizationAvailable() {
-        return clientCoreService.isAuthorizationAvailable();
-    }
+//    @Override
+//    public boolean isAuthorizationAvailable() {
+//        return clientCoreService.isAuthorizationAvailable();
+//    }
 
-    @Override
-    public void AuthorizationButtonEnterInThread() {
-        clientCoreService.AuthorizationButtonEnterInThread();
-    }
+//    @Override
+//    public void AuthorizationButtonEnterInThread() {
+//        clientCoreService.AuthorizationButtonEnterInThread();
+//    }
 
-    @Override
-    public void setAuthorizationAvailable(boolean authorizationAvailable) {
-        clientCoreService.setAuthorizationAvailable(authorizationAvailable);
-        //IsAuthorizationAvailable = authorizationAvailable;
-    }
+//    @Override
+//    public void setAuthorizationAvailable(boolean authorizationAvailable) {
+//        clientCoreService.setAuthorizationAvailable(authorizationAvailable);
+//        //IsAuthorizationAvailable = authorizationAvailable;
+//    }
 
-    @Override
-    public void SendMessage(ApMessage apMessage) {
-        clientCoreService.SendMessage(apMessage);
-    }
+//    @Override
+//    public void SendMessage(ApMessage apMessage) {
+//        clientCoreService.SendMessage(apMessage);
+//    }
 
-    @Override
-    public void AuthorizationResponseActionConnectionError() {
-        authorizationService.AuthorizationResponseActionConnectionError();
-    }
+//    @Override
+//    public void AuthorizationResponseActionConnectionError() {
+//        authorizationService.AuthorizationResponseActionConnectionError();
+//    }
 
-    @Override
-    public void AuthorizationResponseActionTimeError() {
-        authorizationService.AuthorizationResponseActionTimeError();
-    }
+//    @Override
+//    public void AuthorizationResponseActionTimeError() {
+//        authorizationService.AuthorizationResponseActionTimeError();
+//    }
 
-    @Override
-    public void AuthorizationResponseActionNotPassed() {
-        authorizationService.AuthorizationResponseActionNotPassed();
-    }
+//    @Override
+//    public void AuthorizationResponseActionNotPassed() {
+//        authorizationService.AuthorizationResponseActionNotPassed();
+//    }
 
-    @Override
-    public void AuthorizationResponseActionPassed() {
-        authorizationService.AuthorizationResponseActionPassed();
-    }
+//    @Override
+//    public void AuthorizationResponseActionPassed() {
+//        authorizationService.AuthorizationResponseActionPassed();
+//    }
 
-    @Override
-    public String GetServerIP() {
-        return null;
-    }
-
-    @Override
-    public Integer GetServerPort() {
-        return null;
-    }
+//    @Override
+//    public String GetServerIP() {
+//        return null;
+//    }
+//
+//    @Override
+//    public Integer GetServerPort() {
+//        return null;
+//    }
 
 
 //    private void LoadStage(Boolean showOnStart, String fxmlName) {

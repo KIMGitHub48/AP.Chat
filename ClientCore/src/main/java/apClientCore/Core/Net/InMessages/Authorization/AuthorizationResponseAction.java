@@ -4,10 +4,10 @@ package apClientCore.Core.Net.InMessages.Authorization;
 import apClientCore.Core.MainClientCoreService;
 //import apClientCore.Presentation.FacadeClientPresentation;
 //import apClientCore.Presentation.MainClientPresentation;
-import apCommon.ApFinals;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 
 public class AuthorizationResponseAction {
-    private apCommon.apModuleServices.ClientUIService clientUIService = apCommon.apModuleServices.ClientUIService.getFirst();
+    private ClientUIService clientUIService = ClientUIService.getFirst();
     private MainClientCoreService mainClientCoreService = MainClientCoreService.getFirst();
 
     public void AuthorizationResponseActionConnectionError(){
@@ -20,8 +20,8 @@ public class AuthorizationResponseAction {
     }
     public void AuthorizationResponseActionPassed(String login, String Password){
         mainClientCoreService.setAuthorizationAvailable(false);
-        mainClientCoreService.setLogin(login);
-        mainClientCoreService.setPassword(Password);
+        mainClientCoreService.SetLogin(login);
+        mainClientCoreService.SetPassword(Password);
         clientUIService.AuthorizationResponseActionPassed();
     }
 //    public void AuthorizationTimeError(){

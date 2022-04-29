@@ -6,12 +6,12 @@
     <packaging>pom</packaging>
     <version>1.0.0</version>
     <modules>
-        <module>ClientCore</module>
-        <module>Server</module>
         <module>Common</module>
-        <module>ClientAuthorization</module>
-        <module>ClientOptions</module>
         <module>ClientUI</module>
+        <module>ClientCore</module>
+        <module>ServerCore</module>
+        <module>ServerDATA</module>
+        <module>ServerUI</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

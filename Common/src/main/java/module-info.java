@@ -1,16 +1,11 @@
-import apCommon.apModuleServices.ClientAuthorizationService;
-import apCommon.apModuleServices.ClientCoreMapService;
-import apCommon.apModuleServices.ClientCoreService;
-import apCommon.apModuleServices.ClientOptionsService;
-import apCommon.apModuleServices.ClientUIService;
+import apCommon.apModuleServices.ClientService.ClientCoreService;
+import apCommon.apModuleServices.ClientService.ClientUIService;
 
 module apCommon {
     exports apCommon;
-    exports apCommon.apModuleServices;
+    exports apCommon.apModuleServices.ServerService;
+    exports apCommon.apModuleServices.ClientService;
 
     uses ClientUIService;
-//    uses ClientAuthorizationService;
-    //uses ClientOptionsService;
     uses ClientCoreService;
-    //uses ClientCoreMapService;
 }
