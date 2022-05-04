@@ -15,5 +15,6 @@ public interface ServerDATAService {
         return serverDATAServiceList.get(0);
 
         //Тестовый коммент Артамонов С.С.
+        //Ком 5а
     }
 }
