@@ -7,21 +7,20 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ClientUI" />
+        <module name="ServerCore" />
         <module name="ServerDATA" />
         <module name="ClientCore" />
         <module name="ServerUI" />
-        <module name="ServerCore" />
         <module name="Common" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Client" target="16" />
       <module name="ClientAuthorization" target="11" />
       <module name="ClientOptions" target="11" />
       <module name="DATA" target="13" />
       <module name="Domain" target="13" />
       <module name="Presentation" target="11" />
-      <module name="ServerDATA" target="16" />
-      <module name="ServerUI" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
