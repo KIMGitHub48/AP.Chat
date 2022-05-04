@@ -13,5 +13,7 @@ public interface ServerDATAService {
                 .map(ServiceLoader.Provider::get)
                 .collect(Collectors.toList());
         return serverDATAServiceList.get(0);
+
+        //Тестовый коммент Артамонов С.С.
     }
 }
