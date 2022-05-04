@@ -20,6 +20,8 @@
       <module name="DATA" target="13" />
       <module name="Domain" target="13" />
       <module name="Presentation" target="11" />
+      <module name="ServerDATA" target="16" />
+      <module name="ServerUI" target="16" />
     </bytecodeTargetLevel>
   </component>
 </project>
