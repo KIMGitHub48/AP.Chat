@@ -1,5 +1,6 @@
 import apCommon.apModuleServices.ClientService.ClientCoreService;
 import apCommon.apModuleServices.ClientService.ClientUIService;
+import apCommon.apModuleServices.ServerService.ServerDATAService;
 
 module apCommon {
     exports apCommon;
@@ -8,4 +9,5 @@ module apCommon {
 
     uses ClientUIService;
     uses ClientCoreService;
+    uses ServerDATAService;
 }
