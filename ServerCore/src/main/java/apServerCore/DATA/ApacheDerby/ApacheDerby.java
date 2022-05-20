@@ -251,7 +251,6 @@ public class ApacheDerby {
                 }
             default:
         }
-
     }
 
     public static boolean checkRecord(UUID uuid, String message) {          //Проверка сообщения на наличие его в БД
