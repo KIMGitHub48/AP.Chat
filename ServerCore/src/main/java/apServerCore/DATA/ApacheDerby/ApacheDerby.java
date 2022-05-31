@@ -253,6 +253,35 @@ public class ApacheDerby {
         }
     }
 
+  /*  public static void addTask(ApMessageEnumType type, UUID id, String message) {        // Добавление в БД сообщения (нужно доработать в зависимости от типа)
+        Statement statement = connect();
+        System.out.println("Передаем сообщение в базу");
+        System.out.println("Тип сообщения: " + type);
+        String table;
+        Iterator itr;
+        HashMap hashMap;
+        switch (type) {                                                                    // В зависимости от типа сообщения, передаем запрос в необходимую таблицу
+            case authorization:
+                addRecordToTable(Table.Log_technical, new Record(id, message));                    // Записываем сообщение в таблицу логов
+            case chatChannelText:
+                hashMap = new HashMap(addRecordToTable(Table.History, new Record(id, message)));   // Возвращаем в HashMap UUID и Сообщение
+                itr = hashMap.entrySet().iterator();                                               // пробегаемся по HashMap и получаем ключ и значение
+                while(itr.hasNext()) {                                                             // По значению записываем в основную таблицу
+                    Map.Entry<UUID, String> entry = (Map.Entry<UUID, String>) itr.next();          // По ключу ищем запись в основной таблице и копируем в дублирующую
+                    UUID uuid = entry.getKey();
+                    String query = entry.getValue();
+                    try {
+                        statement.execute(query);
+                        statement.execute(addRecordInDuplicatedTable(uuid));
+                        statement.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            default:
+        }
+    } */
+
     public static boolean checkRecord(UUID uuid, String message) {          //Проверка сообщения на наличие его в БД
         boolean check = false;
         Statement statement = connect();
@@ -324,7 +353,37 @@ public class ApacheDerby {
         return null;
     }
 
+    public static Map<UUID, String> addTaskToTable(Table table, Record record) {                // Метод добавления записи в таблицу TABLE_TASKS
+        UUID uuid = record.getId();
+        int userID = record.getUserID();
+        String typeMessage = record.getTypeMessage();
+        String datetime = record.getTimestamp();
+        String message = record.getMessage();
+        HashMap<UUID, String> hashMap = new HashMap<>();
+        String query;
+        System.out.println(table);                                          // надо дебажить, не понимаю почему таблица одна а свич/кэйз идет на другую, где-то напортачил
+        switch (table) {
+            case History:
+                query = "INSERT INTO " + table + " VALUES (default, '" + datetime + "', " + userID + ", '" + typeMessage + "', '" + message + "', '" + uuid + "')";
+                hashMap.put(uuid, query);
+                System.out.println(table);
+                return hashMap;
+            case Log_technical:
+                query = "INSERT INTO " + table + " VALUES (default, '" + datetime + "', '" + message + "', '" + uuid + "')";
+                hashMap.put(uuid, query);
+                return hashMap;
+        }
+        return null;
+    }
+
     public static String addRecordInDuplicatedTable(UUID uuidString) { // Метод добавления записи в таблицу-дубликат TABLE_HISTORY_DUPLICATED
+        UUID uuid = UUID.fromString(String.valueOf(uuidString));
+        System.out.println(uuid);
+        String query = "INSERT INTO History_d SELECT * FROM History WHERE UUID = '" + uuid + "'";
+        return query;
+    }
+
+    public static String addTaskInDuplicatedTable(UUID uuidString) { // Метод добавления записи в таблицу-дубликат TABLE_TASK_DUPLICATED
         UUID uuid = UUID.fromString(String.valueOf(uuidString));
         System.out.println(uuid);
         String query = "INSERT INTO History_d SELECT * FROM History WHERE UUID = '" + uuid + "'";
@@ -362,6 +421,12 @@ public class ApacheDerby {
     public static String addRecordTechnicalLog(Log message) {
         String datetime = message.getDatetime();
         String query =  "INSERT INTO Log_technical VALUES (default, '" + datetime + "', '" + message + "')";
+        return query;
+    }
+
+    public static String addRecordUserActivityLog(Log message, User user) {
+        String datetime = message.getDatetime();
+        String query =  "INSERT INTO Log_activity VALUES (default, '" + datetime + "', '" + user + "','" + message + "')";
         return query;
     }
 
