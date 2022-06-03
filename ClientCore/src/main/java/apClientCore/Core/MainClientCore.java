@@ -10,7 +10,6 @@ import apClientCore.Core.ServiceImplementation.ClientCoreServiceImp;
 import apClientCore.Core.ServiceImplementation.MainClientCoreServiceImp;
 import apCommon.ApMessage;
 import apCommon.apModuleServices.ClientService.ClientUIService;
-//import apAuthorization.Test;
 
 import java.net.Socket;
 import java.util.ArrayList;
@@ -22,17 +21,11 @@ public class MainClientCore {
     private String password;
     private boolean isAuthorizationAvailable;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
     private ArrayList<ApMessage> presentationApMessageList = new ArrayList<>(); //Лист синхронизирован, использовать нельзя, использовать только в методе GetSetPresentationApMessageFromList
-    //    private apCommon.apModuleServices.ClientAuthorizationService clientAuthorizationService = ClientAuthorizationService.getFirst();
-//    private apCommon.apModuleServices.ClientOptionsService clientOptionsService = ClientOptionsService.getFirst();
     private ClientUIService clientUIService = ClientUIService.getFirst();
 
 
     public MainClientCore() {
         System.out.println("Запущен Клиент");
-        //mainDomainRef = this;
-        //FacadeClientPresentation.Launcher(args);
-        //clientAuthorizationService.launcher(args);
-        //clientOptionsService.launcher(args);
         MainClientCoreServiceImp.mainClientCore = this;
         ClientCoreServiceImp.mainClientCore = this;
         isAuthorizationAvailable = false;
@@ -105,21 +98,8 @@ public class MainClientCore {
         }
     }
 
-//    public void SendMessageToServer(ApMessage apMessage) {
-//        if (IsConnected()) {
-//            Socket serverSocket = connectToServer.GetServerSocket();
-//            SendMessageInThread sendMessageThread = new SendMessageInThread(serverSocket, apMessage);
-//            sendMessageThread.start();
-//        }
-//    }
-
     public void SortOutMessageInThread(ApMessage apMessage) {
         SortOutMessageInThread sortOutMessageInThread = new SortOutMessageInThread(apMessage);
         sortOutMessageInThread.start();
     }
-
-//    public void WaitingAuthorizationResponse() {
-//        WaitingAuthorizationResponse waitingAuthorizationResponse = new WaitingAuthorizationResponse();
-//        waitingAuthorizationResponse.waitResponse();
-//    }
 }

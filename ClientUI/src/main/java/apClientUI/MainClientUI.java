@@ -7,18 +7,12 @@ import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class MainClientUI extends Application {
-//    public static MainClientUI mainClientUIRef;
 
     private ArrayList<Stage> listStage = new ArrayList<>();
-    //    private ArrayList<String> listFileName = new ArrayList<>();
-//    private ArrayList<FXMLLoader> listFxmlLoader = new ArrayList<>();
     private ClientCoreService clientCoreService = ClientCoreService.getFirst();
-    //    private ClientCoreMapService clientCoreMapService = ClientCoreMapService.getFirst();
-    //private OptionsService clientOptionsService = OptionsService.getFirst();
     private AuthorizationService authorizationService = AuthorizationService.getFirst();
     private MainClientUIService mainClientUIService = MainClientUIService.getFirst();
     private OptionsService optionsService = OptionsService.getFirst();
-    //private boolean IsAuthorizationAvailable = false;//Поле регулирует доступность авторизации для клиента, если false то ответ от сервера для авторизации будет игнорироваться
 
     @Override
     public void start(Stage stage) throws Exception {

@@ -24,10 +24,4 @@ public class AuthorizationResponseAction {
         mainClientCoreService.SetPassword(Password);
         clientUIService.AuthorizationResponseActionPassed();
     }
-//    public void AuthorizationTimeError(){
-//        mainClientCoreService.setAuthorizationAvailable(false);
-//
-//        FacadeClientPresentation.SetButtonEnterTooltipTextAndShow(ApFinals.SERVER_AUTHORIZATION_TIME_ERROR);
-//        MainClientPresentation.mainPresentationRef.ChangeLoginPasswordButtonEnter(ApFinals.ENTER, false);
-//    }
 }

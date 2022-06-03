@@ -1,8 +1,6 @@
 package apClientCore.Core.Net;
 
 //import apClientCore.Presentation.FacadeClientPresentation;
-import apCommon.ApFinals;
-
 import java.io.IOException;
 import java.net.Socket;
 
